@@ -4,6 +4,7 @@ let requestPromise = require('request-promise');
 // let Link = `http://www.b4ucast.me/crichd.php?player=desktop&live=bt1&vw=620&vh=490__requestHeader=Referer::http://free.crichd.online/embed2.php?id=btsp1`;
 eval(`Link = "http://www.b4ucast.me/crichd.php?player=desktop&live=bt1&vw=620&vh=490__requestHeader=Referer::http://free.crichd.online/embed2.php?id=btsp1"`);
 
+let result;
 (async () => {
   for (let i = 0; i < rules.Rules.length; i++) {
     let rule = rules.Rules[i];
@@ -20,15 +21,13 @@ eval(`Link = "http://www.b4ucast.me/crichd.php?player=desktop&live=bt1&vw=620&vh
               }
             });
 
-            eval(`${stage.Result.match(/\w+/)[0]}='${stage.Targets.join("")}'`);
+            eval(`${stage.Result.match(/\w+/)[0]}=${JSON.stringify(stage.Targets.join(""))}`);
             // eval(stage.Result.match(/\w+/)[0] + "=" + "'"+stage.Targets.join("")+"'");
             break;
           case "EVAL":
             stage.String = eval(stage.String.match(/\w+/)[0]);
-            stage.String = stage.String.substr(6, stage.String.length - 8);
-            let result1 = eval(stage.String);
-            // let result1 = eval("link=\"http://www.b4ucast.me/crichd.php?player=desktop&live=bt1&vw=620&vh=490__requestHeader=Referer::http://free.crichd.online/embed2.php?id=btsp1__requestHeader=User-Agent::Safari/537.36::Accept-Encoding::*\";sp=link.split(\"__requestHeader=\");sp[0]")
-            eval(`${stage.Result.match(/\w+/)[0]}='${result1}'`);
+            result = eval(stage.String);
+            eval(`${stage.Result.match(/\w+/)[0]}=${JSON.stringify(result)}`);
             break;
 
           case "REPLACE":
@@ -36,9 +35,9 @@ eval(`Link = "http://www.b4ucast.me/crichd.php?player=desktop&live=bt1&vw=620&vh
             if (stage.In.match(/^\$\w+$/)) {
               string = eval(stage.In.match(/\w+/)[0]);
             }
-            const regex = new RegExp(`${stage.From}`, "g");
-            let result = string.replace(regex, stage.To);
-            eval(`${stage.Result.match(/\w+/)[0]}='${result}'`);
+            const regex = new RegExp(`${JSON.stringify(stage.From)}`, "g");
+            result = string.replace(regex, stage.To);
+            eval(`${stage.Result.match(/\w+/)[0]}=${JSON.stringify(result)}`);
             break;
           case "GET":
             let requestUrl = stage.Link;
@@ -47,7 +46,7 @@ eval(`Link = "http://www.b4ucast.me/crichd.php?player=desktop&live=bt1&vw=620&vh
             }
             var options = {
               uri: requestUrl,
-              headers:{}
+              headers: {}
             };
             let headers = eval(stage.Headers.match(/\w+/)[0]);
             headers = headers.split("::");
@@ -65,7 +64,20 @@ eval(`Link = "http://www.b4ucast.me/crichd.php?player=desktop&live=bt1&vw=620&vh
               });
             break;
           case "MATCH":
-
+            let matchString = stage.Target;
+            if (stage.Target.match(/^\$\w+$/)) {
+              matchString = eval(stage.Target.match(/\w+/)[0]);
+            }
+            const matchRegex = new RegExp(`${stage.String}`, "g");
+            if (matchString.match(matchRegex)) result = matchString.match(matchRegex)[0];
+            else result = stage.Default;
+            // if(stage.Result.match(/\w+/)[0]==="function"){
+            //   eval(`${stage.Result.match(/\w+/)[0]} ${JSON.stringify(result)}`);
+            // } else
+            eval(`${stage.Result.match(/\w+/)[0]}=${JSON.stringify(result)}`);
+            break;
+          case "FINAL":
+            console.log(eval(stage.Result.match(/\w+/)[0]));
             break;
         }
       }
