@@ -1,0 +1,5176 @@
+{
+  "Version": "1.00",
+  "Rules": [
+    {
+      "Match": "janjua",
+      "Name": "janjuaplayer Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"",
+            "link=\\\"",
+            "$Link",
+            "\\\";sp=link.split(\\\"__requestHeader=\\\");sp[0]\")"
+          ],
+          "Result": "$str_Link"
+        },
+        {
+          "Id": 2,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"",
+            "link=\\\"",
+            "$Link",
+            "\\\";sp=link.split(\\\"__requestHeader=\\\");sp[1]\")"
+          ],
+          "Result": "$str_Header"
+        },
+        {
+          "Id": 3,
+          "Action": "EVAL",
+          "String": "$str_Link",
+          "Result": "$Link"
+        },
+        {
+          "Id": 4,
+          "Action": "EVAL",
+          "String": "$str_Header",
+          "Result": "$Headers"
+        },
+        {
+          "Id": 5,
+          "Action": "REPLACE",
+          "In": "$Link",
+          "From": " ",
+          "To": "",
+          "Result": "$Link"
+        },
+        {
+          "Id": 6,
+          "Action": "REPLACE",
+          "In": "$Headers",
+          "From": " ",
+          "To": "",
+          "Result": "$Headers"
+        },
+        {
+          "Id": 7,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "$Headers",
+          "Result": "$Res"
+        },
+        {
+          "Id": 8,
+          "Action": "MATCH",
+          "String": "(?<=enableVideo\\(\")([^\"]*)(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$pk"
+        },
+        {
+          "Id": 11,
+          "Action": "GET",
+          "Link": "https://janjua.pw/resources/scripts/newjanjua.js",
+          "Result": "$pk_js"
+        },
+        {
+          "Id": 9,
+          "Action": "MATCH",
+          "String": "function enableVideo(?:[^\\}]*)\\}",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$pk_js",
+          "Result": "$pk_func"
+        },
+        {
+          "Id": 1,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"",
+            "pk=\\\"",
+            "$pk",
+            "\\\";",
+            "$pk_func",
+            "pk = enableVideo(pk);pk\")"
+          ],
+          "Result": "$pk"
+        },
+        {
+          "Id": 3,
+          "Action": "EVAL",
+          "String": "$pk",
+          "Result": "$pk"
+        },
+        {
+          "Id": 9,
+          "Action": "MATCH",
+          "String": "\"http(?:[^=]*?)m3u8(?:[^;]*?)\"",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 10,
+          "Action": "MATCH",
+          "String": "http(?:[^ ]*?)loadbalancer(?:[^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$loadbalancer"
+        },
+        {
+          "Id": 11,
+          "Action": "GET",
+          "Link": "$loadbalancer",
+          "Result": "$balancer"
+        },
+        {
+          "Id": 12,
+          "Action": "MATCH",
+          "String": "(?<=redirect=)(?:.*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$balancer",
+          "Result": "$ip"
+        },
+        {
+          "Id": 13,
+          "Action": "CONCAT",
+          "Targets": [
+            "\"",
+            "$ip",
+            "\""
+          ],
+          "Result": "$ip"
+        },
+        {
+          "Id": 14,
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": " ea ",
+          "To": "$ip",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 15,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval('",
+            "$eval_link",
+            "')"
+          ],
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 16,
+          "Action": "EVAL",
+          "String": "$eval_link",
+          "Result": "$result"
+        },
+        {
+          "Id": 17,
+          "Action": "CONCAT",
+          "Targets": [
+            "$result",
+            "$pk"
+          ],
+          "Result": "$result"
+        },
+        {
+          "Id": 18,
+          "Action": "CONCAT",
+          "Targets": [
+            "$result",
+            " engineOptions=headers::Referer: ",
+            "$Link",
+            "::user_agent::Safari/9.0"
+          ],
+          "Result": "$result"
+        },
+        {
+          "Id": 19,
+          "Action": "FINAL",
+          "Result": "$result"
+        }
+      ]
+    },
+    {
+      "Match": "liveonlinetv247",
+      "Name": "liveonlinetv247 Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "GET",
+          "Link": "$Link",
+          "Result": "$Res"
+        },
+        {
+          "Id": 2,
+          "Action": "REPLACE",
+          "In": "$Res",
+          "From": "var ",
+          "To": "\\var ",
+          "Result": "$Res"
+        },
+        {
+          "Id": 3,
+          "Action": "MATCH",
+          "String": "var(?:[^\\\\]*)\"\"(?:.*)forEach(?:.*)\\} \\);",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$res1"
+        },
+        {
+          "Id": 2,
+          "Action": "REPLACE",
+          "In": "$res1",
+          "From": "\\var ",
+          "To": "var ",
+          "Result": "$res1"
+        },
+        {
+          "Id": 4,
+          "Action": "MATCH",
+          "String": "(?<=var)(?:[^a-zA-Z]*)([a-zA-Z]*)",
+          "MatchId": "0",
+          "GroupId": "1",
+          "Target": "$res1",
+          "Result": "$res2"
+        },
+        {
+          "Id": 5,
+          "Action": "CONCAT",
+          "Targets": [
+            "$res1",
+            "$res2",
+            ";"
+          ],
+          "Result": "$res3"
+        },
+        {
+          "Id": 6,
+          "Action": "REPLACE",
+          "In": "$res3",
+          "From": "\\n",
+          "To": "",
+          "Result": "$res4"
+        },
+        {
+          "Id": 7,
+          "Action": "REPLACE",
+          "In": "$res4",
+          "From": "\\r",
+          "To": "",
+          "Result": "$res4"
+        },
+        {
+          "Id": 8,
+          "Action": "EVAL",
+          "String": "$res4",
+          "Result": "$res5"
+        },
+        {
+          "Id": 9,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)m3u8(?:[^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$res5",
+          "Result": "$result"
+        },
+        {
+          "Id": 10,
+          "Action": "CONCAT",
+          "Targets": [
+            "$result",
+            " engineOptions=headers::Referer:",
+            "$Link",
+            "::user_agent::Safari/9.0"
+          ],
+          "Result": "$result"
+        },
+        {
+          "Id": 11,
+          "Action": "FINAL",
+          "Result": "$result"
+        }
+      ]
+    },
+    {
+      "Match": "olweb.tv",
+      "Name": "olweb.tv Parser",
+      "Stages": [
+        {
+          "Id": 2,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"",
+            "link=\\\"",
+            "$Link",
+            "\\\";sp=link.split(\\\"__requestHeader=\\\");sp[0]\")"
+          ],
+          "Result": "$str_Link"
+        },
+        {
+          "Id": 3,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"",
+            "link=\\\"",
+            "$Link",
+            "\\\";sp=link.split(\\\"__requestHeader=\\\");sp[1]\")"
+          ],
+          "Result": "$str_Header"
+        },
+        {
+          "Id": 4,
+          "Action": "EVAL",
+          "String": "$str_Link",
+          "Result": "$Link"
+        },
+        {
+          "Id": 5,
+          "Action": "EVAL",
+          "String": "$str_Header",
+          "Result": "$Headers"
+        },
+        {
+          "Id": 6,
+          "Action": "REPLACE",
+          "In": "$Link",
+          "From": " ",
+          "To": "",
+          "Result": "$Link"
+        },
+        {
+          "Id": 7,
+          "Action": "REPLACE",
+          "In": "$Headers",
+          "From": " ",
+          "To": "",
+          "Result": "$Headers"
+        },
+        {
+          "Id": 8,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "$Headers",
+          "Result": "$Res"
+        },
+        {
+          "Id": 9,
+          "Action": "MATCH",
+          "String": "stream(?:[^;]*)token(?:[^;]*);",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$res2"
+        },
+        {
+          "Id": 11,
+          "Action": "REPLACE",
+          "In": "$res2",
+          "From": " ",
+          "To": "",
+          "Result": "$res2"
+        },
+        {
+          "Id": 12,
+          "Action": "MATCH",
+          "String": "(?<=\\+)([a-zA-Z0-9_]+)(?:[\\W]*)([a-zA-Z0-9_]+)(?:[\\W]*)([a-zA-Z0-9_]+)(?:[\\W]*)([a-zA-Z0-9_]+)(?=[\\W])",
+          "MatchId": "0",
+          "GroupId": "1",
+          "Target": "$res2",
+          "Result": "$para1"
+        },
+        {
+          "Id": 13,
+          "Action": "MATCH",
+          "String": "(?<=\\+)([a-zA-Z0-9_]+)(?:[\\W]*)([a-zA-Z0-9_]+)(?:[\\W]*)([a-zA-Z0-9_]+)(?:[\\W]*)([a-zA-Z0-9_]+)(?=[\\W])",
+          "MatchId": "0",
+          "GroupId": "2",
+          "Default": "@",
+          "Target": "$res2",
+          "Result": "$para2"
+        },
+        {
+          "Id": 14,
+          "Action": "MATCH",
+          "String": "(?<=\\+)([a-zA-Z0-9_]+)(?:[\\W]*)([a-zA-Z0-9_]+)(?:[\\W]*)([a-zA-Z0-9_]+)(?:[\\W]*)([a-zA-Z0-9_]+)(?=[\\W])",
+          "MatchId": "0",
+          "GroupId": "4",
+          "Default": "@",
+          "Target": "$res2",
+          "Result": "$para3"
+        },
+        {
+          "Id": 15,
+          "Action": "CONCAT",
+          "Targets": [
+            "var ",
+            "$para1",
+            "(?:[^;]*);"
+          ],
+          "Result": "$para1"
+        },
+        {
+          "Id": 16,
+          "Action": "MATCH",
+          "String": "$para1",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "",
+          "Target": "$Res",
+          "Result": "$para1"
+        },
+        {
+          "Id": 17,
+          "Action": "CONCAT",
+          "Targets": [
+            "var ",
+            "$para2",
+            "(?:[^;]*);"
+          ],
+          "Result": "$para2"
+        },
+        {
+          "Id": 18,
+          "Action": "MATCH",
+          "String": "$para2",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "",
+          "Target": "$Res",
+          "Result": "$para2"
+        },
+        {
+          "Id": 19,
+          "Action": "CONCAT",
+          "Targets": [
+            "var ",
+            "$para3",
+            "(?:[^;]*);"
+          ],
+          "Result": "$para3"
+        },
+        {
+          "Id": 20,
+          "Action": "MATCH",
+          "String": "$para3",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "",
+          "Target": "$Res",
+          "Result": "$para3"
+        },
+        {
+          "Id": 21,
+          "Action": "MATCH",
+          "String": "(?:[a-zA-Z0-9_]+)(?=;)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "",
+          "Target": "$para3",
+          "Result": "$para4"
+        },
+        {
+          "Id": 22,
+          "Action": "CONCAT",
+          "Targets": [
+            "var ",
+            "$para4",
+            "(?:[^;]*);"
+          ],
+          "Result": "$para4"
+        },
+        {
+          "Id": 23,
+          "Action": "MATCH",
+          "String": "$para4",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "",
+          "Target": "$Res",
+          "Result": "$para4"
+        },
+        {
+          "Id": 24,
+          "Action": "CONCAT",
+          "Targets": [
+            "$para4",
+            "$para1",
+            "$para2",
+            "$para3",
+            "var ",
+            "$res2",
+            "stream;"
+          ],
+          "Result": "$res2"
+        },
+        {
+          "Id": 25,
+          "Action": "EVAL",
+          "String": "$res2",
+          "Result": "$result"
+        },
+        {
+          "Id": 26,
+          "Action": "CONCAT",
+          "Targets": [
+            "$result",
+            " engineOptions=headers::Referer:",
+            "$Link",
+            "::user_agent::Safari/9.0"
+          ],
+          "Result": "$result"
+        },
+        {
+          "Id": 27,
+          "Action": "FINAL",
+          "Result": "$result"
+        }
+      ]
+    },
+    {
+      "Match": "123stream",
+      "Name": "123stream Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "MATCH",
+          "String": "(?<=\\/)(?:\\d\\d\\d\\d\\d)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Link",
+          "Result": "$id_channel"
+        },
+        {
+          "Id": 2,
+          "Action": "CONCAT",
+          "Targets": [
+            "https://stream.123stream.io/embedplayer_123channel.php?width=653&height=370&channel=",
+            "$id_channel"
+          ],
+          "Result": "$Link"
+        },
+        {
+          "Id": 3,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "Referer::https://123stream.io/",
+          "Result": "$Res"
+        },
+        {
+          "Id": 9,
+          "Action": "REPLACE",
+          "In": "$Res",
+          "From": "'",
+          "To": "\"",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 10,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)m3u8(?:[^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res1",
+          "Result": "$result"
+        },
+        {
+          "Id": 11,
+          "Action": "MATCH",
+          "String": "function\\(p,a,c,k,e,d\\)(?:.*)\\{\\}\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "'@'",
+          "Target": "$Res",
+          "Result": "$code"
+        },
+        {
+          "Id": 12,
+          "Action": "REPLACE",
+          "In": "$code",
+          "From": "\\",
+          "To": "\\\\",
+          "Result": "$code"
+        },
+        {
+          "Id": 13,
+          "Action": "REPLACE",
+          "In": "$code",
+          "From": "\"",
+          "To": "\\\"",
+          "Result": "$code"
+        },
+        {
+          "Id": 14,
+          "Action": "CONCAT",
+          "Targets": [
+            "var code;var env = {eval: function (c) {code = c;}};eval(\"with(env) {\" + \"eval(",
+            "$code",
+            ")\" + \"}\"); code;"
+          ],
+          "Result": "$code"
+        },
+        {
+          "Id": 15,
+          "Action": "EVAL",
+          "String": "$code",
+          "Result": "$out_code"
+        },
+        {
+          "Id": 16,
+          "Action": "REPLACE",
+          "In": "$out_code",
+          "From": "'",
+          "To": "\"",
+          "Result": "$out_code"
+        },
+        {
+          "Id": 17,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)m3u8(?:[^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "$result",
+          "Target": "$out_code",
+          "Result": "$result"
+        },
+        {
+          "Id": 18,
+          "Action": "MATCH",
+          "String": "function(?:[^\\}]*)\"m\",\"3\",\"u\",\"8\"(?:[^\\}]*?)\\}",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$function"
+        },
+        {
+          "Id": 19,
+          "Action": "MATCH",
+          "String": "(?<=function)(?:.*?)\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$func_name"
+        },
+        {
+          "Id": 20,
+          "Action": "MATCH",
+          "String": "(?<=document\\.getElementById\\(\")([^\"]*)(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$Res5"
+        },
+        {
+          "Id": 21,
+          "Action": "CONCAT",
+          "Targets": [
+            "(?<=id=",
+            "$Res5",
+            ">)([^<]*)(?=<)"
+          ],
+          "Result": "$Res6"
+        },
+        {
+          "Id": 22,
+          "Action": "MATCH",
+          "String": "$Res6",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$Res7"
+        },
+        {
+          "Id": 23,
+          "Action": "CONCAT",
+          "Targets": [
+            "\"",
+            "$Res7",
+            "\")"
+          ],
+          "Result": "$Res7"
+        },
+        {
+          "Id": 24,
+          "Action": "MATCH",
+          "String": "document.getElementById(.*)innerHTML\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$Res8"
+        },
+        {
+          "Id": 25,
+          "Action": "REPLACE",
+          "In": "$function",
+          "From": "$Res8",
+          "To": "$Res7",
+          "Result": "$function"
+        },
+        {
+          "Id": 26,
+          "Action": "MATCH",
+          "String": "(?<=\\+ )(.*)(?=.join)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$var_name"
+        },
+        {
+          "Id": 27,
+          "Action": "CONCAT",
+          "Targets": [
+            "var ",
+            "$var_name",
+            "(?:[^;]*);"
+          ],
+          "Result": "$var_regex"
+        },
+        {
+          "Id": 28,
+          "Action": "MATCH",
+          "String": "$var_regex",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$var"
+        },
+        {
+          "Id": 29,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval('",
+            "$var",
+            "$function",
+            "$func_name",
+            ";",
+            "')"
+          ],
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 30,
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": "\r",
+          "To": "",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 31,
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": "\n",
+          "To": "",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 32,
+          "Action": "EVAL",
+          "String": "$eval_link",
+          "Result": "$result1"
+        },
+        {
+          "Id": 33,
+          "Action": "MATCH",
+          "String": "\\/\\/(?:[^\"]*)m3u8(?:[^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "$result",
+          "Target": "$result1",
+          "Result": "$result"
+        },
+        {
+          "Id": 34,
+          "Action": "CONCAT",
+          "Targets": [
+            "https:",
+            "$result"
+          ],
+          "Result": "$result"
+        },
+        {
+          "Id": 35,
+          "Action": "CONCAT",
+          "Targets": [
+            "$result",
+            " engineOptions=headers::Referer:",
+            "$Link",
+            "::user_agent::Safari/9.0"
+          ],
+          "Result": "$result"
+        },
+        {
+          "Id": 36,
+          "Action": "FINAL",
+          "Result": "$result"
+        }
+      ]
+    },
+    {
+      "Match": "rocketmediaworld",
+      "Name": "rocketmediaworld Parser",
+      "Stages": [
+        {
+          "Id": 3,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "Referer::http://123stream.io/",
+          "Result": "$Res"
+        },
+        {
+          "Id": 9,
+          "Action": "REPLACE",
+          "In": "$Res",
+          "From": "'",
+          "To": "\"",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 10,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)m3u8(?:[^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res1",
+          "Result": "$result"
+        },
+        {
+          "Id": 35,
+          "Action": "CONCAT",
+          "Targets": [
+            "$result",
+            " engineOptions=headers::Referer:",
+            "$Link",
+            "::user_agent::Safari/9.0"
+          ],
+          "Result": "$result"
+        },
+        {
+          "Id": 36,
+          "Action": "FINAL",
+          "Result": "$result"
+        }
+      ]
+    },
+    {
+      "Match": "ustvgo",
+      "Name": "ustvgo Parser",
+      "Stages": [
+        {
+          "Id": 3,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "Referer::http://ustvgo.tv/",
+          "Result": "$Res"
+        },
+        {
+          "Id": 9,
+          "Action": "REPLACE",
+          "In": "$Res",
+          "From": "'",
+          "To": "\"",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 10,
+          "Action": "MATCH",
+          "String": "http(?:[^\\']*)m3u8(?:[^\\']*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res1",
+          "Result": "$result"
+        },
+        {
+          "Id": 35,
+          "Action": "CONCAT",
+          "Targets": [
+            "$result",
+            " engineOptions=headers::Referer:",
+            "$Link",
+            "::user_agent::Safari/9.0"
+          ],
+          "Result": "$result"
+        },
+        {
+          "Id": 36,
+          "Action": "FINAL",
+          "Result": "$result"
+        }
+      ]
+    },
+    {
+      "Match": "123tv",
+      "Name": "123tvgo Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "Referer::http://123tvnow.com/",
+          "Result": "$Res"
+        },
+        {
+          "Id": 2,
+          "Action": "MATCH",
+          "String": "atob(?:[^;]*);",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$var"
+        },
+        {
+          "Id": 3,
+          "Action": "MATCH",
+          "String": "(?<=__\\+=')(?:.*)json(?:[^;]*)(?=')",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$json"
+        },
+        {
+          "Id": 4,
+          "Action": "REPLACE",
+          "In": "$var",
+          "From": "'",
+          "To": "\\'",
+          "Result": "$var"
+        },
+        {
+          "Id": 5,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval('function atob (s){var e = {}, r=\\\"\\\",i, k, v = [], w = String.fromCharCode;var n = [[65, 91], [97, 123], [48, 58], [43, 44], [47, 48]];for (z in n) {for (i = n[z][0]; i < n[z][1]; i++) {v.push(w(i)); }} for (i = 0; i < 64; i++)  {e[v[i]] = i;}for (i = 0; i < s.length; i+=72){var b = 0, c, x, l = 0, o = s.substring(i, i+72); for (x = 0; x < o.length; x++){c = e[o.charAt(x)];b = (b << 6) + c; l += 6; while (l >= 8){   r += w((b >>> (l -= 8)) % 256); }}} return r;};var __=",
+            "$var",
+            "__;')"
+          ],
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 6,
+          "Action": "EVAL",
+          "String": "$eval_link",
+          "Result": "$__"
+        },
+        {
+          "Id": 7,
+          "Action": "MATCH",
+          "String": "http(?:.*)m3u8",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$__",
+          "Result": "$__"
+        },
+        {
+          "Id": 8,
+          "Action": "CONCAT",
+          "Targets": [
+            "$__",
+            "$json"
+          ],
+          "Result": "$Res2"
+        },
+        {
+          "Id": 9,
+          "Action": "GET",
+          "Link": "$Res2",
+          "Headers": "Referer::http://123tvnow.com/",
+          "Result": "$Res"
+        },
+        {
+          "Id": 10,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)m3u8(?:[^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$result"
+        },
+        {
+          "Id": 11,
+          "Action": "REPLACE",
+          "In": "$result",
+          "From": "\\/",
+          "To": "/",
+          "Result": "$result"
+        },
+        {
+          "Id": 12,
+          "Action": "CONCAT",
+          "Targets": [
+            "$result",
+            " engineOptions=headers::Referer:",
+            "$Link",
+            "::user_agent::Safari/9.0"
+          ],
+          "Result": "$result"
+        },
+        {
+          "Id": 13,
+          "Action": "FINAL",
+          "Result": "$result"
+        }
+      ]
+    },
+    {
+      "Match": "streamlive.to",
+      "Name": "StreamLive Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "MATCH",
+          "String": "(?<=\\/)(?:\\d\\d\\d\\d\\d)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Link",
+          "Result": "$id_channel"
+        },
+        {
+          "Id": 2,
+          "Action": "CONCAT",
+          "Targets": [
+            "https://www.streamlive.to/embedplayer.php?channel=",
+            "$id_channel"
+          ],
+          "Result": "$Link"
+        },
+        {
+          "Id": 3,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "Referer::https://www.streamlive.to/",
+          "Result": "$Res"
+        },
+        {
+          "Id": 18,
+          "Action": "MATCH",
+          "String": "function(?:[^\\}]*)\"m\",\"3\",\"u\",\"8\"(?:[^\\}]*?)\\}",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$function"
+        },
+        {
+          "Id": 19,
+          "Action": "MATCH",
+          "String": "(?<=function)(?:.*?)\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$func_name"
+        },
+        {
+          "Id": 20,
+          "Action": "MATCH",
+          "String": "(?<=document\\.getElementById\\(\")([^\"]*)(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$Res5"
+        },
+        {
+          "Id": 21,
+          "Action": "CONCAT",
+          "Targets": [
+            "(?<=id=",
+            "$Res5",
+            ">)([^<]*)(?=<)"
+          ],
+          "Result": "$Res6"
+        },
+        {
+          "Id": 22,
+          "Action": "MATCH",
+          "String": "$Res6",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$Res7"
+        },
+        {
+          "Id": 23,
+          "Action": "CONCAT",
+          "Targets": [
+            "\"",
+            "$Res7",
+            "\")"
+          ],
+          "Result": "$Res7"
+        },
+        {
+          "Id": 24,
+          "Action": "MATCH",
+          "String": "document.getElementById(.*)innerHTML\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$Res8"
+        },
+        {
+          "Id": 25,
+          "Action": "REPLACE",
+          "In": "$function",
+          "From": "$Res8",
+          "To": "$Res7",
+          "Result": "$function"
+        },
+        {
+          "Id": 26,
+          "Action": "MATCH",
+          "String": "(?<=\\+ )(.*)(?=.join)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$var_name"
+        },
+        {
+          "Id": 27,
+          "Action": "CONCAT",
+          "Targets": [
+            "var ",
+            "$var_name",
+            "(?:[^;]*);"
+          ],
+          "Result": "$var_regex"
+        },
+        {
+          "Id": 28,
+          "Action": "MATCH",
+          "String": "$var_regex",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$var"
+        },
+        {
+          "Id": 29,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval('",
+            "$var",
+            "$function",
+            "$func_name",
+            ";",
+            "')"
+          ],
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 30,
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": "\r",
+          "To": "",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 31,
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": "\n",
+          "To": "",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 32,
+          "Action": "EVAL",
+          "String": "$eval_link",
+          "Result": "$result1"
+        },
+        {
+          "Id": 34,
+          "Action": "CONCAT",
+          "Targets": [
+            "https:",
+            "$result1"
+          ],
+          "Result": "$result"
+        },
+        {
+          "Id": 35,
+          "Action": "CONCAT",
+          "Targets": [
+            "$result",
+            " engineOptions=headers::Referer:",
+            "$Link",
+            "::user_agent::Mozilla/5.0"
+          ],
+          "Result": "$result"
+        },
+        {
+          "Id": 36,
+          "Action": "FINAL",
+          "Result": "$result"
+        }
+      ]
+    },
+    {
+      "Match": "livenewsmag",
+      "Name": "livenewsmag Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "Referer::http://www.livenewsmag.com/",
+          "Result": "$Res"
+        },
+        {
+          "Id": 2,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)m3u8(?:[^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$result"
+        },
+        {
+          "Id": 3,
+          "Action": "CONCAT",
+          "Targets": [
+            "$result",
+            " engineOptions=headers::Referer:",
+            "$Link",
+            "::user_agent::Mozilla/5.0"
+          ],
+          "Result": "$result"
+        },
+        {
+          "Id": 4,
+          "Action": "FINAL",
+          "Result": "$result"
+        }
+      ]
+    },
+    {
+      "Match": "usnewslive",
+      "Name": "usnewslive Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "Referer::http://usnewslive.tv/",
+          "Result": "$Res"
+        },
+        {
+          "Id": 2,
+          "Action": "MATCH",
+          "String": "http(?:[^']*)m3u8(?:[^']*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$result"
+        },
+        {
+          "Id": 3,
+          "Action": "CONCAT",
+          "Targets": [
+            "$result",
+            " engineOptions=headers::Referer:",
+            "$Link",
+            "::user_agent::Mozilla/5.0"
+          ],
+          "Result": "$result"
+        },
+        {
+          "Id": 4,
+          "Action": "FINAL",
+          "Result": "$result"
+        }
+      ]
+    },
+    {
+      "Match": "gomostream.com",
+      "Name": "gomostream Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "MATCH",
+          "String": "(?<=\\/)(?:\\d\\d\\d\\d\\d)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Link",
+          "Result": "$id_channel"
+        },
+        {
+          "Id": 2,
+          "Action": "CONCAT",
+          "Targets": [
+            "Referer::",
+            "$Link"
+          ],
+          "Result": "$refer"
+        },
+        {
+          "Id": 3,
+          "Action": "CONCAT",
+          "Targets": [
+            "https://www.streamlive.to/embedplayer_putlive.php?channel=",
+            "$id_channel"
+          ],
+          "Result": "$Link"
+        },
+        {
+          "Id": 4,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "$refer",
+          "Result": "$Res"
+        },
+        {
+          "Id": 18,
+          "Action": "MATCH",
+          "String": "function(?:[^\\}]*)\"m\",\"3\",\"u\",\"8\"(?:[^\\}]*?)\\}",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$function"
+        },
+        {
+          "Id": 19,
+          "Action": "MATCH",
+          "String": "(?<=function)(?:.*?)\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$func_name"
+        },
+        {
+          "Id": 20,
+          "Action": "MATCH",
+          "String": "(?<=document\\.getElementById\\(\")([^\"]*)(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$Res5"
+        },
+        {
+          "Id": 21,
+          "Action": "CONCAT",
+          "Targets": [
+            "(?<=id=",
+            "$Res5",
+            ">)([^<]*)(?=<)"
+          ],
+          "Result": "$Res6"
+        },
+        {
+          "Id": 22,
+          "Action": "MATCH",
+          "String": "$Res6",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$Res7"
+        },
+        {
+          "Id": 23,
+          "Action": "CONCAT",
+          "Targets": [
+            "\"",
+            "$Res7",
+            "\")"
+          ],
+          "Result": "$Res7"
+        },
+        {
+          "Id": 24,
+          "Action": "MATCH",
+          "String": "document.getElementById(.*)innerHTML\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$Res8"
+        },
+        {
+          "Id": 25,
+          "Action": "REPLACE",
+          "In": "$function",
+          "From": "$Res8",
+          "To": "$Res7",
+          "Result": "$function"
+        },
+        {
+          "Id": 26,
+          "Action": "MATCH",
+          "String": "(?<=\\+ )(.*)(?=.join)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$var_name"
+        },
+        {
+          "Id": 27,
+          "Action": "CONCAT",
+          "Targets": [
+            "var ",
+            "$var_name",
+            "(?:[^;]*);"
+          ],
+          "Result": "$var_regex"
+        },
+        {
+          "Id": 28,
+          "Action": "MATCH",
+          "String": "$var_regex",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$var"
+        },
+        {
+          "Id": 29,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval('",
+            "$var",
+            "$function",
+            "$func_name",
+            ";",
+            "')"
+          ],
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 30,
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": "\r",
+          "To": "",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 31,
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": "\n",
+          "To": "",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 32,
+          "Action": "EVAL",
+          "String": "$eval_link",
+          "Result": "$result1"
+        },
+        {
+          "Id": 34,
+          "Action": "CONCAT",
+          "Targets": [
+            "https:",
+            "$result1"
+          ],
+          "Result": "$result"
+        },
+        {
+          "Id": 35,
+          "Action": "CONCAT",
+          "Targets": [
+            "$result",
+            " engineOptions=headers::Referer:",
+            "$Link",
+            "::user_agent::Mozilla/5.0"
+          ],
+          "Result": "$result"
+        },
+        {
+          "Id": 36,
+          "Action": "REPLACE",
+          "In": "$result",
+          "From": "1.streamlive.to",
+          "To": "nlcache6.streamlive.to",
+          "Result": "$result"
+        },
+        {
+          "Id": 37,
+          "Action": "FINAL",
+          "Result": "$result"
+        }
+      ]
+    },
+    {
+      "Match": "wstream.to",
+      "Name": "WStream Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "CONCAT",
+          "Targets": [
+            "$Link",
+            "__requestHeader=User-Agent::Safari/537.36::Accept-Encoding::*"
+          ],
+          "Result": "$o_Link"
+        },
+        {
+          "Id": 2,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"",
+            "link=\\\"",
+            "$o_Link",
+            "\\\";sp=link.split(\\\"__requestHeader=\\\");sp[0]\")"
+          ],
+          "Result": "$str_Link"
+        },
+        {
+          "Id": 3,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"",
+            "link=\\\"",
+            "$o_Link",
+            "\\\";sp=link.split(\\\"__requestHeader=\\\");sp[1]\")"
+          ],
+          "Result": "$str_Header"
+        },
+        {
+          "Id": 4,
+          "Action": "EVAL",
+          "String": "$str_Link",
+          "Result": "$Link"
+        },
+        {
+          "Id": 5,
+          "Action": "EVAL",
+          "String": "$str_Header",
+          "Result": "$Headers"
+        },
+        {
+          "Id": 3,
+          "Action": "CONCAT",
+          "Targets": [
+            "$Headers",
+            "::content-type::text/html; charset=utf-8"
+          ],
+          "Result": "$Headers"
+        },
+        {
+          "Id": 6,
+          "Action": "REPLACE",
+          "In": "$Link",
+          "From": " ",
+          "To": "",
+          "Result": "$Link"
+        },
+        {
+          "Id": 7,
+          "Action": "REPLACE",
+          "In": "$Headers",
+          "From": " ",
+          "To": "",
+          "Result": "$Headers"
+        },
+        {
+          "Id": 8,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "$Headers",
+          "Result": "$Res"
+        },
+        {
+          "Id": 9,
+          "Action": "REPLACE",
+          "In": "$Res",
+          "From": "'",
+          "To": "\"",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 10,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)m3u8(?:[^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res1",
+          "Result": "$result"
+        },
+        {
+          "Id": 11,
+          "Action": "MATCH",
+          "String": "function\\(p,a,c,k,e,d\\)(?:[^\\n]*)\\{\\}\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "'@'",
+          "Target": "$Res",
+          "Result": "$code"
+        },
+        {
+          "Id": 12,
+          "Action": "REPLACE",
+          "In": "$code",
+          "From": "\\",
+          "To": "\\\\",
+          "Result": "$code"
+        },
+        {
+          "Id": 13,
+          "Action": "REPLACE",
+          "In": "$code",
+          "From": "\"",
+          "To": "\\\"",
+          "Result": "$code"
+        },
+        {
+          "Id": 14,
+          "Action": "CONCAT",
+          "Targets": [
+            "var code;var env = {eval: function (c) {code = c;}};eval(\"with(env) {\" + \"eval(",
+            "$code",
+            ")\" + \"}\"); code;"
+          ],
+          "Result": "$code"
+        },
+        {
+          "Id": 15,
+          "Action": "EVAL",
+          "String": "$code",
+          "Result": "$out_code"
+        },
+        {
+          "Id": 16,
+          "Action": "REPLACE",
+          "In": "$out_code",
+          "From": "'",
+          "To": "\"",
+          "Result": "$out_code"
+        },
+        {
+          "Id": 17,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)m3u8(?:[^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "$result",
+          "Target": "$out_code",
+          "Result": "$result"
+        },
+        {
+          "Id": 18,
+          "Action": "FINAL",
+          "Result": "$result"
+        }
+      ]
+    },
+    {
+      "Match": "wlive.tv",
+      "Name": "Vlive Parser",
+      "Stages": [
+        {
+          "Id": 6,
+          "Action": "REPLACE",
+          "In": "$Link",
+          "From": "www.wlive.tv/crichd.php",
+          "To": "www.vlive.pw/embed.php",
+          "Result": "$Link"
+        },
+        {
+          "Id": 1,
+          "Action": "CONCAT",
+          "Targets": [
+            "$Link",
+            "__requestHeader=User-Agent::Safari/537.36::Accept-Encoding::*"
+          ],
+          "Result": "$o_Link"
+        },
+        {
+          "Id": 2,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"",
+            "link=\\\"",
+            "$o_Link",
+            "\\\";sp=link.split(\\\"__requestHeader=\\\");sp[0]\")"
+          ],
+          "Result": "$str_Link"
+        },
+        {
+          "Id": 3,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"",
+            "link=\\\"",
+            "$o_Link",
+            "\\\";sp=link.split(\\\"__requestHeader=\\\");sp[1]\")"
+          ],
+          "Result": "$str_Header"
+        },
+        {
+          "Id": 4,
+          "Action": "EVAL",
+          "String": "$str_Link",
+          "Result": "$Link"
+        },
+        {
+          "Id": 5,
+          "Action": "EVAL",
+          "String": "$str_Header",
+          "Result": "$Headers"
+        },
+        {
+          "Id": 3,
+          "Action": "CONCAT",
+          "Targets": [
+            "$Headers",
+            "::content-type::text/html; charset=utf-8"
+          ],
+          "Result": "$Headers"
+        },
+        {
+          "Id": 6,
+          "Action": "REPLACE",
+          "In": "$Link",
+          "From": " ",
+          "To": "",
+          "Result": "$Link"
+        },
+        {
+          "Id": 7,
+          "Action": "REPLACE",
+          "In": "$Headers",
+          "From": " ",
+          "To": "",
+          "Result": "$Headers"
+        },
+        {
+          "Id": 8,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "$Headers",
+          "Result": "$Res"
+        },
+        {
+          "Id": 9,
+          "Action": "REPLACE",
+          "In": "$Res",
+          "From": "'",
+          "To": "\"",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 10,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)m3u8(?:[^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res1",
+          "Result": "$result"
+        },
+        {
+          "Id": 11,
+          "Action": "MATCH",
+          "String": "function\\(p,a,c,k,e,d\\)(?:.*)\\{\\}\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "'@'",
+          "Target": "$Res",
+          "Result": "$code"
+        },
+        {
+          "Id": 12,
+          "Action": "REPLACE",
+          "In": "$code",
+          "From": "\\",
+          "To": "\\\\",
+          "Result": "$code"
+        },
+        {
+          "Id": 13,
+          "Action": "REPLACE",
+          "In": "$code",
+          "From": "\"",
+          "To": "\\\"",
+          "Result": "$code"
+        },
+        {
+          "Id": 14,
+          "Action": "CONCAT",
+          "Targets": [
+            "var code;var env = {eval: function (c) {code = c;}};eval(\"with(env) {\" + \"eval(",
+            "$code",
+            ")\" + \"}\"); code;"
+          ],
+          "Result": "$code"
+        },
+        {
+          "Id": 15,
+          "Action": "EVAL",
+          "String": "$code",
+          "Result": "$out_code"
+        },
+        {
+          "Id": 16,
+          "Action": "REPLACE",
+          "In": "$out_code",
+          "From": "'",
+          "To": "\"",
+          "Result": "$out_code"
+        },
+        {
+          "Id": 17,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)m3u8(?:[^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "$result",
+          "Target": "$out_code",
+          "Result": "$result"
+        },
+        {
+          "Id": 18,
+          "Action": "MATCH",
+          "String": "function(?:[^\\}]*)\"m\",\"3\",\"u\",\"8\"(?:[^\\}]*?)\\}",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$function"
+        },
+        {
+          "Id": 19,
+          "Action": "MATCH",
+          "String": "(?<=function)(?:.*?)\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$func_name"
+        },
+        {
+          "Id": 20,
+          "Action": "MATCH",
+          "String": "(?<=document\\.getElementById\\(\")([^\"]*)(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$Res5"
+        },
+        {
+          "Id": 21,
+          "Action": "CONCAT",
+          "Targets": [
+            "(?<=id=",
+            "$Res5",
+            ">)([^<]*)(?=<)"
+          ],
+          "Result": "$Res6"
+        },
+        {
+          "Id": 22,
+          "Action": "MATCH",
+          "String": "$Res6",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$Res7"
+        },
+        {
+          "Id": 23,
+          "Action": "CONCAT",
+          "Targets": [
+            "\"",
+            "$Res7",
+            "\")"
+          ],
+          "Result": "$Res7"
+        },
+        {
+          "Id": 24,
+          "Action": "MATCH",
+          "String": "document.getElementById(.*)innerHTML\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$Res8"
+        },
+        {
+          "Id": 25,
+          "Action": "REPLACE",
+          "In": "$function",
+          "From": "$Res8",
+          "To": "$Res7",
+          "Result": "$function"
+        },
+        {
+          "Id": 26,
+          "Action": "MATCH",
+          "String": "(?<=\\+ )(.*)(?=.join)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$var_name"
+        },
+        {
+          "Id": 27,
+          "Action": "CONCAT",
+          "Targets": [
+            "var ",
+            "$var_name",
+            "(?:[^;]*);"
+          ],
+          "Result": "$var_regex"
+        },
+        {
+          "Id": 28,
+          "Action": "MATCH",
+          "String": "$var_regex",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$var"
+        },
+        {
+          "Id": 29,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval('",
+            "$var",
+            "$function",
+            "$func_name",
+            ";",
+            "')"
+          ],
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 30,
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": "\r",
+          "To": "",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 31,
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": "\n",
+          "To": "",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 32,
+          "Action": "EVAL",
+          "String": "$eval_link",
+          "Result": "$result1"
+        },
+        {
+          "Id": 33,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)m3u8(?:[^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "$result1",
+          "Target": "$result1",
+          "Result": "$result"
+        },
+        {
+          "Id": 33,
+          "Action": "MATCH",
+          "String": "\\/tv\\/(?:.*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "$result",
+          "Target": "$result",
+          "Result": "$result"
+        },
+        {
+          "Id": 35,
+          "Action": "CONCAT",
+          "Targets": [
+            "http://tv.wlive.tv",
+            "$result",
+            " engineOptions=headers::Referer:",
+            "$Link",
+            "::user_agent::Mozilla/5.0"
+          ],
+          "Result": "$result"
+        },
+        {
+          "Id": 34,
+          "Action": "FINAL",
+          "Result": "$result"
+        }
+      ]
+    },
+    {
+      "Match": "jantv.live",
+      "Name": "Jantv Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "CONCAT",
+          "Targets": [
+            "$Link",
+            "__requestHeader=User-Agent::Safari/537.36::Accept-Encoding::*"
+          ],
+          "Result": "$o_Link"
+        },
+        {
+          "Id": 2,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"",
+            "link=\\\"",
+            "$o_Link",
+            "\\\";sp=link.split(\\\"__requestHeader=\\\");sp[0]\")"
+          ],
+          "Result": "$str_Link"
+        },
+        {
+          "Id": 3,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"",
+            "link=\\\"",
+            "$o_Link",
+            "\\\";sp=link.split(\\\"__requestHeader=\\\");sp[1]\")"
+          ],
+          "Result": "$str_Header"
+        },
+        {
+          "Id": 4,
+          "Action": "EVAL",
+          "String": "$str_Link",
+          "Result": "$Link"
+        },
+        {
+          "Id": 5,
+          "Action": "EVAL",
+          "String": "$str_Header",
+          "Result": "$Headers"
+        },
+        {
+          "Id": 3,
+          "Action": "CONCAT",
+          "Targets": [
+            "$Headers",
+            "::content-type::text/html; charset=utf-8"
+          ],
+          "Result": "$Headers"
+        },
+        {
+          "Id": 6,
+          "Action": "REPLACE",
+          "In": "$Link",
+          "From": " ",
+          "To": "",
+          "Result": "$Link"
+        },
+        {
+          "Id": 7,
+          "Action": "REPLACE",
+          "In": "$Headers",
+          "From": " ",
+          "To": "",
+          "Result": "$Headers"
+        },
+        {
+          "Id": 8,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "$Headers",
+          "Result": "$Res"
+        },
+        {
+          "Id": 9,
+          "Action": "REPLACE",
+          "In": "$Res",
+          "From": "'",
+          "To": "\"",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 10,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)m3u8(?:[^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res1",
+          "Result": "$result"
+        },
+        {
+          "Id": 11,
+          "Action": "MATCH",
+          "String": "function\\(p,a,c,k,e,d\\)(?:.*)\\{\\}\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "'@'",
+          "Target": "$Res",
+          "Result": "$code"
+        },
+        {
+          "Id": 12,
+          "Action": "REPLACE",
+          "In": "$code",
+          "From": "\\",
+          "To": "\\\\",
+          "Result": "$code"
+        },
+        {
+          "Id": 13,
+          "Action": "REPLACE",
+          "In": "$code",
+          "From": "\"",
+          "To": "\\\"",
+          "Result": "$code"
+        },
+        {
+          "Id": 14,
+          "Action": "CONCAT",
+          "Targets": [
+            "var code;var env = {eval: function (c) {code = c;}};eval(\"with(env) {\" + \"eval(",
+            "$code",
+            ")\" + \"}\"); code;"
+          ],
+          "Result": "$code"
+        },
+        {
+          "Id": 15,
+          "Action": "EVAL",
+          "String": "$code",
+          "Result": "$out_code"
+        },
+        {
+          "Id": 16,
+          "Action": "REPLACE",
+          "In": "$out_code",
+          "From": "'",
+          "To": "\"",
+          "Result": "$out_code"
+        },
+        {
+          "Id": 17,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)m3u8(?:[^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "$result",
+          "Target": "$out_code",
+          "Result": "$result"
+        },
+        {
+          "Id": 18,
+          "Action": "MATCH",
+          "String": "function(?:[^\\}]*)\"m\",\"3\",\"u\",\"8\"(?:[^\\}]*?)\\}",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$function"
+        },
+        {
+          "Id": 19,
+          "Action": "MATCH",
+          "String": "(?<=function)(?:.*?)\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$func_name"
+        },
+        {
+          "Id": 20,
+          "Action": "MATCH",
+          "String": "(?<=document\\.getElementById\\(\")([^\"]*)(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$Res5"
+        },
+        {
+          "Id": 21,
+          "Action": "CONCAT",
+          "Targets": [
+            "(?<=id=",
+            "$Res5",
+            ">)([^<]*)(?=<)"
+          ],
+          "Result": "$Res6"
+        },
+        {
+          "Id": 22,
+          "Action": "MATCH",
+          "String": "$Res6",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$Res7"
+        },
+        {
+          "Id": 23,
+          "Action": "CONCAT",
+          "Targets": [
+            "\"",
+            "$Res7",
+            "\")"
+          ],
+          "Result": "$Res7"
+        },
+        {
+          "Id": 24,
+          "Action": "MATCH",
+          "String": "document.getElementById(.*)innerHTML\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$Res8"
+        },
+        {
+          "Id": 25,
+          "Action": "REPLACE",
+          "In": "$function",
+          "From": "$Res8",
+          "To": "$Res7",
+          "Result": "$function"
+        },
+        {
+          "Id": 26,
+          "Action": "MATCH",
+          "String": "(?<=\\+ )(.*)(?=.join)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$var_name"
+        },
+        {
+          "Id": 27,
+          "Action": "CONCAT",
+          "Targets": [
+            "var ",
+            "$var_name",
+            "(?:[^;]*);"
+          ],
+          "Result": "$var_regex"
+        },
+        {
+          "Id": 28,
+          "Action": "MATCH",
+          "String": "$var_regex",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$var"
+        },
+        {
+          "Id": 29,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval('",
+            "$var",
+            "$function",
+            "$func_name",
+            ";",
+            "')"
+          ],
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 30,
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": "\r",
+          "To": "",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 31,
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": "\n",
+          "To": "",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 32,
+          "Action": "EVAL",
+          "String": "$eval_link",
+          "Result": "$result1"
+        },
+        {
+          "Id": 33,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)m3u8(?:[^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "$result1",
+          "Target": "$result1",
+          "Result": "$result"
+        },
+        {
+          "Id": 34,
+          "Action": "CONCAT",
+          "Targets": [
+            "http:",
+            "$result",
+            " engineOptions=headers::Referer:",
+            "$Link",
+            "::user_agent::Mozilla/5.0"
+          ],
+          "Result": "$result"
+        },
+        {
+          "Id": 35,
+          "Action": "FINAL",
+          "Result": "$result"
+        }
+      ]
+    },
+    {
+      "Match": "pkcast.com",
+      "Name": "pkcast Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "CONCAT",
+          "Targets": [
+            "$Link",
+            "__requestHeader=User-Agent::Safari/537.36::Accept-Encoding::*"
+          ],
+          "Result": "$o_Link"
+        },
+        {
+          "Id": 2,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"",
+            "link=\\\"",
+            "$o_Link",
+            "\\\";sp=link.split(\\\"__requestHeader=\\\");sp[0]\")"
+          ],
+          "Result": "$str_Link"
+        },
+        {
+          "Id": 3,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"",
+            "link=\\\"",
+            "$o_Link",
+            "\\\";sp=link.split(\\\"__requestHeader=\\\");sp[1]\")"
+          ],
+          "Result": "$str_Header"
+        },
+        {
+          "Id": 4,
+          "Action": "EVAL",
+          "String": "$str_Link",
+          "Result": "$Link"
+        },
+        {
+          "Id": 5,
+          "Action": "EVAL",
+          "String": "$str_Header",
+          "Result": "$Headers"
+        },
+        {
+          "Id": 3,
+          "Action": "CONCAT",
+          "Targets": [
+            "$Headers",
+            "::content-type::text/html; charset=utf-8"
+          ],
+          "Result": "$Headers"
+        },
+        {
+          "Id": 6,
+          "Action": "REPLACE",
+          "In": "$Link",
+          "From": " ",
+          "To": "",
+          "Result": "$Link"
+        },
+        {
+          "Id": 7,
+          "Action": "REPLACE",
+          "In": "$Headers",
+          "From": " ",
+          "To": "",
+          "Result": "$Headers"
+        },
+        {
+          "Id": 8,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "$Headers",
+          "Result": "$Res"
+        },
+        {
+          "Id": 9,
+          "Action": "REPLACE",
+          "In": "$Res",
+          "From": "'",
+          "To": "\"",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 10,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)m3u8(?:[^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res1",
+          "Result": "$result"
+        },
+        {
+          "Id": 11,
+          "Action": "MATCH",
+          "String": "function\\(p,a,c,k,e,d\\)(?:.*)\\{\\}\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "'@'",
+          "Target": "$Res",
+          "Result": "$code"
+        },
+        {
+          "Id": 12,
+          "Action": "REPLACE",
+          "In": "$code",
+          "From": "\\",
+          "To": "\\\\",
+          "Result": "$code"
+        },
+        {
+          "Id": 13,
+          "Action": "REPLACE",
+          "In": "$code",
+          "From": "\"",
+          "To": "\\\"",
+          "Result": "$code"
+        },
+        {
+          "Id": 14,
+          "Action": "CONCAT",
+          "Targets": [
+            "var code;var env = {eval: function (c) {code = c;}};eval(\"with(env) {\" + \"eval(",
+            "$code",
+            ")\" + \"}\"); code;"
+          ],
+          "Result": "$code"
+        },
+        {
+          "Id": 15,
+          "Action": "EVAL",
+          "String": "$code",
+          "Result": "$out_code"
+        },
+        {
+          "Id": 16,
+          "Action": "REPLACE",
+          "In": "$out_code",
+          "From": "'",
+          "To": "\"",
+          "Result": "$out_code"
+        },
+        {
+          "Id": 17,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)m3u8(?:[^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "$result",
+          "Target": "$out_code",
+          "Result": "$result"
+        },
+        {
+          "Id": 18,
+          "Action": "MATCH",
+          "String": "function(?:[^\\}]*)\"m\",\"3\",\"u\",\"8\"(?:[^\\}]*?)\\}",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$function"
+        },
+        {
+          "Id": 19,
+          "Action": "MATCH",
+          "String": "(?<=function)(?:.*?)\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$func_name"
+        },
+        {
+          "Id": 20,
+          "Action": "MATCH",
+          "String": "(?<=document\\.getElementById\\(\")([^\"]*)(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$Res5"
+        },
+        {
+          "Id": 21,
+          "Action": "CONCAT",
+          "Targets": [
+            "(?<=id=",
+            "$Res5",
+            ">)([^<]*)(?=<)"
+          ],
+          "Result": "$Res6"
+        },
+        {
+          "Id": 22,
+          "Action": "MATCH",
+          "String": "$Res6",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$Res7"
+        },
+        {
+          "Id": 23,
+          "Action": "CONCAT",
+          "Targets": [
+            "\"",
+            "$Res7",
+            "\")"
+          ],
+          "Result": "$Res7"
+        },
+        {
+          "Id": 24,
+          "Action": "MATCH",
+          "String": "document.getElementById(.*)innerHTML\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$Res8"
+        },
+        {
+          "Id": 25,
+          "Action": "REPLACE",
+          "In": "$function",
+          "From": "$Res8",
+          "To": "$Res7",
+          "Result": "$function"
+        },
+        {
+          "Id": 26,
+          "Action": "MATCH",
+          "String": "(?<=\\+ )(.*)(?=.join)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$var_name"
+        },
+        {
+          "Id": 27,
+          "Action": "CONCAT",
+          "Targets": [
+            "var ",
+            "$var_name",
+            "(?:[^;]*);"
+          ],
+          "Result": "$var_regex"
+        },
+        {
+          "Id": 28,
+          "Action": "MATCH",
+          "String": "$var_regex",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$var"
+        },
+        {
+          "Id": 29,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval('",
+            "$var",
+            "$function",
+            "$func_name",
+            ";",
+            "')"
+          ],
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 30,
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": "\r",
+          "To": "",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 31,
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": "\n",
+          "To": "",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 32,
+          "Action": "EVAL",
+          "String": "$eval_link",
+          "Result": "$result1"
+        },
+        {
+          "Id": 33,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)m3u8(?:[^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "$result1",
+          "Target": "$result1",
+          "Result": "$result"
+        },
+        {
+          "Id": 34,
+          "Action": "CONCAT",
+          "Targets": [
+            "http:",
+            "$result",
+            " engineOptions=headers::Referer:",
+            "$Link",
+            "::user_agent::Mozilla/5.0"
+          ],
+          "Result": "$result"
+        },
+        {
+          "Id": 35,
+          "Action": "FINAL",
+          "Result": "$result"
+        }
+      ]
+    },
+    {
+      "Match": "b4ucast",
+      "Name": "b4ucast Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "CONCAT",
+          "Targets": [
+            "$Link",
+            "__requestHeader=User-Agent::Safari/537.36::Accept-Encoding::*"
+          ],
+          "Result": "$o_Link"
+        },
+        {
+          "Id": 2,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"",
+            "link=\\\"",
+            "$o_Link",
+            "\\\";sp=link.split(\\\"__requestHeader=\\\");sp[0]\")"
+          ],
+          "Result": "$str_Link"
+        },
+        {
+          "Id": 3,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"",
+            "link=\\\"",
+            "$o_Link",
+            "\\\";sp=link.split(\\\"__requestHeader=\\\");sp[1]\")"
+          ],
+          "Result": "$str_Header"
+        },
+        {
+          "Id": 4,
+          "Action": "EVAL",
+          "String": "$str_Link",
+          "Result": "$Link"
+        },
+        {
+          "Id": 5,
+          "Action": "EVAL",
+          "String": "$str_Header",
+          "Result": "$Headers"
+        },
+        {
+          "Id": 3,
+          "Action": "CONCAT",
+          "Targets": [
+            "$Headers",
+            "::content-type::text/html; charset=utf-8"
+          ],
+          "Result": "$Headers"
+        },
+        {
+          "Id": 6,
+          "Action": "REPLACE",
+          "In": "$Link",
+          "From": " ",
+          "To": "",
+          "Result": "$Link"
+        },
+        {
+          "Id": 7,
+          "Action": "REPLACE",
+          "In": "$Headers",
+          "From": " ",
+          "To": "",
+          "Result": "$Headers"
+        },
+        {
+          "Id": 8,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "$Headers",
+          "Result": "$Res"
+        },
+        {
+          "Id": 9,
+          "Action": "REPLACE",
+          "In": "$Res",
+          "From": "'",
+          "To": "\"",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 10,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)m3u8(?:[^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res1",
+          "Result": "$result"
+        },
+        {
+          "Id": 11,
+          "Action": "MATCH",
+          "String": "function\\(p,a,c,k,e,d\\)(?:.*)\\{\\}\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "'@'",
+          "Target": "$Res",
+          "Result": "$code"
+        },
+        {
+          "Id": 12,
+          "Action": "REPLACE",
+          "In": "$code",
+          "From": "\\",
+          "To": "\\\\",
+          "Result": "$code"
+        },
+        {
+          "Id": 13,
+          "Action": "REPLACE",
+          "In": "$code",
+          "From": "\"",
+          "To": "\\\"",
+          "Result": "$code"
+        },
+        {
+          "Id": 14,
+          "Action": "CONCAT",
+          "Targets": [
+            "var code;var env = {eval: function (c) {code = c;}};eval(\"with(env) {\" + \"eval(",
+            "$code",
+            ")\" + \"}\"); code;"
+          ],
+          "Result": "$code"
+        },
+        {
+          "Id": 15,
+          "Action": "EVAL",
+          "String": "$code",
+          "Result": "$out_code"
+        },
+        {
+          "Id": 16,
+          "Action": "REPLACE",
+          "In": "$out_code",
+          "From": "'",
+          "To": "\"",
+          "Result": "$out_code"
+        },
+        {
+          "Id": 17,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)m3u8(?:[^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "$result",
+          "Target": "$out_code",
+          "Result": "$result"
+        },
+        {
+          "Id": 18,
+          "Action": "MATCH",
+          "String": "function(?:[^\\}]*)\"m\",\"3\",\"u\",\"8\"(?:[^\\}]*?)\\}",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$function"
+        },
+        {
+          "Id": 19,
+          "Action": "MATCH",
+          "String": "(?<=function)(?:.*?)\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$func_name"
+        },
+        {
+          "Id": 20,
+          "Action": "MATCH",
+          "String": "(?<=document\\.getElementById\\(\")([^\"]*)(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$Res5"
+        },
+        {
+          "Id": 21,
+          "Action": "CONCAT",
+          "Targets": [
+            "(?<=id=",
+            "$Res5",
+            ">)([^<]*)(?=<)"
+          ],
+          "Result": "$Res6"
+        },
+        {
+          "Id": 22,
+          "Action": "MATCH",
+          "String": "$Res6",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$Res7"
+        },
+        {
+          "Id": 23,
+          "Action": "CONCAT",
+          "Targets": [
+            "\"",
+            "$Res7",
+            "\")"
+          ],
+          "Result": "$Res7"
+        },
+        {
+          "Id": 24,
+          "Action": "MATCH",
+          "String": "document.getElementById(.*)innerHTML\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$Res8"
+        },
+        {
+          "Id": 25,
+          "Action": "REPLACE",
+          "In": "$function",
+          "From": "$Res8",
+          "To": "$Res7",
+          "Result": "$function"
+        },
+        {
+          "Id": 26,
+          "Action": "MATCH",
+          "String": "(?<=\\+ )(.*)(?=.join)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$var_name"
+        },
+        {
+          "Id": 27,
+          "Action": "CONCAT",
+          "Targets": [
+            "var ",
+            "$var_name",
+            "(?:[^;]*);"
+          ],
+          "Result": "$var_regex"
+        },
+        {
+          "Id": 28,
+          "Action": "MATCH",
+          "String": "$var_regex",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$var"
+        },
+        {
+          "Id": 29,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval('",
+            "$var",
+            "$function",
+            "$func_name",
+            ";",
+            "')"
+          ],
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 30,
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": "\r",
+          "To": "",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 31,
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": "\n",
+          "To": "",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 32,
+          "Action": "EVAL",
+          "String": "$eval_link",
+          "Result": "$result1"
+        },
+        {
+          "Id": 33,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)m3u8(?:[^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "$result1",
+          "Target": "$result1",
+          "Result": "$result"
+        },
+        {
+          "Id": 34,
+          "Action": "CONCAT",
+          "Targets": [
+            "http:",
+            "$result",
+            " engineOptions=headers::Referer:",
+            "$Link",
+            "::user_agent::Mozilla/5.0"
+          ],
+          "Result": "$result"
+        },
+        {
+          "Id": 35,
+          "Action": "FINAL",
+          "Result": "$result"
+        }
+      ]
+    },
+    {
+      "Match": "vlive.pw",
+      "Name": "Vlive Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "CONCAT",
+          "Targets": [
+            "$Link",
+            "__requestHeader=User-Agent::Safari/537.36"
+          ],
+          "Result": "$o_Link"
+        },
+        {
+          "Id": 2,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"",
+            "link=\\\"",
+            "$o_Link",
+            "\\\";sp=link.split(\\\"__requestHeader=\\\");sp[0]\")"
+          ],
+          "Result": "$str_Link"
+        },
+        {
+          "Id": 3,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"",
+            "link=\\\"",
+            "$o_Link",
+            "\\\";sp=link.split(\\\"__requestHeader=\\\");sp[1]\")"
+          ],
+          "Result": "$str_Header"
+        },
+        {
+          "Id": 4,
+          "Action": "EVAL",
+          "String": "$str_Link",
+          "Result": "$Link"
+        },
+        {
+          "Id": 5,
+          "Action": "EVAL",
+          "String": "$str_Header",
+          "Result": "$Headers"
+        },
+        {
+          "Id": 6,
+          "Action": "REPLACE",
+          "In": "$Link",
+          "From": " ",
+          "To": "",
+          "Result": "$Link"
+        },
+        {
+          "Id": 7,
+          "Action": "REPLACE",
+          "In": "$Headers",
+          "From": " ",
+          "To": "",
+          "Result": "$Headers"
+        },
+        {
+          "Id": 8,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "$Headers",
+          "Result": "$Res"
+        },
+        {
+          "Id": 9,
+          "Action": "REPLACE",
+          "In": "$Res",
+          "From": "'",
+          "To": "\"",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 10,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)m3u8(?:[^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res1",
+          "Result": "$result"
+        },
+        {
+          "Id": 11,
+          "Action": "MATCH",
+          "String": "function\\(p,a,c,k,e,d\\)(?:.*)\\{\\}\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "'@'",
+          "Target": "$Res",
+          "Result": "$code"
+        },
+        {
+          "Id": 12,
+          "Action": "REPLACE",
+          "In": "$code",
+          "From": "\\",
+          "To": "\\\\",
+          "Result": "$code"
+        },
+        {
+          "Id": 13,
+          "Action": "REPLACE",
+          "In": "$code",
+          "From": "\"",
+          "To": "\\\"",
+          "Result": "$code"
+        },
+        {
+          "Id": 14,
+          "Action": "CONCAT",
+          "Targets": [
+            "var code;var env = {eval: function (c) {code = c;}};eval(\"with(env) {\" + \"eval(",
+            "$code",
+            ")\" + \"}\"); code;"
+          ],
+          "Result": "$code"
+        },
+        {
+          "Id": 15,
+          "Action": "EVAL",
+          "String": "$code",
+          "Result": "$out_code"
+        },
+        {
+          "Id": 16,
+          "Action": "REPLACE",
+          "In": "$out_code",
+          "From": "'",
+          "To": "\"",
+          "Result": "$out_code"
+        },
+        {
+          "Id": 17,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)m3u8(?:[^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "$result",
+          "Target": "$out_code",
+          "Result": "$result"
+        },
+        {
+          "Id": 18,
+          "Action": "MATCH",
+          "String": "function(?:[^\\}]*)\"m\",\"3\",\"u\",\"8\"(?:[^\\}]*?)\\}",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$function"
+        },
+        {
+          "Id": 19,
+          "Action": "MATCH",
+          "String": "(?<=function)(?:.*?)\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$func_name"
+        },
+        {
+          "Id": 20,
+          "Action": "MATCH",
+          "String": "(?<=document\\.getElementById\\(\")([^\"]*)(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$Res5"
+        },
+        {
+          "Id": 21,
+          "Action": "CONCAT",
+          "Targets": [
+            "(?<=id=",
+            "$Res5",
+            ">)([^<]*)(?=<)"
+          ],
+          "Result": "$Res6"
+        },
+        {
+          "Id": 22,
+          "Action": "MATCH",
+          "String": "$Res6",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$Res7"
+        },
+        {
+          "Id": 23,
+          "Action": "CONCAT",
+          "Targets": [
+            "\"",
+            "$Res7",
+            "\")"
+          ],
+          "Result": "$Res7"
+        },
+        {
+          "Id": 24,
+          "Action": "MATCH",
+          "String": "document.getElementById(.*)innerHTML\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$Res8"
+        },
+        {
+          "Id": 25,
+          "Action": "REPLACE",
+          "In": "$function",
+          "From": "$Res8",
+          "To": "$Res7",
+          "Result": "$function"
+        },
+        {
+          "Id": 26,
+          "Action": "MATCH",
+          "String": "(?<=\\+ )(.*)(?=.join)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$function",
+          "Result": "$var_name"
+        },
+        {
+          "Id": 27,
+          "Action": "CONCAT",
+          "Targets": [
+            "var ",
+            "$var_name",
+            "(?:[^;]*);"
+          ],
+          "Result": "$var_regex"
+        },
+        {
+          "Id": 28,
+          "Action": "MATCH",
+          "String": "$var_regex",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$var"
+        },
+        {
+          "Id": 29,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval('",
+            "$var",
+            "$function",
+            "$func_name",
+            ";",
+            "')"
+          ],
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 30,
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": "\r",
+          "To": "",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 31,
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": "\n",
+          "To": "",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 32,
+          "Action": "EVAL",
+          "String": "$eval_link",
+          "Result": "$result1"
+        },
+        {
+          "Id": 33,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)m3u8(?:[^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "$result",
+          "Target": "$result1",
+          "Result": "$result"
+        },
+        {
+          "Id": 34,
+          "Action": "FINAL",
+          "Result": "$result"
+        }
+      ]
+    },
+    {
+      "Match": "247bay",
+      "Name": "247bay Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "CONCAT",
+          "Targets": [
+            "$Link",
+            "__requestHeader=User-Agent::Safari/537.36"
+          ],
+          "Result": "$o_Link"
+        },
+        {
+          "Id": 2,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"",
+            "link=\\\"",
+            "$o_Link",
+            "\\\";sp=link.split(\\\"__requestHeader=\\\");sp[0]\")"
+          ],
+          "Result": "$str_Link"
+        },
+        {
+          "Id": 3,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"",
+            "link=\\\"",
+            "$o_Link",
+            "\\\";sp=link.split(\\\"__requestHeader=\\\");sp[1]\")"
+          ],
+          "Result": "$str_Header"
+        },
+        {
+          "Id": 4,
+          "Action": "EVAL",
+          "String": "$str_Link",
+          "Result": "$Link"
+        },
+        {
+          "Id": 5,
+          "Action": "EVAL",
+          "String": "$str_Header",
+          "Result": "$Headers"
+        },
+        {
+          "Id": 6,
+          "Action": "REPLACE",
+          "In": "$Link",
+          "From": " ",
+          "To": "",
+          "Result": "$Link"
+        },
+        {
+          "Id": 7,
+          "Action": "REPLACE",
+          "In": "$Headers",
+          "From": " ",
+          "To": "",
+          "Result": "$Headers"
+        },
+        {
+          "Id": 8,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "$Headers",
+          "Result": "$Res"
+        },
+        {
+          "Id": 9,
+          "Action": "MATCH",
+          "String": "(?<=enableVideo\\(\")([^\"]*)(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "",
+          "Target": "$Res",
+          "Result": "$pk"
+        },
+        {
+          "Id": 10,
+          "Action": "MATCH",
+          "String": "\"http(?:[^=]*?)m3u8(?:[^;]*?)\"",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 11,
+          "Action": "MATCH",
+          "String": "http(?:[^ ]*?)loadbalancer",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$loadbalancer"
+        },
+        {
+          "Id": 12,
+          "Action": "GET",
+          "Link": "$loadbalancer",
+          "Result": "$balancer"
+        },
+        {
+          "Id": 13,
+          "Action": "MATCH",
+          "String": "(?<=redirect=)(?:.*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$balancer",
+          "Result": "$ip"
+        },
+        {
+          "Id": 14,
+          "Action": "CONCAT",
+          "Targets": [
+            "\"",
+            "$ip",
+            "\""
+          ],
+          "Result": "$ip"
+        },
+        {
+          "Id": 15,
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": " ea ",
+          "To": "$ip",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 16,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval('",
+            "$eval_link",
+            "')"
+          ],
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 17,
+          "Action": "EVAL",
+          "String": "$eval_link",
+          "Result": "$result"
+        },
+        {
+          "Id": 18,
+          "Action": "CONCAT",
+          "Targets": [
+            "$result",
+            "$pk"
+          ],
+          "Result": "$result"
+        },
+        {
+          "Id": 19,
+          "Action": "FINAL",
+          "Result": "$result"
+        }
+      ]
+    },
+    {
+      "Match": "wcast",
+      "Name": "wcast",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "CONCAT",
+          "Targets": [
+            "$Link",
+            "__requestHeader=User-Agent::Safari/537.36"
+          ],
+          "Result": "$o_Link"
+        },
+        {
+          "Id": 2,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"",
+            "link=\\\"",
+            "$o_Link",
+            "\\\";sp=link.split(\\\"__requestHeader=\\\");sp[0]\")"
+          ],
+          "Result": "$str_Link"
+        },
+        {
+          "Id": 3,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"",
+            "link=\\\"",
+            "$o_Link",
+            "\\\";sp=link.split(\\\"__requestHeader=\\\");sp[1]\")"
+          ],
+          "Result": "$str_Header"
+        },
+        {
+          "Id": 4,
+          "Action": "EVAL",
+          "String": "$str_Link",
+          "Result": "$Link"
+        },
+        {
+          "Id": 5,
+          "Action": "EVAL",
+          "String": "$str_Header",
+          "Result": "$Headers"
+        },
+        {
+          "Id": 6,
+          "Action": "REPLACE",
+          "In": "$Link",
+          "From": " ",
+          "To": "",
+          "Result": "$Link"
+        },
+        {
+          "Id": 7,
+          "Action": "REPLACE",
+          "In": "$Headers",
+          "From": " ",
+          "To": "",
+          "Result": "$Headers"
+        },
+        {
+          "Id": 8,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "$Headers",
+          "Result": "$Res"
+        },
+        {
+          "Id": 9,
+          "Action": "MATCH",
+          "String": "(?<=enableVideo\\(\")([^\"]*)(?=\")",
+          "MatchId": "0",
+          "Default": "@",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$pk"
+        },
+        {
+          "Id": 10,
+          "Action": "MATCH",
+          "String": "\"http(?:[^=]*?)m3u8(?:[^;]*?)\"",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 11,
+          "Action": "REPLACE",
+          "In": "$Res",
+          "From": "'",
+          "To": "\"",
+          "Result": "$Res_r"
+        },
+        {
+          "Id": 12,
+          "Action": "MATCH",
+          "String": "\"http(?:[^=]*?)m3u8(?:[^,]*?)\"",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "$eval_link",
+          "Target": "$Res_r",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 13,
+          "Action": "MATCH",
+          "String": "http(?:[^ ]*?)loadbalancer",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$loadbalancer"
+        },
+        {
+          "Id": 14,
+          "Action": "GET",
+          "Link": "$loadbalancer",
+          "Result": "$balancer"
+        },
+        {
+          "Id": 15,
+          "Action": "MATCH",
+          "String": "(?<=redirect=)(?:.*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$balancer",
+          "Result": "$ip"
+        },
+        {
+          "Id": 16,
+          "Action": "CONCAT",
+          "Targets": [
+            "\"",
+            "$ip",
+            "\""
+          ],
+          "Result": "$ip"
+        },
+        {
+          "Id": 17,
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": " ea ",
+          "To": "$ip",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 18,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval('",
+            "$eval_link",
+            "')"
+          ],
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 19,
+          "Action": "EVAL",
+          "String": "$eval_link",
+          "Result": "$result"
+        },
+        {
+          "Id": 20,
+          "Action": "CONCAT",
+          "Targets": [
+            "$result",
+            "$pk"
+          ],
+          "Result": "$result"
+        },
+        {
+          "Id": 21,
+          "Action": "REPLACE",
+          "In": "$result",
+          "From": "@",
+          "To": "",
+          "Result": "$result"
+        },
+        {
+          "Id": 22,
+          "Action": "FINAL",
+          "Result": "$result"
+        }
+      ]
+    },
+    {
+      "Match": "crichd.tv",
+      "Name": "CrichdTV Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "User-Agent::Safari/537.36",
+          "Result": "$Res"
+        },
+        {
+          "Id": 2,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)update(?:[^\"]*)(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 3,
+          "Action": "GET",
+          "Link": "$Res1",
+          "Headers": "User-Agent::Safari/537.36",
+          "Result": "$Res"
+        },
+        {
+          "Id": 6,
+          "Action": "MATCH",
+          "String": "(?<=fid=\")(?:.*?)(?=\";)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$fid"
+        },
+        {
+          "Id": 7,
+          "Action": "MATCH",
+          "String": "(?<=v_width=)(?:.*?)(?=;)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$v_width"
+        },
+        {
+          "Id": 8,
+          "Action": "MATCH",
+          "String": "(?<=v_height=)(?:.*?)(?=;)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$v_height"
+        },
+        {
+          "Id": 9,
+          "Action": "CONCAT",
+          "Targets": [
+            "http://www.vvcast.tv/embed.php?live=",
+            "$fid",
+            "&vw=",
+            "$v_width",
+            "&vh=",
+            "$v_height"
+          ],
+          "Result": "$location"
+        },
+        {
+          "Id": 10,
+          "Action": "GET",
+          "Link": "$location",
+          "Headers": "Referer::http://cdn2.crichd.info/::User-Agent::Safari/537.36",
+          "Result": "$Res"
+        },
+        {
+          "Id": 11,
+          "Action": "MATCH",
+          "String": "function(?:[^\\}]*)\"m\",\"3\",\"u\",\"8\"(?:[^\\}]*?)\\}",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$function"
+        },
+        {
+          "Id": 12,
+          "Action": "MATCH",
+          "String": "(?<=function)(?:.*?)\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$function",
+          "Result": "$func_name"
+        },
+        {
+          "Id": 13,
+          "Action": "MATCH",
+          "String": "(?<=document\\.getElementById\\(\")([^\"]*)(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$function",
+          "Result": "$Res5"
+        },
+        {
+          "Id": 14,
+          "Action": "CONCAT",
+          "Targets": [
+            "(?<=id=",
+            "$Res5",
+            ">)([^<]*)(?=<)"
+          ],
+          "Result": "$Res6"
+        },
+        {
+          "Id": 15,
+          "Action": "MATCH",
+          "String": "$Res6",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$Res7"
+        },
+        {
+          "Id": 16,
+          "Action": "CONCAT",
+          "Targets": [
+            "\"",
+            "$Res7",
+            "\")"
+          ],
+          "Result": "$Res7"
+        },
+        {
+          "Id": 17,
+          "Action": "MATCH",
+          "String": "document.getElementById(.*)innerHTML\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$function",
+          "Result": "$Res8"
+        },
+        {
+          "Id": 18,
+          "Action": "REPLACE",
+          "In": "$function",
+          "From": "$Res8",
+          "To": "$Res7",
+          "Result": "$function"
+        },
+        {
+          "Id": 19,
+          "Action": "MATCH",
+          "String": "(?<=\\+ )(.*)(?=.join)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$function",
+          "Result": "$var_name"
+        },
+        {
+          "Id": 20,
+          "Action": "CONCAT",
+          "Targets": [
+            "var ",
+            "$var_name",
+            "(?:[^;]*);"
+          ],
+          "Result": "$var_regex"
+        },
+        {
+          "Id": 21,
+          "Action": "MATCH",
+          "String": "$var_regex",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$var"
+        },
+        {
+          "Id": 22,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval('",
+            "$var",
+            "$function",
+            "$func_name",
+            ";",
+            "')"
+          ],
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 23,
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": "\r",
+          "To": "",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 24,
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": "\n",
+          "To": "",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 25,
+          "Action": "EVAL",
+          "String": "$eval_link",
+          "Result": "$Result"
+        },
+        {
+          "Id": 26,
+          "Action": "FINAL",
+          "Result": "$Result"
+        }
+      ]
+    },
+    {
+      "Match": "showskorner",
+      "Name": "Showskorner Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "User-Agent::Safari/537.36",
+          "Result": "$Res"
+        },
+        {
+          "Id": 2,
+          "Action": "MATCH",
+          "String": "(?<=channel=')(?:.*?)(?=')",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$Channel"
+        },
+        {
+          "Id": 3,
+          "Action": "MATCH",
+          "String": "(?<=g=')(?:.*?)(?=')",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$g"
+        },
+        {
+          "Id": 4,
+          "Action": "CONCAT",
+          "Targets": [
+            "http://www.janjuaplayer.com/hembedplayer/",
+            "$Channel",
+            "/",
+            "$g",
+            "/280/250"
+          ],
+          "Result": "$Res2"
+        },
+        {
+          "Id": 5,
+          "Action": "GET",
+          "Link": "$Res2",
+          "Headers": "Referer::http://www.showskorner.com/::User-Agent::Safari/537.36",
+          "Result": "$Res"
+        },
+        {
+          "Id": 6,
+          "Action": "MATCH",
+          "String": "(?<=\"src\",)(?:.*?)m3u8(?:.*?)\"",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 7,
+          "Action": "GET",
+          "Link": "http://dedicated.janjuapublisher.com:1935/loadbalancer",
+          "Headers": "User-Agent::Safari/537.36",
+          "Result": "$Res"
+        },
+        {
+          "Id": 8,
+          "Action": "MATCH",
+          "String": "(?<=redirect=)(?:.*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$ip"
+        },
+        {
+          "Id": 9,
+          "Action": "CONCAT",
+          "Targets": [
+            "\"",
+            "$ip",
+            "\""
+          ],
+          "Result": "$ip"
+        },
+        {
+          "Id": 10,
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": " ea ",
+          "To": "$ip",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 11,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval('",
+            "$eval_link",
+            "')"
+          ],
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 12,
+          "Action": "EVAL",
+          "String": "$eval_link",
+          "Result": "$result"
+        },
+        {
+          "Id": 13,
+          "Action": "FINAL",
+          "Result": "$result"
+        }
+      ]
+    },
+    {
+      "Match": "baqiworld",
+      "Name": "Baqiworld Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "User-Agent::Safari/537.36",
+          "Result": "$Res"
+        },
+        {
+          "Id": 2,
+          "Action": "MATCH",
+          "String": "(?<=channel=')(?:.*?)(?=')",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$Channel"
+        },
+        {
+          "Id": 3,
+          "Action": "MATCH",
+          "String": "(?<=g=')(?:.*?)(?=')",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$g"
+        },
+        {
+          "Id": 4,
+          "Action": "CONCAT",
+          "Targets": [
+            "http://www.janjuaplayer.com/hembedplayer/",
+            "$Channel",
+            "/",
+            "$g",
+            "/280/250"
+          ],
+          "Result": "$Res2"
+        },
+        {
+          "Id": 5,
+          "Action": "GET",
+          "Link": "$Res2",
+          "Headers": "Referer::http://www.showskorner.com/::User-Agent::Safari/537.36",
+          "Result": "$Res"
+        },
+        {
+          "Id": 6,
+          "Action": "MATCH",
+          "String": "(?<=\"src\",)(?:.*?)m3u8(?:.*?)\"",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 7,
+          "Action": "GET",
+          "Link": "http://dedicated.janjuapublisher.com:1935/loadbalancer",
+          "Headers": "User-Agent::Safari/537.36",
+          "Result": "$Res"
+        },
+        {
+          "Id": 8,
+          "Action": "MATCH",
+          "String": "(?<=redirect=)(?:.*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$ip"
+        },
+        {
+          "Id": 9,
+          "Action": "CONCAT",
+          "Targets": [
+            "\"",
+            "$ip",
+            "\""
+          ],
+          "Result": "$ip"
+        },
+        {
+          "Id": 10,
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": " ea ",
+          "To": "$ip",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 11,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval('",
+            "$eval_link",
+            "')"
+          ],
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 12,
+          "Action": "EVAL",
+          "String": "$eval_link",
+          "Result": "$result"
+        },
+        {
+          "Id": 13,
+          "Action": "FINAL",
+          "Result": "$result"
+        }
+      ]
+    },
+    {
+      "Match": "cricfree",
+      "Name": "CricFree Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "User-Agent::Safari/537.36",
+          "Result": "$Res"
+        },
+        {
+          "Id": 2,
+          "Action": "MATCH",
+          "String": "http(?:[\\S]*?)update(?:[\\S]*?)php",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$Res"
+        },
+        {
+          "Id": 3,
+          "Action": "GET",
+          "Link": "$Res",
+          "Headers": "User-Agent::Safari/537.36",
+          "Result": "$Res"
+        },
+        {
+          "Id": 4,
+          "Action": "MATCH",
+          "String": "(?<=fid=[\"|'])(?:.*?)(?=[\"|'];)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$fid"
+        },
+        {
+          "Id": 5,
+          "Action": "MATCH",
+          "String": "(?<=v_width=)(?:.*?)(?=;)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$v_width"
+        },
+        {
+          "Id": 6,
+          "Action": "MATCH",
+          "String": "(?<=v_height=)(?:.*?)(?=;)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$v_height"
+        },
+        {
+          "Id": 7,
+          "Action": "CONCAT",
+          "Targets": [
+            "http://www.webtv.ws/embed.php?live=",
+            "$fid",
+            "&vw=",
+            "$v_width",
+            "&vh=",
+            "$v_height"
+          ],
+          "Result": "$Res"
+        },
+        {
+          "Id": 8,
+          "Action": "GET",
+          "Link": "$Res",
+          "Headers": "Referer::http://cricfree.sc/",
+          "Result": "$Res"
+        },
+        {
+          "Id": 9,
+          "Action": "MATCH",
+          "String": "http(?:[\\S]*?)m3u8(?:[\\S]*)(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$link"
+        },
+        {
+          "Id": 10,
+          "Action": "FINAL",
+          "Result": "$link"
+        }
+      ]
+    },
+    {
+      "Match": "hulku",
+      "Name": "Hulkus Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "User-Agent::Safari/537.36::User-Agent::Safari/537.36",
+          "Result": "$Res"
+        },
+        {
+          "Id": 2,
+          "Action": "MATCH",
+          "String": "(?<=channel=')(?:.*?)(?=')",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$Channel"
+        },
+        {
+          "Id": 3,
+          "Action": "MATCH",
+          "String": "(?<=g=')(?:.*?)(?=')",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$g"
+        },
+        {
+          "Id": 4,
+          "Action": "CONCAT",
+          "Targets": [
+            "http://www.janjuaplayer.com/hembedplayer/",
+            "$Channel",
+            "/",
+            "$g",
+            "/280/250"
+          ],
+          "Result": "$Res2"
+        },
+        {
+          "Id": 4,
+          "Action": "CONCAT",
+          "Targets": [
+            "Referer::",
+            "$Link",
+            "::User-Agent::Safari/537.36"
+          ],
+          "Result": "$header"
+        },
+        {
+          "Id": 5,
+          "Action": "GET",
+          "Link": "$Res2",
+          "Headers": "$header",
+          "Result": "$Res"
+        },
+        {
+          "Id": 6,
+          "Action": "MATCH",
+          "String": "(?<=\"src\",)(?:.*?)m3u8(?:.*?)\"",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 7,
+          "Action": "GET",
+          "Link": "http://www.janjuapublisher.com:1935/loadbalancer",
+          "Headers": "User-Agent::Safari/537.36",
+          "Result": "$Res"
+        },
+        {
+          "Id": 8,
+          "Action": "MATCH",
+          "String": "(?<=redirect=)(?:.*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$ip"
+        },
+        {
+          "Id": 9,
+          "Action": "CONCAT",
+          "Targets": [
+            "\"",
+            "$ip",
+            "\""
+          ],
+          "Result": "$ip"
+        },
+        {
+          "Id": 10,
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": " ea ",
+          "To": "$ip",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 11,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval('",
+            "$eval_link",
+            "')"
+          ],
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 12,
+          "Action": "EVAL",
+          "String": "$eval_link",
+          "Result": "$result"
+        },
+        {
+          "Id": 13,
+          "Action": "FINAL",
+          "Result": "$result"
+        }
+      ]
+    },
+    {
+      "Match": "vvcast",
+      "Name": "VVcast Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "Referer::http://cdn2.crichd.info/::User-Agent::Safari/537.36",
+          "Result": "$Res"
+        },
+        {
+          "Id": 2,
+          "Action": "MATCH",
+          "String": "function(?:[^\\}]*)\"m\",\"3\",\"u\",\"8\"(?:[^\\}]*?)\\}",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$function"
+        },
+        {
+          "Id": 3,
+          "Action": "MATCH",
+          "String": "(?<=function)(?:.*?)\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$function",
+          "Result": "$func_name"
+        },
+        {
+          "Id": 4,
+          "Action": "MATCH",
+          "String": "(?<=document\\.getElementById\\(\")([^\"]*)(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$function",
+          "Result": "$Res5"
+        },
+        {
+          "Id": 5,
+          "Action": "CONCAT",
+          "Targets": [
+            "(?<=id=",
+            "$Res5",
+            ">)([^<]*)(?=<)"
+          ],
+          "Result": "$Res6"
+        },
+        {
+          "Id": 6,
+          "Action": "MATCH",
+          "String": "$Res6",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$Res7"
+        },
+        {
+          "Id": 7,
+          "Action": "CONCAT",
+          "Targets": [
+            "\"",
+            "$Res7",
+            "\")"
+          ],
+          "Result": "$Res7"
+        },
+        {
+          "Id": 8,
+          "Action": "MATCH",
+          "String": "document.getElementById(.*)innerHTML\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$function",
+          "Result": "$Res8"
+        },
+        {
+          "Id": 9,
+          "Action": "REPLACE",
+          "In": "$function",
+          "From": "$Res8",
+          "To": "$Res7",
+          "Result": "$function"
+        },
+        {
+          "Id": 10,
+          "Action": "MATCH",
+          "String": "(?<=\\+ )(.*)(?=.join)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$function",
+          "Result": "$var_name"
+        },
+        {
+          "Id": 11,
+          "Action": "CONCAT",
+          "Targets": [
+            "var ",
+            "$var_name",
+            "(?:[^;]*);"
+          ],
+          "Result": "$var_regex"
+        },
+        {
+          "Id": 12,
+          "Action": "MATCH",
+          "String": "$var_regex",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$var"
+        },
+        {
+          "Id": 13,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval('",
+            "$var",
+            "$function",
+            "$func_name",
+            ";",
+            "')"
+          ],
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 14,
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": "\r",
+          "To": "",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 15,
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": "\n",
+          "To": "",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 16,
+          "Action": "EVAL",
+          "String": "$eval_link",
+          "Result": "$Result"
+        },
+        {
+          "Id": 17,
+          "Action": "FINAL",
+          "Result": "$Result"
+        }
+      ]
+    },
+    {
+      "Match": "livetv",
+      "Name": "LiveTV Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "User-Agent::Safari/537.36",
+          "Result": "$Res"
+        },
+        {
+          "Id": 2,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)update(?:[^\"]*)(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 3,
+          "Action": "GET",
+          "Link": "$Res1",
+          "Headers": "User-Agent::Safari/537.36",
+          "Result": "$Res"
+        },
+        {
+          "Id": 4,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)livetv(?:[^\"]*)Channel(?:[^\"]*)(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$Res"
+        },
+        {
+          "Id": 5,
+          "Action": "GET",
+          "Link": "$Res",
+          "Headers": "User-Agent::Safari/537.36",
+          "Result": "$Res"
+        },
+        {
+          "Id": 6,
+          "Action": "MATCH",
+          "String": "(?<=ch=')(?:[^']*)(?=')",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$ch"
+        },
+        {
+          "Id": 7,
+          "Action": "MATCH",
+          "String": "(?<=ch_width=)(?:[^;]*?)(?=;)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$ch_width"
+        },
+        {
+          "Id": 8,
+          "Action": "MATCH",
+          "String": "(?<=ch_height=)(?:[^;]*?)(?=;)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$ch_height"
+        },
+        {
+          "Id": 9,
+          "Action": "CONCAT",
+          "Targets": [
+            "http://arembed.com/live.php?ch=",
+            "$ch",
+            "&vw=",
+            "$ch_width",
+            "&vh=",
+            "$ch_height",
+            "&domain=livetv.sc"
+          ],
+          "Result": "$location"
+        },
+        {
+          "Id": 10,
+          "Action": "GET",
+          "Link": "$location",
+          "Headers": "Referer::http://livetv.sc/::User-Agent::Safari/537.36",
+          "Result": "$Res"
+        },
+        {
+          "Id": 11,
+          "Action": "MATCH",
+          "String": "(?<=channel=')(?:[^']*?)(?=')",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$channel"
+        },
+        {
+          "Id": 12,
+          "Action": "MATCH",
+          "String": "(?<=width=)(?:[^,]*?)(?=,)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$width"
+        },
+        {
+          "Id": 13,
+          "Action": "MATCH",
+          "String": "(?<=height=)(?:[^,]*?)(?=,)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$height"
+        },
+        {
+          "Id": 14,
+          "Action": "MATCH",
+          "String": "(?<=g=')(?:[^']*?)(?=')",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$g"
+        },
+        {
+          "Id": 15,
+          "Action": "CONCAT",
+          "Targets": [
+            "http://www.247bay.tv/hembedplayer/",
+            "$channel",
+            "/",
+            "$g",
+            "/",
+            "$width",
+            "/",
+            "$height"
+          ],
+          "Result": "$location"
+        },
+        {
+          "Id": 16,
+          "Action": "GET",
+          "Link": "$location",
+          "Headers": "Referer::http://arembed.com/::User-Agent::Safari/537.36",
+          "Result": "$Res"
+        },
+        {
+          "Id": 17,
+          "Action": "MATCH",
+          "String": "(?<=\")(?:[^\"]*)m3u8(?:[^\"]*)(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$link"
+        },
+        {
+          "Id": 18,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)loadbalancer(?:[^\"]*)(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$loadbalancer"
+        },
+        {
+          "Id": 19,
+          "Action": "GET",
+          "Link": "$loadbalancer",
+          "Headers": "Referer::http://www.247bay.tv/::User-Agent::Safari/537.36",
+          "Result": "$ip"
+        },
+        {
+          "Id": 20,
+          "Action": "MATCH",
+          "String": "(?<=redirect=)(?:.*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$ip",
+          "Result": "$ip"
+        },
+        {
+          "Id": 21,
+          "Action": "MATCH",
+          "String": "(?<=enableVideo\\(\")(?:[^\"]*)(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$pk"
+        },
+        {
+          "Id": 22,
+          "Action": "CONCAT",
+          "Targets": [
+            "http://",
+            "$ip",
+            "$link",
+            "$pk"
+          ],
+          "Result": "$link"
+        },
+        {
+          "Id": 23,
+          "Action": "FINAL",
+          "Result": "$link"
+        }
+      ]
+    },
+    {
+      "Match": "freehdsport",
+      "Name": "freehdsport Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "User-Agent::Safari/537.36",
+          "Result": "$Res"
+        },
+        {
+          "Id": 2,
+          "Action": "MATCH",
+          "String": "http://sportzonline(?:[^\"]*)(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$Res"
+        },
+        {
+          "Id": 3,
+          "Action": "GET",
+          "Link": "$Res",
+          "Headers": "User-Agent::Safari/537.36",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 4,
+          "Action": "MATCH",
+          "String": "whostreams(?:[^\"]*)(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res1",
+          "Result": "$Res"
+        },
+        {
+          "Id": 5,
+          "Action": "CONCAT",
+          "Targets": [
+            "http://",
+            "$Res"
+          ],
+          "Result": "$Res"
+        },
+        {
+          "Id": 6,
+          "Action": "GET",
+          "Link": "$Res",
+          "Headers": "User-Agent::Safari/537.36",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 7,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)m3u8(?:[^\"]*)(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res1",
+          "Result": "$result"
+        },
+        {
+          "Id": 8,
+          "Action": "CONCAT",
+          "Targets": [
+            "$result",
+            " parseM3U8=0"
+          ],
+          "Result": "$result"
+        },
+        {
+          "Id": 9,
+          "Action": "FINAL",
+          "Result": "$result"
+        }
+      ]
+    },
+    {
+      "Match": "whostream",
+      "Name": "Whowstream Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"",
+            "link=\\\"",
+            "$Link",
+            "\\\";sp=link.split(\\\"__requestHeader=\\\");sp[0]\")"
+          ],
+          "Result": "$str_Link"
+        },
+        {
+          "Id": 2,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"",
+            "link=\\\"",
+            "$Link",
+            "\\\";sp=link.split(\\\"__requestHeader=\\\");sp[1]\")"
+          ],
+          "Result": "$str_Header"
+        },
+        {
+          "Id": 3,
+          "Action": "EVAL",
+          "String": "$str_Link",
+          "Result": "$Link"
+        },
+        {
+          "Id": 4,
+          "Action": "EVAL",
+          "String": "$str_Header",
+          "Result": "$Headers"
+        },
+        {
+          "Id": 5,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "$Headers",
+          "Result": "$Res"
+        },
+        {
+          "Id": 7,
+          "Action": "REPLACE",
+          "In": "$Res",
+          "From": "<script>",
+          "To": "@",
+          "Result": "$Res"
+        },
+        {
+          "Id": 7,
+          "Action": "REPLACE",
+          "In": "$Res",
+          "From": "</script>",
+          "To": "@",
+          "Result": "$Res"
+        },
+        {
+          "Id": 6,
+          "Action": "MATCH",
+          "String": "function\\(p,a,c,k,e,d\\)(?:[^@]*)\\{\\}\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "'@'",
+          "Target": "$Res",
+          "Result": "$code"
+        },
+        {
+          "Id": 7,
+          "Action": "REPLACE",
+          "In": "$code",
+          "From": "\\",
+          "To": "\\\\",
+          "Result": "$code"
+        },
+        {
+          "Id": 8,
+          "Action": "REPLACE",
+          "In": "$code",
+          "From": "\"",
+          "To": "\\\"",
+          "Result": "$code"
+        },
+        {
+          "Id": 9,
+          "Action": "CONCAT",
+          "Targets": [
+            "var code;var env = {eval: function (c) {code = c;}};eval(\"with(env) {\" + \"eval(",
+            "$code",
+            ")\" + \"}\"); code;"
+          ],
+          "Result": "$code"
+        },
+        {
+          "Id": 10,
+          "Action": "EVAL",
+          "String": "$code",
+          "Result": "$out_code"
+        },
+        {
+          "Id": 11,
+          "Action": "REPLACE",
+          "In": "$out_code",
+          "From": "'",
+          "To": "\"",
+          "Result": "$out_code"
+        },
+        {
+          "Id": 12,
+          "Action": "MATCH",
+          "String": "http(?:[^\"]*)m3u8(?:[^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "$result",
+          "Target": "$out_code",
+          "Result": "$result"
+        },
+        {
+          "Id": 13,
+          "Action": "CONCAT",
+          "Targets": [
+            "$result",
+            " engineOptions=headers::Referer:",
+            "$Link",
+            "::user_agent::Safari/9.0"
+          ],
+          "Result": "$result"
+        },
+        {
+          "Id": 14,
+          "Action": "FINAL",
+          "Result": "$result"
+        }
+      ]
+    },
+    {
+      "Match": "firstone",
+      "Name": "Firstone Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "User-Agent::Safari/537.36",
+          "Result": "$Res"
+        },
+        {
+          "Id": 2,
+          "Action": "MATCH",
+          "String": "(?<=country)(.*?)(?=;)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 3,
+          "Action": "MATCH",
+          "String": "(?<=')(.*?)(?=')",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res1",
+          "Result": "$country"
+        },
+        {
+          "Id": 4,
+          "Action": "MATCH",
+          "String": "(?<=channelID)(.*?)(?=;)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 5,
+          "Action": "MATCH",
+          "String": "(?<=')(.*?)(?=')",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res1",
+          "Result": "$ID"
+        },
+        {
+          "Id": 6,
+          "Action": "POST",
+          "Link": "https://www.firstonetv.live/api/",
+          "Headers": "User-Agent::Safari/537.36",
+          "Params": "action::hiro::result::get",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 7,
+          "Action": "MATCH",
+          "String": "(?<=\"hash\":\")(.*?)(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res1",
+          "Result": "$hash"
+        },
+        {
+          "Id": 8,
+          "Action": "MATCH",
+          "String": "(?<=\"time\":)([\\d]*)(?=[^\\d])",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res1",
+          "Result": "$time"
+        },
+        {
+          "Id": 9,
+          "Action": "MATCH",
+          "String": "(?<=\"hiro\":\")(.*?)(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res1",
+          "Result": "$hiro"
+        },
+        {
+          "Id": 10,
+          "Action": "REPLACE",
+          "In": "$hiro",
+          "From": "p",
+          "To": "186",
+          "Result": "$hiro"
+        },
+        {
+          "Id": 11,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval('",
+            "$hiro",
+            "').toFixed(0);"
+          ],
+          "Result": "$hiro"
+        },
+        {
+          "Id": 12,
+          "Action": "EVAL",
+          "String": "$hiro",
+          "Result": "$result"
+        },
+        {
+          "Id": 13,
+          "Action": "MATCH",
+          "String": "(?<=\"rss\":)([\\d]*)(?=[^\\d])",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res1",
+          "Result": "$rss"
+        },
+        {
+          "Id": 14,
+          "Action": "CONCAT",
+          "Targets": [
+            "action::hiro::result::",
+            "$result",
+            "::time::",
+            "$time",
+            "::hash::",
+            "$hash"
+          ],
+          "Result": "$param"
+        },
+        {
+          "Id": 15,
+          "Action": "POST",
+          "Link": "https://www.firstonetv.live/api/",
+          "Headers": "User-Agent::Safari/537.36",
+          "Params": "$param",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 16,
+          "Action": "MATCH",
+          "String": "(?<=\"ctoken\":\")(.*?)(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res1",
+          "Result": "$ctoken"
+        },
+        {
+          "Id": 17,
+          "Action": "CONCAT",
+          "Targets": [
+            "action::channel::ctoken::",
+            "$ctoken",
+            "::c::",
+            "$country",
+            "::id::",
+            "$ID"
+          ],
+          "Result": "$param"
+        },
+        {
+          "Id": 18,
+          "Action": "POST",
+          "Link": "https://www.firstonetv.live/api/",
+          "Headers": "User-Agent::Safari/537.36",
+          "Params": "$param",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 19,
+          "Action": "MATCH",
+          "String": "(?<=\"surl\":\")(.*)(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res1",
+          "Result": "$Res2"
+        },
+        {
+          "Id": 20,
+          "Action": "MATCH",
+          "String": "Quality(?:.*?)m3u8",
+          "MatchId": "1",
+          "GroupId": "0",
+          "Target": "$Res2",
+          "Default": "@",
+          "Result": "$item1"
+        },
+        {
+          "Id": 21,
+          "Action": "MATCH",
+          "String": "http(?:.*?)m3u8(?:[^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res2",
+          "Default": "$Res2",
+          "Result": "$item2"
+        },
+        {
+          "Id": 22,
+          "Action": "CONCAT",
+          "Targets": [
+            "$item1",
+            "$item2",
+            "@"
+          ],
+          "Result": "$Res3"
+        },
+        {
+          "Id": 23,
+          "Action": "MATCH",
+          "String": "http(?:.*?)m3u8(?:[^\"|^@]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res3",
+          "Result": "$Res2"
+        },
+        {
+          "Id": 24,
+          "Action": "REPLACE",
+          "In": "$Res2",
+          "From": "\\",
+          "To": "",
+          "Result": "$Res2"
+        },
+        {
+          "Id": 25,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval('link=\"",
+            "$Res2",
+            "\";pos=link.indexOf(\"://\");res=\"\";if(link.indexOf(\"par\")>0||!isNaN(link[pos+3])) res=link+\" engineOptions=user_agent::Safari/537.36\";else res=link;res');"
+          ],
+          "Result": "$Res1"
+        },
+        {
+          "Id": 26,
+          "Action": "EVAL",
+          "String": "$Res1",
+          "Result": "$Res2"
+        },
+        {
+          "Id": 27,
+          "Action": "FINAL",
+          "Result": "$Res2"
+        }
+      ]
+    }
+  ]
+}
+
+
