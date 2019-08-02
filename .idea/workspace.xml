@@ -2,9 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="84435bab-98c9-4fc5-8ab7-3d93fb7f851e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rules.json" beforeDir="false" afterPath="$PROJECT_DIR$/rules.json" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -16,12 +20,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="138">
-              <caret line="73" column="18" lean-forward="true" selection-start-line="73" selection-start-column="18" selection-end-line="73" selection-end-column="18" />
+            <state relative-caret-position="98">
+              <caret line="242" column="5" lean-forward="true" selection-start-line="130" selection-start-column="8" selection-end-line="242" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -29,14 +33,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rules.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="3023" column="17" selection-start-line="3023" selection-start-column="11" selection-end-line="3023" selection-end-column="17" />
+            <state relative-caret-position="185">
+              <caret line="2790" column="18" selection-start-line="2790" selection-start-column="11" selection-end-line="2790" selection-end-column="18" />
               <folding>
-                <element signature="e#31122#36169#0" />
-                <element signature="e#36175#40043#0" />
+                <element signature="e#40#4588#0" />
+                <element signature="e#4594#6934#0" />
                 <element signature="e#40049#48331#0" />
                 <element signature="e#48337#56144#0" />
                 <element signature="e#56150#63958#0" />
+                <element signature="e#71846#79124#0" />
+                <element signature="e#79130#82825#0" />
+                <element signature="e#82831#87162#0" />
+                <element signature="e#87168#92338#0" />
+                <element signature="e#92344#95029#0" />
+                <element signature="e#95035#97716#0" />
               </folding>
             </state>
           </provider>
@@ -59,7 +69,24 @@
       <find>$Link</find>
       <find>eval</find>
       <find>b4u</find>
+      <find>&quot;Result&quot;: &quot;$function&quot;</find>
+      <find>$function</find>
+      <find>$var</find>
+      <find>$eval_link</find>
+      <find>&quot;Default&quot;: &quot;@&quot;,</find>
+      <find>rbrAytSnlaase</find>
+      <find>UgeAnsulSberriarartay</find>
+      <find>slAgSreUabtyenraariru</find>
+      <find>trteHpgtUl</find>
+      <find>aitrnUebrargaSylerAus</find>
+      <find>aBtcfkiirSushtngae</find>
+      <find>html</find>
+      <find>result</find>
+      <find>stage.In</find>
     </findStrings>
+    <replaceStrings>
+      <replace>&quot;Default&quot;: &quot;&quot;,</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -68,8 +95,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/index.html.js" />
-        <option value="$PROJECT_DIR$/rules.json" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/rules.json" />
         <option value="$PROJECT_DIR$/index.js" />
       </list>
     </option>
@@ -86,7 +113,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -98,11 +124,13 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="javascript.nodejs.core.library.configured.version" value="11.12.0" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -113,6 +141,7 @@
     <property name="nodejs.mocha.mocha_node_package_dir" value="" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="prettierjs.PrettierConfiguration.Package" value="C:\Users\chinh\AppData\Roaming\npm\node_modules\prettier" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="Errors" />
@@ -152,35 +181,35 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14946000" />
+    <option name="totallyTimeSpent" value="24739000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
-      <window_info id="DB Browser" />
-      <window_info id="Project Explorer" />
-      <window_info id="Job Explorer" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24962178" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25340393" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Console" />
-      <window_info anchor="bottom" id="DB Execution Console" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Terminal" weight="0.3207856" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="Project Explorer" order="2" />
+      <window_info id="DB Browser" order="3" />
+      <window_info id="Job Explorer" order="4" />
+      <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.42716858" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.3878887" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.44026187" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Database" />
+      <window_info anchor="bottom" id="Console" order="7" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="DB Execution Console" order="9" />
+      <window_info anchor="bottom" id="Database Changes" order="10" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.63502455" />
+      <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="13" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -188,54 +217,40 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/index.js</url>
-          <line>71</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="36" />
-        </line-breakpoint>
-      </breakpoints>
+      <default-breakpoints>
+        <breakpoint enabled="true" type="javascript-exception">
+          <properties />
+        </breakpoint>
+      </default-breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="NodeJSConfigurationType">
-        <watch expression="string" language="JavaScript" />
-        <watch expression="Link" language="JavaScript" />
-        <watch expression="typeof Link" language="JavaScript" />
-        <watch expression="str_Link" language="JavaScript" />
-        <watch expression="`${stage.String.match(/\w+/)[0]}`" language="JavaScript" />
-        <watch expression="requestUrl" language="JavaScript" />
-        <watch expression="eval(`${stage.Result.match(/\w+/)[0]}='${result}'`);" language="JavaScript" />
-        <watch expression="str_Header" language="JavaScript" />
-        <watch expression="str_Link" language="JavaScript" />
-        <watch expression="stage.String.match(/\w+/)[0]" language="JavaScript" />
-        <watch expression="eval(eval(stage.String.match(/\w+/)[0]));" language="JavaScript" />
-        <watch expression="eval(stage.Headers.match(/\w+/)[0])" language="JavaScript" />
-        <watch expression="stage.Headers.match(/\w+/)[0]" language="JavaScript" />
-        <watch expression="htmlString" language="JavaScript" />
-        <watch expression="JSON.stringify(htmlString)" language="JavaScript" />
+        <watch expression="function_result" language="JavaScript" />
+        <watch expression="matchString" language="JavaScript" />
+        <watch expression="matchString.match(matchRegex)[0]" language="JavaScript" />
+        <watch expression="Res8" language="JavaScript" />
+        <watch expression="stage.From" language="JavaScript" />
+        <watch expression="string.match(regex);" language="JavaScript" />
+        <watch expression="result" language="JavaScript" />
+        <watch expression="stage.String" language="JavaScript" />
+        <watch expression="matchString.match(matchRegex)[0];" language="JavaScript" />
+        <watch expression="new RegExp(`${JSON.stringify(stage.From)}`, &quot;g&quot;);" language="JavaScript" />
+        <watch expression="new RegExp(`${escapeRegExp(JSON.stringify(stage.From))}`, &quot;g&quot;)" language="JavaScript" />
+        <watch expression="new RegExp(`${escapeRegExp((stage.From))}`, &quot;g&quot;);" language="JavaScript" />
+        <watch expression="escapeRegExp((stage.From))" language="JavaScript" />
+        <watch expression="result1" language="JavaScript" />
       </configuration>
     </watches-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="watch">
       <expression>
-        <expression-string>JSON.stringify(htmlString)</expression-string>
+        <expression-string>matchString.match(matchRegex)[0];</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>htmlString</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>eval(stage.Headers.match(/\w+/)[0])</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>stage.Headers.match(/\w+/)[0]</expression-string>
+        <expression-string>result1</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -245,40 +260,55 @@
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>eval(eval(stage.String.match(/\w+/)[0]));</expression-string>
+        <expression-string>result</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>`${stage.String.match(/\w+/)[0]}`</expression-string>
+        <expression-string>string.match(regex);</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>str_Link</expression-string>
+        <expression-string>string.replace(regex, stage.To);</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>stage.String.match(/\w+/)[0]</expression-string>
+        <expression-string>escapeRegExp((stage.From))</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>stage.String.match(/w+/)[0]</expression-string>
+        <expression-string>new RegExp(`${escapeRegExp((stage.From))}`, &quot;g&quot;);</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>new RegExp(`${escapeRegExp(JSON.stringify(stage.From))}`, &quot;g&quot;)</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>new RegExp(`${JSON.stringify(stage.From)}`, &quot;g&quot;);</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+    <expressions id="setValue">
+      <expression>
+        <expression-string>&quot;\&quot;)&quot;</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>&quot;eval(\&quot;&quot;</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es5.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-124">
-          <caret line="31" column="17" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/request-promise/lib/rp.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="446">
@@ -293,24 +323,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es5.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-45">
+          <caret line="951" column="4" selection-start-line="951" selection-start-column="4" selection-end-line="951" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/rules.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="3023" column="17" selection-start-line="3023" selection-start-column="11" selection-end-line="3023" selection-end-column="17" />
+        <state relative-caret-position="185">
+          <caret line="2790" column="18" selection-start-line="2790" selection-start-column="11" selection-end-line="2790" selection-end-column="18" />
           <folding>
-            <element signature="e#31122#36169#0" />
-            <element signature="e#36175#40043#0" />
+            <element signature="e#40#4588#0" />
+            <element signature="e#4594#6934#0" />
             <element signature="e#40049#48331#0" />
             <element signature="e#48337#56144#0" />
             <element signature="e#56150#63958#0" />
+            <element signature="e#71846#79124#0" />
+            <element signature="e#79130#82825#0" />
+            <element signature="e#82831#87162#0" />
+            <element signature="e#87168#92338#0" />
+            <element signature="e#92344#95029#0" />
+            <element signature="e#95035#97716#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="73" column="18" lean-forward="true" selection-start-line="73" selection-start-column="18" selection-end-line="73" selection-end-column="18" />
+        <state relative-caret-position="98">
+          <caret line="242" column="5" lean-forward="true" selection-start-line="130" selection-start-column="8" selection-end-line="242" selection-end-column="5" />
         </state>
       </provider>
     </entry>

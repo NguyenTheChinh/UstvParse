@@ -2861,7 +2861,7 @@
           "GroupId": "0",
           "Default": "@",
           "Target": "$Res",
-          "Result": "$function"
+          "Result": "$function_result"
         },
         {
           "Id": 19,
@@ -2870,7 +2870,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function",
+          "Target": "$function_result",
           "Result": "$func_name"
         },
         {
@@ -2880,7 +2880,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function",
+          "Target": "$function_result",
           "Result": "$Res5"
         },
         {
@@ -2920,16 +2920,16 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function",
+          "Target": "$function_result",
           "Result": "$Res8"
         },
         {
           "Id": 25,
           "Action": "REPLACE",
-          "In": "$function",
+          "In": "$function_result",
           "From": "$Res8",
           "To": "$Res7",
-          "Result": "$function"
+          "Result": "$function_result"
         },
         {
           "Id": 26,
@@ -2938,7 +2938,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function",
+          "Target": "$function_result",
           "Result": "$var_name"
         },
         {
@@ -2959,15 +2959,15 @@
           "GroupId": "0",
           "Default": "@",
           "Target": "$Res",
-          "Result": "$var"
+          "Result": "$var_result"
         },
         {
           "Id": 29,
           "Action": "CONCAT",
           "Targets": [
             "eval('",
-            "$var",
-            "$function",
+            "$var_result",
+            "$function_result",
             "$func_name",
             ";",
             "')"
