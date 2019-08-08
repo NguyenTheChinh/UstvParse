@@ -328,11 +328,3 @@ function getLink(link) {
 function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
-
-function decode(first, second) {
-  var e = JSON.parse(CryptoJS.enc.Utf8.stringify(CryptoJS.enc.Base64.parse(first))), o = CryptoJS.enc.Hex.parse(e.salt),
-    p = CryptoJS.enc.Hex.parse(e.iv), a = e.ciphertext, S = parseInt(e.iterations);
-  S <= 0 && (S = 999);
-  var i = 256 / 4, n = CryptoJS.PBKDF2(second, o, {hasher: CryptoJS.algo.SHA512, keySize: i / 8, iterations: S});
-  return CryptoJS.AES.decrypt(a, n, {mode: CryptoJS.mode.CBC, iv: p}).toString(CryptoJS.enc.Utf8)
-}
