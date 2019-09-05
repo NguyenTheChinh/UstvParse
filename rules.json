@@ -5602,7 +5602,8 @@
           "Action": "GET",
           "Link": "$Link",
           "Headers": "Accept::text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3::Accept-Language::vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,fr-FR;q=0.5::Connection::keep-alive::Host::ustv247.tv::Upgrade-Insecure-Requests::1::User-Agent::Safari/537.36",
-          "Result": "$Res1"
+          "Result": "$Res1",
+          "ResHeaders": "$ResHeader"
         },
         {
           "Id": 3,
@@ -5762,7 +5763,8 @@
           "Id": 29,
           "Action": "CONCAT",
           "Targets": [
-            "Accept::text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3::Accept-Language::vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,fr-FR;q=0.5::User-Agent::Safari/537.36::Referer::",
+            "$ResHeader",
+            "::Accept::text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3::Accept-Language::vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,fr-FR;q=0.5::User-Agent::Safari/537.36::Referer::",
             "$Link"
           ],
           "Result": "$Headers"
