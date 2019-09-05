@@ -5598,17 +5598,11 @@
       "Name": "ustv247 Parser",
       "Stages": [
         {
-          "Id": 30,
-          "Action": "SLEEP",
-          "Time": 4500
-        },
-        {
           "Id": 1,
           "Action": "GET",
           "Link": "$Link",
-          "Headers": "User-Agent::Safari/537.36",
-          "Result": "$Res1",
-          "ResHeaders": "$ResHeader"
+          "Headers": "Accept::text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3::Accept-Language::vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,fr-FR;q=0.5::Connection::keep-alive::Host::ustv247.tv::Upgrade-Insecure-Requests::1::User-Agent::Safari/537.36",
+          "Result": "$Res1"
         },
         {
           "Id": 3,
@@ -5768,16 +5762,16 @@
           "Id": 29,
           "Action": "CONCAT",
           "Targets": [
-            "$ResHeader",
-            "::User-Agent::Safari/537.36::Referer::",
+            "Accept::text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3::Accept-Language::vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,fr-FR;q=0.5::User-Agent::Safari/537.36::Referer::",
             "$Link"
           ],
           "Result": "$Headers"
         },
         {
           "Id": 30,
-          "Action": "SLEEP",
-          "Time": 5000
+          "Action": "EVAL",
+          "String": "eval('function sleep(ms){var cur = new Date().getTime();var expire =  cur+ms;while(new Date().getTime()<expire){}};sleep(4500);')",
+          "Result": "$Res4"
         },
         {
           "Id": 31,

@@ -101,7 +101,9 @@ function getLink(link) {
                                 break;
 
                             case "EVAL":
-                                stage.String = eval(stage.String.match(/\w+/)[0]);
+                                if(stage.String.match(/^\$\w+$/)){
+                                    stage.String = eval(stage.String.match(/\w+/)[0]);
+                                } else stage.String = eval(stage.String);
                                 tempResult = eval(stage.String);
                                 eval(`${stage.Result.match(/\w+/)[0]}=${JSON.stringify(tempResult)}`);
                                 break;
@@ -145,18 +147,7 @@ function getLink(link) {
                                     });
                                 }
                                 let requestSucess = false;
-                                if (cookies) {
-                                    // let cookies = new tough.Cookie({
-                                    //     key: "__cfduid",
-                                    //     value: ResHeader,
-                                    //     domain: '.ustv247.tv',
-                                    //     httpOnly: true
-                                    // });
-                                    var cookiejar = requestPromise.jar();
-                                    cookiejar.setCookie(cookies.toString(), 'https://ustv247.tv');
-                                    options.jar = cookiejar;
-                                }
-
+                                console.log(options);
                                 await requestPromise(options).then(function (htmlString) {
                                     console.log(htmlString);
                                     eval(`${stage.Result.match(/\w+/)[0]}=${JSON.stringify(htmlString.body)}`);
@@ -166,15 +157,6 @@ function getLink(link) {
                                         if (err.statusCode === 503) {
                                             eval(`${stage.Result.match(/\w+/)[0]}=${JSON.stringify(err.message)}`);
                                             requestSucess = true;
-                                            if (err.response && err.response.headers["set-cookie"]) {
-                                                err.response.headers["set-cookie"].forEach((cookie, i, s) => {
-                                                    s[i] = s[i].substr(0, s[i].indexOf(";"))
-                                                });
-                                                cookies = err.response.headers["set-cookie"].map(tough.Cookie.parse);
-                                                if (stage.ResHeaders && stage.ResHeaders.match(/^\$\w+$/)) {
-                                                    eval(`${stage.ResHeaders.match(/\w+/)[0]}="Cookie::"+${JSON.stringify(err.response.headers["set-cookie"].join(";"))}`);
-                                                }
-                                            }
                                         } else {
                                             requestSucess = false;
                                             console.error(err)
