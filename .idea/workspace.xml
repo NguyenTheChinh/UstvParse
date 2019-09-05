@@ -2,134 +2,42 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="84435bab-98c9-4fc5-8ab7-3d93fb7f851e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/chinh.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rules-original.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/temp.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rules.json" beforeDir="false" afterPath="$PROJECT_DIR$/rules.json" afterDir="false" />
     </list>
-    <ignored path="$PROJECT_DIR$/.tmp/" />
-    <ignored path="$PROJECT_DIR$/temp/" />
-    <ignored path="$PROJECT_DIR$/tmp/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="99">
-              <caret line="73" column="40" selection-start-line="73" selection-start-column="40" selection-end-line="73" selection-end-column="40" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rules.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="5561" column="23" selection-start-line="5561" selection-start-column="23" selection-end-line="5561" selection-end-column="23" />
-              <folding>
-                <element signature="e#143216#148502#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JavaScript File" />
+        <option value="HTML File" />
       </list>
     </option>
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>Cipher</find>
-      <find>parse</find>
-      <find>x</find>
-      <find>r</find>
-      <find>&quot;FROM&quot;: &quot;'</find>
-      <find>r.parse</find>
-      <find>REPLACE</find>
-      <find>&quot;Action&quot;: &quot;REPLACE&quot;,</find>
-      <find>ustv247</find>
-      <find>engineOptions</find>
-      <find>&quot;</find>
-      <find>\\\n</find>
-      <find>\n</find>
-      <find>\</find>
-      <find>return</find>
-      <find>&quot;http.*newjanjua\\.js([^'\&quot;]*)&quot;</find>
-      <find>$js_link</find>
-      <find>(?&lt;=enableVideo\\(\&quot;)([^\&quot;]*)(?=\&quot;)</find>
-      <find>ustvgo</find>
-      <find>$pk_func</find>
-      <find>Referer</find>
-      <find>engineOptions=headers::Referer</find>
-      <find>User-Agent</find>
-      <find>eval('</find>
-      <find>newjanjua</find>
-      <find>eval(\&quot;</find>
-      <find>&quot;eval(\&quot;&quot;,</find>
-      <find>.split</find>
-      <find>CONCAT</find>
-      <find>&quot;EVAL&quot;</find>
-    </findStrings>
-    <replaceStrings>
-      <replace>&quot;Default&quot;: &quot;&quot;,</replace>
-      <replace>$function_result</replace>
-      <replace>$var_result</replace>
-      <replace>arguments[0]</replace>
-      <replace>\n</replace>
-    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/index.html.js" />
-        <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/index.js" />
-        <option value="$PROJECT_DIR$/rules.json" />
-      </list>
-    </option>
-  </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1346" />
-    <option name="height" value="688" />
-  </component>
+  <component name="ProjectId" id="1PvHIZt6r7ByJ5b6u6wESaHTdQJ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="UstvParse" type="b2602c69:ProjectViewProjectNode" />
-              <item name="UstvParse" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-    </panes>
-  </component>
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="javascript.nodejs.core.library.configured.version" value="11.12.0" />
+    <property name="javascript.nodejs.core.library.configured.version" value="12.9.0" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -143,7 +51,13 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="prettierjs.PrettierConfiguration.Package" value="C:\Users\chinh\AppData\Roaming\npm\node_modules\prettier" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="Errors" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2019.2.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Work\UstvParse" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -180,165 +94,79 @@
       <workItem from="1565106280720" duration="2030000" />
       <workItem from="1565143798779" duration="25920000" />
       <workItem from="1565582740679" duration="964000" />
-      <workItem from="1566359830485" duration="3135000" />
+      <workItem from="1566359830485" duration="8941000" />
+      <workItem from="1566747577612" duration="182000" />
+      <workItem from="1566747804922" duration="713000" />
+      <workItem from="1567479836258" duration="269000" />
+      <workItem from="1567480120936" duration="14839000" />
+      <workItem from="1567564248316" duration="17305000" />
+      <workItem from="1567602379970" duration="9811000" />
+      <workItem from="1567648179532" duration="1074000" />
     </task>
     <servers />
-  </component>
-  <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="105269000" />
-  </component>
-  <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49421966" visible="true" weight="0.27231467" />
-      <window_info id="Structure" order="1" sideWeight="0.50578034" side_tool="true" visible="true" weight="0.27231467" />
-      <window_info id="Project Explorer" order="2" />
-      <window_info id="DB Browser" order="3" />
-      <window_info id="Job Explorer" order="4" />
-      <window_info id="Favorites" order="5" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.08674304" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.43371522" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Console" order="7" />
-      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="DB Execution Console" order="9" />
-      <window_info anchor="bottom" id="Database Changes" order="10" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.2667758" />
-      <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="13" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Database" order="3" />
-    </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/index.js</url>
+          <line>257</line>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/index.js</url>
+          <line>160</line>
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/index.js</url>
+          <line>165</line>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
-        <breakpoint enabled="true" type="javascript-exception">
-          <properties />
-        </breakpoint>
+        <breakpoint enabled="true" type="javascript-exception" />
       </default-breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="NodeJSConfigurationType">
-        <watch expression="Res" language="JavaScript" />
-        <watch expression="loadbalancer" language="JavaScript" />
-        <watch expression="stage.String" language="JavaScript" />
+        <watch expression="eval(stage.String)" language="JavaScript" />
+        <watch expression="`${JSON.stringify(&quot;Cookie::&quot;+err.response.headers[&quot;set-cookie&quot;].join(&quot;;&quot;))}`" language="JavaScript" />
+        <watch expression="err.response.headers[&quot;set-cookie&quot;].join(&quot;;&quot;)" language="JavaScript" />
+        <watch expression="$Res1" language="JavaScript" />
+        <watch expression="eval(`${stage.ResHeaders.match(/\w+/)[0]}=${&quot;Cookie::&quot;+JSON.stringify(err.response.headers[&quot;set-cookie&quot;].join(&quot;;&quot;))}`);" language="JavaScript" />
+        <watch expression="`${&quot;Cookie::&quot;+JSON.stringify(err.response.headers[&quot;set-cookie&quot;].join(&quot;;&quot;))}`" language="JavaScript" />
+        <watch expression="eval(`${stage.ResHeaders.match(/\w+/)[0]}=&quot;Cookie::&quot;+${JSON.stringify(err.response.headers[&quot;set-cookie&quot;].join(&quot;;&quot;))}`);" language="JavaScript" />
+        <watch expression="Res2" language="JavaScript" />
+        <watch expression="Res3" language="JavaScript" />
+        <watch expression="ResHeader" language="JavaScript" />
+        <watch expression="Headers" language="JavaScript" />
+        <watch expression="err.message.replace(/\\\&quot;/,&quot;&quot;)" language="JavaScript" />
+        <watch expression="err.response.headers[&quot;set-cookie&quot;][0].substr(0,err.response.headers[&quot;set-cookie&quot;][0].indexOf(&quot;;&quot;))" language="JavaScript" />
+        <watch expression="err.response.headers[&quot;set-cookie&quot;]" language="JavaScript" />
+        <watch expression="err.options" language="JavaScript" />
+        <watch expression="stage.Targets.join(&quot;&quot;)" language="JavaScript" />
+        <watch expression="eval(&quot;\&quot;https://ustv247.tv/cdn-cgi/l/chk_jschl?s=\&quot;+encodeURIComponent('86bf5d609fceb637f7c5cfacb7dc7da477d31dc5-1567611990-1800-AcAnCDnMfGoxQyjlz1h3b/ug4aWp61zxWeDQIdlslwshdV08+nE9xaS3am9LWQ1ChkSRPUMFJjZlowyAxQJaUDPv7kzy0c76wWoAMK9NLH+W0p8ReHCJI95EeuYDJt66aVbR1/k/+fV4Jbd2HBoN1WU=')\&quot;+&amp;jschl_vc=d40310efd7f3140b4e491a88af41c790&amp;pass=1567611994.002-6JTfLYIn+z&amp;jschl_answer=32.3371901475\&quot;&quot;)" language="JavaScript" />
+        <watch expression="htmlString" language="JavaScript" />
+        <watch expression="htmlString" />
+        <watch expression="htmlString.body" language="JavaScript" />
       </configuration>
     </watches-manager>
-  </component>
-  <component name="debuggerHistoryManager">
-    <expressions id="watch">
-      <expression>
-        <expression-string>loadbalancer</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>Res</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>CryptoJS</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>arguments[0]</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>arguments</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>this</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>this.lib</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>test('eyJjaXBoZXJ0ZXh0IjoiQm8wd0h6RXB2N0E0b2hUSHQreW1nSzY0NlwvR2xMczBtYytFd0pJR29NTlAxOFlYQ3B2aDhqQVE0ZytMd3RmM2NreGJUK1dQS3JXc3NFdmQ0NDRwU2FRYlgzVHREV1lIdHZkRHBJZlFMbEJ6S2FKWmt2bG9ZYUd4SkM3ZFVcLzI3cyIsIml2IjoiZmVjOGY2M2Q5ZDE0MDI1NzFjMjYzNTFhZjQ4Mzc1NTEiLCJzYWx0IjoiMTM5N2U2NjE4MzZiMGMwZjUwOWQ4NzQ4YjNkNDQ3NDM1YmRmMDI0ZDIxYTViYmJkNWQyMTFjM2M2MzI2MGFlYTA5MmRkODQ2ZDc1YzEwMTg0OTkyODZjOWU3NTM2MmUxZmU5ZWRkODE5ZmMzY2VjMTA5YjJhMDc2MDc4OGJhODYyMjQ5NzNiYTAyYTYzYTQ4MTEyZGI3YjM2OTZhZWU5NGU0ZWQyZmM4NDlmMzkzOGM2ZDJmODIxMTExNDQ0M2JlNmQ3MGQ4NzI1OTYzZGJlZmExM2I1ZGMxMGRhNTBlNzRhYjY1NmYxZjJmZDU1NTQyMzgxNzY3YTkwZjgxN2JmYjdlZmQ0NGNhMjdjN2Q3OWM0ZjRkM2UzODA3MTVmNGU2ZjYxYzUwNzlhOTI0ZDVmMThjMDViNzE0NDI2NGVhOWYwODU2YWI0YzJhNzFkNTYxYjk2NDMxY2IzZjY5ZTg4YzYyNjE5ZWY0MzlkM2ZiYWM3MzNmNzA5YzM0OWYyZGI3M2VmZjkwMTYyZGVjMjM5MTY4YTJhMjM2NmYyZjkzM2YwNTdhMjY3MDM5NWYxNTEyMGUwMGVhOGI1ZWU3YWQ5Y2QyMjNiMTcwYjhmZWUyMTRjYjFmNDg2MjVlZDYwNzNlZGY2NDRlNjJlNTI0ZmQ3YmFhNjQyYTgwNzYwYjRlZDEiLCJpdGVyYXRpb25zIjo5OTl9','sQsauPmbUaKnrkK')</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>function test(r,t){var e=JSON.parse(CryptoJS.enc.Utf8.stringify(CryptoJS.enc.Base64.parse(r))),o=CryptoJS.enc.Hex.parse(e.salt),p=CryptoJS.enc.Hex.parse(e.iv),a=e.ciphertext,S=parseInt(e.iterations);S&lt;=0&amp;&amp;(S=999);var i=256/4,n=CryptoJS.PBKDF2(t,o,{hasher:CryptoJS.algo.SHA512,keySize:i/8,iterations:S});return CryptoJS.AES.decrypt(a,n,{mode:CryptoJS.mode.CBC,iv:p}).toString(CryptoJS.enc.Utf8)};</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>stage.Targets[0]</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-    </expressions>
-    <expressions id="setValue">
-      <expression>
-        <expression-string>&quot;\&quot;)&quot;</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>&quot;eval(\&quot;&quot;</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-    </expressions>
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/node_modules/request-promise/lib/rp.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="446">
-          <caret line="51" selection-start-line="51" selection-end-line="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="13" lean-forward="true" selection-start-column="13" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es5.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-45">
-          <caret line="951" column="4" selection-start-line="951" selection-start-column="4" selection-end-line="951" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rules.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="5561" column="23" selection-start-line="5561" selection-start-column="23" selection-end-line="5561" selection-end-column="23" />
-          <folding>
-            <element signature="e#143216#148502#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="99">
-          <caret line="73" column="40" selection-start-line="73" selection-start-column="40" selection-end-line="73" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
   </component>
 </project>
