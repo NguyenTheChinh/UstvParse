@@ -5600,8 +5600,7 @@
           "Action": "GET",
           "Link": "$Link",
           "Headers": "Accept::text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3::Accept-Language::vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,fr-FR;q=0.5::Connection::keep-alive::Host::ustv247.tv::Upgrade-Insecure-Requests::1::User-Agent::Safari/537.36",
-          "Result": "$Res1",
-          "ResHeaders": "$ResHeader"
+          "Result": "$Res1"
         },
         {
           "Id": 2,
@@ -5625,6 +5624,27 @@
         },
         {
           "Id": 4,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"if(\\\"@\\\"==\\\"",
+            "$Res3",
+            "\\\") 24; else 7;\")"
+          ],
+          "Result": "$Res"
+        },
+        {
+          "Id": 5,
+          "Action": "EVAL",
+          "String": "$Res",
+          "Result": "$Res"
+        },
+        {
+          "Id": 6,
+          "Action": "GOTO",
+          "Stage": "$Res"
+        },
+        {
+          "Id": 7,
           "Action": "REPLACE",
           "In": "$Res2",
           "From": "\"",
@@ -5632,7 +5652,7 @@
           "Result": "$Res2"
         },
         {
-          "Id": 5,
+          "Id": 8,
           "Action": "REPLACE",
           "In": "$Res2",
           "From": ",",
@@ -5640,23 +5660,7 @@
           "Result": "$Res2"
         },
         {
-          "Id": 6,
-          "Action": "CONCAT",
-          "Targets": [
-            "eval(\"",
-            "$Res2",
-            "\")"
-          ],
-          "Result": "$Res2"
-        },
-        {
-          "Id": 7,
-          "Action": "EVAL",
-          "String": "$Res2",
-          "Result": "$Res2"
-        },
-        {
-          "Id": 8,
+          "Id": 9,
           "Action": "CONCAT",
           "Targets": [
             ";",
@@ -5666,7 +5670,7 @@
           "Result": "$Res4"
         },
         {
-          "Id": 9,
+          "Id": 10,
           "Action": "MATCH",
           "String": "$Res4",
           "MatchId": "0",
@@ -5676,9 +5680,10 @@
           "Result": "$Res5"
         },
         {
-          "Id": 10,
+          "Id": 11,
           "Action": "CONCAT",
           "Targets": [
+            "$Res2",
             "t='ustv247.tv';a={value:'@'}",
             "$Res5",
             ";a.value;"
@@ -5686,13 +5691,13 @@
           "Result": "$Res6"
         },
         {
-          "Id": 11,
+          "Id": 12,
           "Action": "EVAL",
           "String": "$Res6",
           "Result": "$Res6"
         },
         {
-          "Id": 12,
+          "Id": 13,
           "Action": "MATCH",
           "String": "(?<=action=\").*?(?=\")",
           "MatchId": "0",
@@ -5702,7 +5707,7 @@
           "Result": "$Res2"
         },
         {
-          "Id": 13,
+          "Id": 14,
           "Action": "CONCAT",
           "Targets": [
             "eval('Res2=\\\"\\\";if(\\\"",
@@ -5715,15 +5720,15 @@
           "Result": "$Res2"
         },
         {
-          "Id": 14,
+          "Id": 15,
           "Action": "EVAL",
           "String": "$Res2",
           "Result": "$Res3"
         },
         {
-          "Id": 15,
+          "Id": 16,
           "Action": "MATCH",
-          "String": "(?<=value=\")([^\"]*)",
+          "String": "(?<=name=\"s\" value=\")([^\"]*)",
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
@@ -5731,27 +5736,27 @@
           "Result": "$Res7"
         },
         {
-          "Id": 16,
+          "Id": 17,
           "Action": "MATCH",
-          "String": "(?<=value=\")([^\"]*)",
-          "MatchId": "1",
+          "String": "(?<=name=\"jschl_vc\" value=\")([^\"]*)",
+          "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
           "Target": "$Res1",
           "Result": "$Res8"
         },
         {
-          "Id": 17,
+          "Id": 18,
           "Action": "MATCH",
-          "String": "(?<=value=\")([^\"]*)",
-          "MatchId": "2",
+          "String": "(?<=name=\"pass\" value=\")([^\"]*)",
+          "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
           "Target": "$Res1",
           "Result": "$Res9"
         },
         {
-          "Id": 18,
+          "Id": 19,
           "Action": "CONCAT",
           "Targets": [
             "eval(\"\\\"",
@@ -5769,62 +5774,43 @@
           "Result": "$Res2"
         },
         {
-          "Id": 19,
+          "Id": 20,
           "Action": "EVAL",
           "String": "$Res2",
           "Result": "$Res3"
         },
         {
-          "Id": 20,
+          "Id": 21,
           "Action": "CONCAT",
           "Targets": [
-            "$ResHeader",
-            "::Accept::text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3::Accept-Language::vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,fr-FR;q=0.5::User-Agent::Safari/537.36::Referer::",
+            "Connection::keep-alive::Accept::text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3::Accept-Language::vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,fr-FR;q=0.5::User-Agent::Safari/537.36::Referer::",
             "$Link"
           ],
           "Result": "$Headers"
         },
         {
-          "Id": 21,
+          "Id": 22,
           "Action": "EVAL",
           "String": "eval('function sleep(ms){var cur = new Date().getTime();var expire = cur+ms;while(new Date().getTime()<expire){}};sleep(4500);')",
           "Result": "$Res4"
         },
         {
-          "Id": 22,
+          "Id": 23,
           "Action": "GET",
           "Link": "$Res3",
           "Headers": "$Headers",
-          "Result": "$Res",
-          "ResHeaders": "$ResHeader"
-        },
-        {
-          "Id": 23,
-          "Action": "CONCAT",
-          "Targets": [
-            "$ResHeader",
-            "::Accept::text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3::Accept-Language::vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,fr-FR;q=0.5::User-Agent::Safari/537.36::Referer::",
-            "$Link"
-          ],
-          "Result": "$Headers"
+          "Result": "$Res1"
         },
         {
           "Id": 24,
-          "Action": "GET",
-          "Link": "$Link",
-          "Headers": "$Headers",
-          "Result": "$Res"
-        },
-        {
-          "Id": 25,
           "Action": "REPLACE",
-          "In": "$Res",
+          "In": "$Res1",
           "From": "'",
           "To": "\"",
           "Result": "$Res1"
         },
         {
-          "Id": 26,
+          "Id": 25,
           "Action": "MATCH",
           "String": "(?<=file: \")http.*?m3u8([^'\"]*)",
           "MatchId": "0",
@@ -5834,7 +5820,7 @@
           "Result": "$result"
         },
         {
-          "Id": 27,
+          "Id": 26,
           "Action": "CONCAT",
           "Targets": [
             "$result",
@@ -5845,7 +5831,7 @@
           "Result": "$result"
         },
         {
-          "Id": 28,
+          "Id": 27,
           "Action": "FINAL",
           "Result": "$result"
         }

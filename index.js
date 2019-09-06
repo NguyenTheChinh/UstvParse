@@ -1,5 +1,5 @@
 let originalRules = require('./rules.json');
-let requestPromise = require('request-promise');
+let requestPromise = require('request-promise').defaults({jar: true});
 let bodyParser = require('body-parser');
 let tough = require('tough-cookie');
 
@@ -11,13 +11,13 @@ app.use(bodyParser.urlencoded());
 
 app.use(bodyParser.json());
 
-requestPromise("http://usnewslive.tv/showtime/").then(function (htmlString) {
-    console.log(htmlString);
-    eval(`${stage.Result.match(/\w+/)[0]}=${JSON.stringify(htmlString.body)}`);
-    debugger;
-}).catch(err => {
-    debugger;
-});
+// requestPromise("http://usnewslive.tv/showtime/").then(function (htmlString) {
+//     console.log(htmlString);
+//     eval(`${stage.Result.match(/\w+/)[0]}=${JSON.stringify(htmlString.body)}`);
+//     debugger;
+// }).catch(err => {
+//     debugger;
+// });
 
 // const puppeteer = require('puppeteer');
 // (async () => {
@@ -80,6 +80,7 @@ app.get('/', async (req, res) => {
 function getLink(link) {
     return new Promise(async resolve => {
         try {
+            let goto;
             let Link = link;
             let tempResult;
             let rules = JSON.parse(JSON.stringify(originalRules));
@@ -89,8 +90,16 @@ function getLink(link) {
                     console.log(rule.Name);
                     for (let j = 0; j < rule.Stages.length; j++) {
                         let stage = rule.Stages[j];
+                        if (goto && stage.Id != goto) continue;
+                        goto=undefined;
                         console.log(stage.Id, stage.Action);
                         switch (stage.Action) {
+                            case "GOTO":
+                                if (stage.Stage.match(/^\$\w+$/)) {
+                                    stage.Stage = eval(stage.Stage.match(/\w+/)[0]);
+                                }
+                                goto = stage.Stage;
+                                break;
                             case "SLEEP":
                                 console.log(stage.Time);
                                 await sleep(stage.Time);
@@ -143,8 +152,8 @@ function getLink(link) {
                                 let options = {
                                     uri: stage.Link,
                                     headers: {},
-                                    followAllRedirects: false,
-                                    followRedirect: false,
+                                    // followAllRedirects: false,
+                                    // followRedirect: false,
                                     resolveWithFullResponse: true
                                 };
                                 let headers = stage.Headers;
@@ -169,14 +178,13 @@ function getLink(link) {
                                 }
 
                                 let requestSucess = false;
-                                console.log(options);
                                 await requestPromise(options).then(function (htmlString) {
                                     console.log(htmlString);
                                     eval(`${stage.Result.match(/\w+/)[0]}=${JSON.stringify(htmlString.body)}`);
                                     requestSucess = true;
                                 })
                                     .catch(function (err) {
-                                        if (err.statusCode === 503||err.statusCode===302) {
+                                        if (err.statusCode === 503 || err.statusCode === 302) {
                                             eval(`${stage.Result.match(/\w+/)[0]}=${JSON.stringify(err.error)}`);
                                             requestSucess = true;
                                             if (err.response && err.response.headers["set-cookie"]) {
