@@ -1402,31 +1402,239 @@
           "Id": 1,
           "Action": "GET",
           "Link": "$Link",
-          "Headers": "Referer::http://usnewslive.tv/",
-          "Result": "$Res"
+          "Headers": "Accept::text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3::Accept-Language::vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,fr-FR;q=0.5::Connection::keep-alive::Upgrade-Insecure-Requests::1::User-Agent::Safari/537.36",
+          "Result": "$Res1"
         },
         {
           "Id": 2,
           "Action": "MATCH",
-          "String": "http(?:[^']*)m3u8(?:[^']*)",
+          "String": "s,t,o,p(?:[^;]*);",
           "MatchId": "0",
           "GroupId": "0",
-          "Target": "$Res",
-          "Result": "$result"
+          "Default": "@",
+          "Target": "$Res1",
+          "Result": "$Res2"
         },
         {
           "Id": 3,
+          "Action": "MATCH",
+          "String": "\\w+(?==)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res2",
+          "Result": "$Res3"
+        },
+        {
+          "Id": 4,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"if(\\\"@\\\"==\\\"",
+            "$Res3",
+            "\\\") 24; else 7;\")"
+          ],
+          "Result": "$Res"
+        },
+        {
+          "Id": 5,
+          "Action": "EVAL",
+          "String": "$Res",
+          "Result": "$Res"
+        },
+        {
+          "Id": 6,
+          "Action": "GOTO",
+          "Stage": "$Res"
+        },
+        {
+          "Id": 7,
+          "Action": "REPLACE",
+          "In": "$Res2",
+          "From": "\"",
+          "To": "'",
+          "Result": "$Res2"
+        },
+        {
+          "Id": 8,
+          "Action": "REPLACE",
+          "In": "$Res2",
+          "From": ",",
+          "To": "=undefined;",
+          "Result": "$Res2"
+        },
+        {
+          "Id": 9,
+          "Action": "CONCAT",
+          "Targets": [
+            ";",
+            "$Res3",
+            ".*; (?=')"
+          ],
+          "Result": "$Res4"
+        },
+        {
+          "Id": 10,
+          "Action": "MATCH",
+          "String": "$Res4",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res1",
+          "Result": "$Res5"
+        },
+        {
+          "Id": 11,
+          "Action": "CONCAT",
+          "Targets": [
+            "$Res2",
+            "t='ustv247.tv';a={value:'@'}",
+            "$Res5",
+            ";a.value;"
+          ],
+          "Result": "$Res6"
+        },
+        {
+          "Id": 12,
+          "Action": "EVAL",
+          "String": "$Res6",
+          "Result": "$Res6"
+        },
+        {
+          "Id": 13,
+          "Action": "MATCH",
+          "String": "(?<=action=\").*?(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res1",
+          "Result": "$Res2"
+        },
+        {
+          "Id": 14,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval('Res2=\\\"\\\";if(\\\"",
+            "$Res2",
+            "\\\".indexOf(\\\"http\\\")==-1){Res2=\\\"https://ustv247.tv\\\"+\\\"",
+            "$Res2",
+            "\\\"};Res2;",
+            "')"
+          ],
+          "Result": "$Res2"
+        },
+        {
+          "Id": 15,
+          "Action": "EVAL",
+          "String": "$Res2",
+          "Result": "$Res3"
+        },
+        {
+          "Id": 16,
+          "Action": "MATCH",
+          "String": "(?<=name=\"s\" value=\")([^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res1",
+          "Result": "$Res7"
+        },
+        {
+          "Id": 17,
+          "Action": "MATCH",
+          "String": "(?<=name=\"jschl_vc\" value=\")([^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res1",
+          "Result": "$Res8"
+        },
+        {
+          "Id": 18,
+          "Action": "MATCH",
+          "String": "(?<=name=\"pass\" value=\")([^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res1",
+          "Result": "$Res9"
+        },
+        {
+          "Id": 19,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"\\\"",
+            "$Res3",
+            "?s=\\\"+encodeURIComponent('",
+            "$Res7",
+            "')+\\\"&jschl_vc=\\\"+encodeURIComponent('",
+            "$Res8",
+            "')+\\\"&pass=",
+            "$Res9",
+            "&jschl_answer=",
+            "$Res6",
+            "\\\"\")"
+          ],
+          "Result": "$Res2"
+        },
+        {
+          "Id": 20,
+          "Action": "EVAL",
+          "String": "$Res2",
+          "Result": "$Res3"
+        },
+        {
+          "Id": 21,
+          "Action": "CONCAT",
+          "Targets": [
+            "Connection::keep-alive::Accept::text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3::Accept-Language::vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,fr-FR;q=0.5::User-Agent::Safari/537.36::Referer::",
+            "$Link"
+          ],
+          "Result": "$Headers"
+        },
+        {
+          "Id": 22,
+          "Action": "EVAL",
+          "String": "eval('function sleep(ms){var cur = new Date().getTime();var expire = cur+ms;while(new Date().getTime()<expire){}};sleep(4500);')",
+          "Result": "$Res4"
+        },
+        {
+          "Id": 23,
+          "Action": "GET",
+          "Link": "$Res3",
+          "Headers": "$Headers",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 24,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "'",
+          "To": "\"",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 25,
+          "Action": "MATCH",
+          "String": "(?<=file: \")http.*?m3u8([^'\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res1",
+          "Result": "$result"
+        },
+        {
+          "Id": 26,
           "Action": "CONCAT",
           "Targets": [
             "$result",
             " engineOptions=headers::Referer:",
             "$Link",
-            "::user_agent::Mozilla/5.0"
+            "::user_agent::Safari/9.0"
           ],
           "Result": "$result"
         },
         {
-          "Id": 4,
+          "Id": 27,
           "Action": "FINAL",
           "Result": "$result"
         }

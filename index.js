@@ -6,7 +6,6 @@ let tough = require('tough-cookie');
 const express = require('express');
 const app = express();
 const port = 3000;
-let ResHeader;
 app.use(bodyParser.urlencoded());
 
 app.use(bodyParser.json());
@@ -48,11 +47,12 @@ app.listen(port, (err) => {
     if (err) throw err;
     console.log(`server is listening on ${port}`);
 });
+
 app.get('/debug', function () {
     console.log(Res);
     debugger;
-})
-let cookies;
+});
+
 app.get('/', async (req, res) => {
     if (req.query.url) {
         let link = await getLink(req.query.url).catch(ref => {
@@ -91,7 +91,7 @@ function getLink(link) {
                     for (let j = 0; j < rule.Stages.length; j++) {
                         let stage = rule.Stages[j];
                         if (goto && stage.Id != goto) continue;
-                        goto=undefined;
+                        goto = undefined;
                         console.log(stage.Id, stage.Action);
                         switch (stage.Action) {
                             case "GOTO":
@@ -100,12 +100,8 @@ function getLink(link) {
                                 }
                                 goto = stage.Stage;
                                 break;
-                            case "SLEEP":
-                                console.log(stage.Time);
-                                await sleep(stage.Time);
-                                break;
-                            case "CONCAT":
 
+                            case "CONCAT":
                                 // duyệt mảng thay các chuỗi bắt đầu bằng giá trị biến
                                 stage.Targets.forEach((target, index) => {
                                     if (target.match(/^\$\w+$/)) {
@@ -113,7 +109,7 @@ function getLink(link) {
                                     }
                                 });
 
-                                eval(`${stage.Result.match(/\w+/)[0]}=${JSON.stringify(stage.Targets.join(""))}`);
+                                eval(`${stage.Result.match(/\w+/)[0]} = ${JSON.stringify(stage.Targets.join(""))}`);
                                 break;
 
                             case "EVAL":
@@ -121,7 +117,7 @@ function getLink(link) {
                                     stage.String = eval(stage.String.match(/\w+/)[0]);
                                 } else stage.String = eval(stage.String);
                                 tempResult = eval(stage.String);
-                                eval(`${stage.Result.match(/\w+/)[0]}=${JSON.stringify(tempResult)}`);
+                                eval(`${stage.Result.match(/\w+/)[0]} = ${JSON.stringify(tempResult)}`);
                                 break;
 
                             case "REPLACE":
@@ -137,7 +133,7 @@ function getLink(link) {
 
                                 let replaceRegex = new RegExp(`${escapeRegExp((stage.From))}`, "g");
                                 tempResult = stage.In.replace(replaceRegex, stage.To);
-                                eval(`${stage.Result.match(/\w+/)[0]}=${JSON.stringify(tempResult)}`);
+                                eval(`${stage.Result.match(/\w+/)[0]} = ${JSON.stringify(tempResult)}`);
                                 break;
 
                             case "GET":
@@ -152,8 +148,6 @@ function getLink(link) {
                                 let options = {
                                     uri: stage.Link,
                                     headers: {},
-                                    // followAllRedirects: false,
-                                    // followRedirect: false,
                                     resolveWithFullResponse: true
                                 };
                                 let headers = stage.Headers;
@@ -165,37 +159,16 @@ function getLink(link) {
                                     });
                                 }
 
-                                if (cookies) {
-                                    // let cookies = new tough.Cookie({
-                                    //     key: "__cfduid",
-                                    //     value: ResHeader,
-                                    //     domain: '.ustv247.tv',
-                                    //     httpOnly: true
-                                    // });
-                                    // var cookiejar = requestPromise.jar();
-                                    // cookiejar.setCookie(cookies.toString(), 'https://ustv247.tv');
-                                    // options.jar = cookiejar;
-                                }
-
                                 let requestSucess = false;
                                 await requestPromise(options).then(function (htmlString) {
-                                    console.log(htmlString);
-                                    eval(`${stage.Result.match(/\w+/)[0]}=${JSON.stringify(htmlString.body)}`);
+                                    console.log(htmlString.body);
+                                    eval(`${stage.Result.match(/\w+/)[0]} = ${JSON.stringify(htmlString.body)}`);
                                     requestSucess = true;
                                 })
                                     .catch(function (err) {
                                         if (err.statusCode === 503 || err.statusCode === 302) {
-                                            eval(`${stage.Result.match(/\w+/)[0]}=${JSON.stringify(err.error)}`);
+                                            eval(`${stage.Result.match(/\w+/)[0]} = ${JSON.stringify(err.error)}`);
                                             requestSucess = true;
-                                            if (err.response && err.response.headers["set-cookie"]) {
-                                                err.response.headers["set-cookie"].forEach((cookie, i, s) => {
-                                                    s[i] = s[i].substr(0, s[i].indexOf(";"))
-                                                });
-                                                cookies = err.response.headers["set-cookie"].map(tough.Cookie.parse);
-                                                if (stage.ResHeaders && stage.ResHeaders.match(/^\$\w+$/)) {
-                                                    eval(`${stage.ResHeaders.match(/\w+/)[0]}="Cookie::"+${JSON.stringify(err.response.headers["set-cookie"].join(";"))}`);
-                                                }
-                                            }
                                         } else {
                                             requestSucess = false;
                                             console.error(err)
@@ -240,6 +213,7 @@ function getLink(link) {
                                 })
                                     .catch(function (err) {
                                         postRequestSucess = false;
+                                        console.error(err)
                                     });
                                 if (!postRequestSucess) return resolve(false);
 
@@ -273,7 +247,7 @@ function getLink(link) {
                                     tempResult = stage.Default || "";
                                 }
 
-                                eval(`${stage.Result.match(/\w+/)[0]}=${JSON.stringify(tempResult)}`);
+                                eval(`${stage.Result.match(/\w+/)[0]} = ${JSON.stringify(tempResult)}`);
                                 break;
                             case "FINAL":
                                 return resolve(eval(stage.Result.match(/\w+/)[0]));
@@ -290,10 +264,4 @@ function getLink(link) {
 
 function escapeRegExp(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-function sleep(ms) {
-    return new Promise(resolve => {
-        setTimeout(resolve, ms)
-    })
 }
