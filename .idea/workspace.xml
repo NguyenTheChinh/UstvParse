@@ -3,6 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="84435bab-98c9-4fc5-8ab7-3d93fb7f851e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rules-original.json" beforeDir="false" afterPath="$PROJECT_DIR$/rules-original.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rules.json" beforeDir="false" afterPath="$PROJECT_DIR$/rules.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -41,7 +44,7 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="prettierjs.PrettierConfiguration.Package" value="C:\Users\chinh\AppData\Roaming\npm\node_modules\prettier" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="settings.nodejs" />
+    <property name="settings.editor.selected.configurable" value="preferences.editor" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2019.2.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
@@ -94,7 +97,15 @@
       <workItem from="1567648179532" duration="20250000" />
       <workItem from="1567681231979" duration="694000" />
       <workItem from="1567734858345" duration="11626000" />
-      <workItem from="1567753614502" duration="1796000" />
+      <workItem from="1567753614502" duration="1892000" />
+      <workItem from="1567997063862" duration="601000" />
+      <workItem from="1568174296979" duration="1051000" />
+      <workItem from="1568175596837" duration="2610000" />
+      <workItem from="1569904911836" duration="10765000" />
+      <workItem from="1571970112897" duration="20000" />
+      <workItem from="1571970175453" duration="2997000" />
+      <workItem from="1572421339165" duration="11000" />
+      <workItem from="1572494751923" duration="2325000" />
     </task>
     <servers />
   </component>
@@ -122,29 +133,21 @@
     </breakpoint-manager>
     <watches-manager>
       <configuration name="NodeJSConfigurationType">
-        <watch expression="eval(stage.String)" language="JavaScript" />
-        <watch expression="stage.String" language="JavaScript" />
-        <watch expression="`${JSON.stringify(&quot;Cookie::&quot;+err.response.headers[&quot;set-cookie&quot;].join(&quot;;&quot;))}`" language="JavaScript" />
-        <watch expression="err.response.headers[&quot;set-cookie&quot;].join(&quot;;&quot;)" language="JavaScript" />
-        <watch expression="$Res1" language="JavaScript" />
-        <watch expression="eval(`${stage.ResHeaders.match(/\w+/)[0]}=${&quot;Cookie::&quot;+JSON.stringify(err.response.headers[&quot;set-cookie&quot;].join(&quot;;&quot;))}`);" language="JavaScript" />
-        <watch expression="`${&quot;Cookie::&quot;+JSON.stringify(err.response.headers[&quot;set-cookie&quot;].join(&quot;;&quot;))}`" language="JavaScript" />
-        <watch expression="eval(`${stage.ResHeaders.match(/\w+/)[0]}=&quot;Cookie::&quot;+${JSON.stringify(err.response.headers[&quot;set-cookie&quot;].join(&quot;;&quot;))}`);" language="JavaScript" />
-        <watch expression="Res2" language="JavaScript" />
+        <watch expression="tempResult" language="JavaScript" />
+        <watch expression="stage.In" language="JavaScript" />
+        <watch expression="stage.In.replace(replaceRegex, stage.To)" language="JavaScript" />
+        <watch expression="stage.To" language="JavaScript" />
+        <watch expression="stage.In.match(replaceRegex)" language="JavaScript" />
+        <watch expression="stage.In.match(/e.r.;/gm)" language="JavaScript" />
+        <watch expression="replaceRegex" language="JavaScript" />
         <watch expression="Res3" language="JavaScript" />
-        <watch expression="ResHeader" language="JavaScript" />
-        <watch expression="Headers" language="JavaScript" />
-        <watch expression="err.message.replace(/\\\&quot;/,&quot;&quot;)" language="JavaScript" />
-        <watch expression="err.response.headers[&quot;set-cookie&quot;][0].substr(0,err.response.headers[&quot;set-cookie&quot;][0].indexOf(&quot;;&quot;))" language="JavaScript" />
-        <watch expression="err.response.headers[&quot;set-cookie&quot;]" language="JavaScript" />
-        <watch expression="err.options" language="JavaScript" />
-        <watch expression="stage.Targets.join(&quot;&quot;)" language="JavaScript" />
-        <watch expression="eval(&quot;\&quot;https://ustv247.tv/cdn-cgi/l/chk_jschl?s=\&quot;+encodeURIComponent('86bf5d609fceb637f7c5cfacb7dc7da477d31dc5-1567611990-1800-AcAnCDnMfGoxQyjlz1h3b/ug4aWp61zxWeDQIdlslwshdV08+nE9xaS3am9LWQ1ChkSRPUMFJjZlowyAxQJaUDPv7kzy0c76wWoAMK9NLH+W0p8ReHCJI95EeuYDJt66aVbR1/k/+fV4Jbd2HBoN1WU=')\&quot;+&amp;jschl_vc=d40310efd7f3140b4e491a88af41c790&amp;pass=1567611994.002-6JTfLYIn+z&amp;jschl_answer=32.3371901475\&quot;&quot;)" language="JavaScript" />
-        <watch expression="htmlString" language="JavaScript" />
-        <watch expression="htmlString" />
-        <watch expression="htmlString.body" language="JavaScript" />
+        <watch expression="eval(Res2)" language="JavaScript" />
+        <watch expression="tempResult" language="JavaScript" />
+        <watch expression="Res1" language="JavaScript" />
         <watch expression="stage.String" language="JavaScript" />
-        <watch expression="err.error" language="JavaScript" />
+        <watch expression="stage.String" language="JavaScript" />
+        <watch expression="Res3" language="JavaScript" />
+        <watch expression="stage.String" language="JavaScript" />
       </configuration>
     </watches-manager>
   </component>
