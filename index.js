@@ -242,7 +242,7 @@ function escapeRegExp(string) {
 app.get('/search', async function (req, res) {
     if (!req.query.link) {
         res.send('thiếu trường link')
-    } else res.send(await searchLink(req.query.query, req.query.link));
+    } else res.send(JSON.parse(await searchLink(req.query.query, req.query.link)));
 });
 
 function searchLink(query, Link) {

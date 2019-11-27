@@ -56,7 +56,7 @@
             "    var imageRegex = new RegExp('(?<=\\\"' + link + '\\\".*?src=\\\").*?(?=\\\")',\\\"g\\\"), nameRegex = new RegExp('(?<=\\\"' + link + '\\\".*?title=\\\").*?(?=\\\")',\\\"g\\\");",
             "    results[index] = {link: link, image: html.match(imageRegex)?html.match(imageRegex)[0]:null, name: html.match(nameRegex)?html.match(nameRegex)[0]:null}",
             "  });",
-            "} results;\")"
+            "} JSON.stringify(results);\")"
           ],
           "Result": "$Res2"
         },
@@ -5843,7 +5843,7 @@
             "    var imageRegex = new RegExp('(?<=\\\"' + link + '\\\".*?src=\\\").*?(?=\\\" class=\\\"attachment-mh-magazine-medium)',\\\"g\\\"), nameRegex = new RegExp('(?<='+ link +'.*?title=\\\").*?(?=\\\")',\\\"g\\\");",
             "    results[index] = {link: link, image: html.match(imageRegex)?html.match(imageRegex)[0]:null, name: html.match(nameRegex)?html.match(nameRegex)[0]:null}",
             "  });",
-            "} results;\")"
+            "} JSON.stringify(results);\")"
           ],
           "Result": "$Res2"
         },
