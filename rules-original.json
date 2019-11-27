@@ -1402,29 +1402,147 @@
           "Id": 1,
           "Action": "GET",
           "Link": "$Link",
-          "Headers": "User-Agent::Safari/537.36",
-          "Result": "$Res"
+          "Headers": "Accept::text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3::Accept-Language::vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,fr-FR;q=0.5::Connection::keep-alive::Upgrade-Insecure-Requests::1::User-Agent::Safari/537.36",
+          "Result": "$Res1"
         },
         {
           "Id": 2,
-          "Action": "REPLACE",
-          "In": "$Res",
-          "From": "'",
-          "To": "\"",
-          "Result": "$Res"
+          "Action": "MATCH",
+          "String": "s,t,o,p(?:[^;]*);",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res1",
+          "Result": "$Res2"
         },
         {
           "Id": 3,
+          "Action": "MATCH",
+          "String": "var.*;",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res1",
+          "Result": "$Res2"
+        },
+        {
+          "Id": 4,
+          "Action": "REPLACE",
+          "In": "$Res2",
+          "From": "\"",
+          "To": "'",
+          "Result": "$Res2"
+        },
+        {
+          "Id": 5,
+          "Action": "REPLACE",
+          "In": "$Res2",
+          "From": "u,c,U,r,i,l=0,a",
+          "To": "u=undefined,c=undefined,U=undefined,r=undefined,i=undefined,l=0,a=undefined",
+          "Result": "$Res2"
+        },
+        {
+          "Id": 6,
+          "Action": "REPLACE",
+          "In": "$Res2",
+          "From": "var",
+          "To": "",
+          "Result": "$Res2"
+        },
+        {
+          "Id": 7,
+          "Action": "REPLACE",
+          "In": "$Res2",
+          "From": "e(r);",
+          "To": "r",
+          "Result": "$Res2"
+        },
+        {
+          "Id": 8,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"",
+            "$Res2",
+            "\")"
+          ],
+          "Result": "$Res2"
+        },
+        {
+          "Id": 9,
+          "Action": "EVAL",
+          "String": "$Res2",
+          "Result": "$Res2"
+        },
+        {
+          "Id": 10,
+          "Action": "REPLACE",
+          "In": "$Res2",
+          "From": "document.cookie",
+          "To": "cookie",
+          "Result": "$Res2"
+        },
+        {
+          "Id": 11,
+          "Action": "REPLACE",
+          "In": "$Res2",
+          "From": "location.reload();",
+          "To": "cookie.split(\";\")[0];",
+          "Result": "$Res2"
+        },
+        {
+          "Id": 12,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"",
+            "$Res2",
+            "\")"
+          ],
+          "Result": "$str_Header"
+        },
+        {
+          "Id": 13,
+          "Action": "EVAL",
+          "String": "$Res2",
+          "Result": "$Res2"
+        },
+        {
+          "Id": 14,
+          "Action": "CONCAT",
+          "Targets": [
+            "Connection::keep-alive::Accept::text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3::Accept-Language::vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,fr-FR;q=0.5::User-Agent::Safari/537.36::Referer::",
+            "$Link",
+            "::Cookie::",
+            "$Res2"
+          ],
+          "Result": "$Headers"
+        },
+        {
+          "Id": 15,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "$Headers",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 16,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "'",
+          "To": "\"",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 17,
           "Action": "MATCH",
           "String": "(?<=file: \")http.*?m3u8([^'\"]*)",
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$Res",
+          "Target": "$Res1",
           "Result": "$result"
         },
         {
-          "Id": 4,
+          "Id": 18,
           "Action": "CONCAT",
           "Targets": [
             "$result",
@@ -1435,7 +1553,7 @@
           "Result": "$result"
         },
         {
-          "Id": 5,
+          "Id": 19,
           "Action": "FINAL",
           "Result": "$result"
         }
@@ -5608,29 +5726,147 @@
           "Id": 1,
           "Action": "GET",
           "Link": "$Link",
-          "Headers": "User-Agent::Safari/537.36",
-          "Result": "$Res"
+          "Headers": "Accept::text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3::Accept-Language::vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,fr-FR;q=0.5::Connection::keep-alive::Host::ustv247.tv::Upgrade-Insecure-Requests::1::User-Agent::Safari/537.36",
+          "Result": "$Res1"
         },
         {
           "Id": 2,
-          "Action": "REPLACE",
-          "In": "$Res",
-          "From": "'",
-          "To": "\"",
-          "Result": "$Res"
+          "Action": "MATCH",
+          "String": "s,t,o,p(?:[^;]*);",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res1",
+          "Result": "$Res2"
         },
         {
           "Id": 3,
+          "Action": "MATCH",
+          "String": "var.*;",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res1",
+          "Result": "$Res2"
+        },
+        {
+          "Id": 4,
+          "Action": "REPLACE",
+          "In": "$Res2",
+          "From": "\"",
+          "To": "'",
+          "Result": "$Res2"
+        },
+        {
+          "Id": 5,
+          "Action": "REPLACE",
+          "In": "$Res2",
+          "From": "u,c,U,r,i,l=0,a",
+          "To": "u=undefined,c=undefined,U=undefined,r=undefined,i=undefined,l=0,a=undefined",
+          "Result": "$Res2"
+        },
+        {
+          "Id": 6,
+          "Action": "REPLACE",
+          "In": "$Res2",
+          "From": "var",
+          "To": "",
+          "Result": "$Res2"
+        },
+        {
+          "Id": 7,
+          "Action": "REPLACE",
+          "In": "$Res2",
+          "From": "e(r);",
+          "To": "r",
+          "Result": "$Res2"
+        },
+        {
+          "Id": 8,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"",
+            "$Res2",
+            "\")"
+          ],
+          "Result": "$Res2"
+        },
+        {
+          "Id": 9,
+          "Action": "EVAL",
+          "String": "$Res2",
+          "Result": "$Res2"
+        },
+        {
+          "Id": 10,
+          "Action": "REPLACE",
+          "In": "$Res2",
+          "From": "document.cookie",
+          "To": "cookie",
+          "Result": "$Res2"
+        },
+        {
+          "Id": 11,
+          "Action": "REPLACE",
+          "In": "$Res2",
+          "From": "location.reload();",
+          "To": "cookie.split(\";\")[0];",
+          "Result": "$Res2"
+        },
+        {
+          "Id": 12,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"",
+            "$Res2",
+            "\")"
+          ],
+          "Result": "$str_Header"
+        },
+        {
+          "Id": 13,
+          "Action": "EVAL",
+          "String": "$Res2",
+          "Result": "$Res2"
+        },
+        {
+          "Id": 14,
+          "Action": "CONCAT",
+          "Targets": [
+            "Connection::keep-alive::Accept::text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3::Accept-Language::vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,fr-FR;q=0.5::User-Agent::Safari/537.36::Referer::",
+            "$Link",
+            "::Cookie::",
+            "$Res2"
+          ],
+          "Result": "$Headers"
+        },
+        {
+          "Id": 15,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "$Headers",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 16,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "'",
+          "To": "\"",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 17,
           "Action": "MATCH",
           "String": "(?<=file: \")http.*?m3u8([^'\"]*)",
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$Res",
+          "Target": "$Res1",
           "Result": "$result"
         },
         {
-          "Id": 4,
+          "Id": 18,
           "Action": "CONCAT",
           "Targets": [
             "$result",
@@ -5641,7 +5877,7 @@
           "Result": "$result"
         },
         {
-          "Id": 5,
+          "Id": 19,
           "Action": "FINAL",
           "Result": "$result"
         }

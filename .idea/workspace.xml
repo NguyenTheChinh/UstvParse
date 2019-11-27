@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="84435bab-98c9-4fc5-8ab7-3d93fb7f851e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/search_rules.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rules-original.json" beforeDir="false" afterPath="$PROJECT_DIR$/rules-original.json" afterDir="false" />
@@ -30,6 +31,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="JSON" />
     <property name="javascript.nodejs.core.library.configured.version" value="12.9.0" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -49,6 +51,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\UstvParse" />
       <recent name="E:\Work\UstvParse" />
     </key>
   </component>
@@ -105,7 +108,13 @@
       <workItem from="1571970112897" duration="20000" />
       <workItem from="1571970175453" duration="2997000" />
       <workItem from="1572421339165" duration="11000" />
-      <workItem from="1572494751923" duration="2325000" />
+      <workItem from="1572494751923" duration="4385000" />
+      <workItem from="1573011544696" duration="7277000" />
+      <workItem from="1573725607529" duration="3850000" />
+      <workItem from="1573784631931" duration="6647000" />
+      <workItem from="1574739573972" duration="13505000" />
+      <workItem from="1574831704641" duration="3277000" />
+      <workItem from="1574838434553" duration="140000" />
     </task>
     <servers />
   </component>
@@ -147,6 +156,7 @@
         <watch expression="stage.String" language="JavaScript" />
         <watch expression="stage.String" language="JavaScript" />
         <watch expression="Res3" language="JavaScript" />
+        <watch expression="stage.String" language="JavaScript" />
         <watch expression="stage.String" language="JavaScript" />
       </configuration>
     </watches-manager>
