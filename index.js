@@ -45,7 +45,7 @@ app.get('/', async (req, res) => {
     }
 });
 
-// let debugIds = [8];
+// let debugIds = [21];
 let debugIds = [];
 
 function getLink(link) {

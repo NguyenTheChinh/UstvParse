@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="84435bab-98c9-4fc5-8ab7-3d93fb7f851e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/search_rules.json" beforeDir="false" afterPath="$PROJECT_DIR$/search_rules.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -113,7 +114,8 @@
       <workItem from="1574831704641" duration="3277000" />
       <workItem from="1574838434553" duration="140000" />
       <workItem from="1574838597741" duration="598000" />
-      <workItem from="1574840189545" duration="2171000" />
+      <workItem from="1574840189545" duration="6039000" />
+      <workItem from="1574907022663" duration="6957000" />
     </task>
     <servers />
   </component>
@@ -141,22 +143,8 @@
     </breakpoint-manager>
     <watches-manager>
       <configuration name="NodeJSConfigurationType">
-        <watch expression="tempResult" language="JavaScript" />
-        <watch expression="stage.In" language="JavaScript" />
-        <watch expression="stage.In.replace(replaceRegex, stage.To)" language="JavaScript" />
-        <watch expression="stage.To" language="JavaScript" />
-        <watch expression="stage.In.match(replaceRegex)" language="JavaScript" />
-        <watch expression="stage.In.match(/e.r.;/gm)" language="JavaScript" />
-        <watch expression="replaceRegex" language="JavaScript" />
-        <watch expression="Res3" language="JavaScript" />
-        <watch expression="eval(Res2)" language="JavaScript" />
-        <watch expression="tempResult" language="JavaScript" />
-        <watch expression="Res1" language="JavaScript" />
         <watch expression="stage.String" language="JavaScript" />
-        <watch expression="stage.String" language="JavaScript" />
-        <watch expression="Res3" language="JavaScript" />
-        <watch expression="stage.String" language="JavaScript" />
-        <watch expression="stage.String" language="JavaScript" />
+        <watch expression="Res2" language="JavaScript" />
       </configuration>
     </watches-manager>
   </component>
