@@ -248,6 +248,140 @@
           "Result": "$Res3"
         }
       ]
+    },
+    {
+      "Match": "streamlive.to",
+      "Name": "StreamLive Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "CONCAT",
+          "Targets": [
+            "page::1::sortBy::1::query::",
+            "$query",
+            "::list::all::itemspp::32"
+          ],
+          "Result": "$params"
+        },
+        {
+          "Id": 2,
+          "Action": "POST",
+          "Link": "https://www.streamlive.to/channelsPages.php",
+          "Headers": "User-Agent::Safari/537.36",
+          "Params": "$params",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 3,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "\n",
+          "To": "",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 4,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "'",
+          "To": "\"",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 5,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "\"",
+          "To": "\\\"",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 6,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"var html = '",
+            "$Res1",
+            "'; var results=[], linkPattern = /(?:href=\\\")(.*?)(?=\\\")/gm, link; while((link=linkPattern.exec(html))!==null){link=link[1].replace(/[()]/g, '\\\\\\\\$&');",
+            "    var imageRegex = new RegExp('(?:\\\"' + link + '\\\".*?src=\\\")(.*?)(?=\\\")',\\\"g\\\"), nameRegex = new RegExp('(?:\\\"' + link + '\\\".*?<h2>)(.*?)(?=</h2>)',\\\"g\\\"), premiumRegex = new RegExp('(?:\\\"' + link + '\\\".*?class=\\\"mli-quality\\\">)(.*?)(?=</span>)',\\\"g\\\");",
+            "    var premiumMatch = premiumRegex.exec(html); if(premiumMatch!=null && premiumMatch[0].indexOf('href')===-1) continue; else {var imageMatch = imageRegex.exec(html), nameMatch = nameRegex.exec(html); results.push({link: link, image: imageMatch?'http:' + imageMatch[1]:null, name: nameMatch?nameMatch[1]:null}) }}",
+            " JSON.stringify(results);\")"
+          ],
+          "Result": "$Res2"
+        },
+        {
+          "Id": 7,
+          "Action": "EVAL",
+          "String": "$Res2",
+          "Result": "$Res3"
+        },
+        {
+          "Id": 8,
+          "Action": "FINAL",
+          "Result": "$Res3"
+        }
+      ]
+    },
+    {
+      "Match": "cobar",
+      "Name": "cobar.live Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "GET",
+          "Link": "https://cobar.live/",
+          "Headers": "User-Agent::Safari/537.36",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 2,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "\n",
+          "To": "",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 3,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "'",
+          "To": "\"",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 4,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "\"",
+          "To": "\\\"",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 5,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"var html = '",
+            "$Res1",
+            "'; var results=[], linkPattern = /(?:href=\\\")(.*?)(?=\\\")/gm, divLinkPattern = /<div class=\\\"event\\\">.*?<\\\\/div>/gm, nameRegex = new RegExp('(?:> )(.*?)(?=<\\\\/h4>)',\\\"g\\\"), link, divLink; while((divLink=divLinkPattern.exec(html))!==null){divLink=divLink[0];",
+            "    var linkMatch=divLink.match(linkPattern), nameMatch = nameRegex.exec(divLink); if (linkMatch[1] == null || linkMatch[1].match(/http.*/gm) == null || nameMatch == null || nameMatch[1].toLowerCase().indexOf('",
+            "$query",
+            "')===-1){ continue; } results.push({link: linkMatch[1].match(/http.*/gm)[0], image: null, name: nameMatch?nameMatch[1]:null}); linkPattern.lastIndex=0; nameRegex.lastIndex=0; }",
+            " JSON.stringify(results);\")"
+          ],
+          "Result": "$Res2"
+        },
+        {
+          "Id": 6,
+          "Action": "EVAL",
+          "String": "$Res2",
+          "Result": "$Res3"
+        },
+        {
+          "Id": 7,
+          "Action": "FINAL",
+          "Result": "$Res3"
+        }
+      ]
     }
   ]
 }

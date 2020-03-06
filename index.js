@@ -45,7 +45,7 @@ app.get('/', async (req, res) => {
     }
 });
 
-// let debugIds = [21];
+// let debugIds = [40];
 let debugIds = [];
 
 function getLink(link) {
@@ -120,8 +120,10 @@ function getLink(link) {
 
                                 let options = {
                                     uri: stage.Link,
+                                    encoding: 'utf-8',
                                     headers: {},
-                                    resolveWithFullResponse: true
+                                    resolveWithFullResponse: true,
+                                    gzip: true
                                 };
                                 let headers = stage.Headers;
                                 if (headers) {
@@ -147,7 +149,7 @@ function getLink(link) {
                                             console.error(err)
                                         }
                                     });
-                                if (!requestSucess) return resolve(false);
+                                // if (!requestSucess) return resolve(false);
                                 break;
 
                             case "POST":
@@ -162,11 +164,17 @@ function getLink(link) {
                                 if (stage.Params.match(/^\$\w+$/)) {
                                     stage.Params = eval(stage.Params.match(/\w+/)[0]);
                                 }
+                                stage.Params = stage.Params.split("::");
 
                                 let postOptions = {
                                     method: 'POST',
                                     uri: stage.Link,
                                     headers: {},
+                                    body: stage.Params.map((value, index) => {
+                                        if (index % 2 === 0) return `${value}=`;
+                                        else return `${value}&`;
+                                    }).join(""),
+                                    gzip: true
                                 };
 
                                 let postHeaders = stage.Headers;
@@ -214,11 +222,17 @@ function getLink(link) {
                                     stage.GroupId = eval(stage.GroupId.match(/\w+/g)[0]);
                                 }
 
-                                const matchRegex = new RegExp(`${stage.String}`, "g");
-                                if (matchString.match(matchRegex)) tempResult = matchString.match(matchRegex)[stage.MatchId];
-                                else {
-                                    tempResult = stage.Default || "";
+                                tempResult = stage.Default || "";
+                                let matchRegex = new RegExp(`${stage.String}`, "g");
+                                let matchId = 0, match;
+                                while ((match = matchRegex.exec(matchString)) !== null) {
+                                    if (matchId == stage.MatchId) {
+                                        tempResult = match[stage.GroupId];
+                                        break;
+                                    }
+                                    matchId++;
                                 }
+
 
                                 eval(`${stage.Result.match(/\w+/)[0]} = ${JSON.stringify(tempResult)}`);
                                 break;
@@ -317,7 +331,8 @@ function searchLink(query, Link) {
                                 let options = {
                                     uri: stage.Link,
                                     headers: {},
-                                    resolveWithFullResponse: true
+                                    resolveWithFullResponse: true,
+                                    gzip: true
                                 };
                                 let headers = stage.Headers;
                                 if (headers) {
@@ -358,11 +373,17 @@ function searchLink(query, Link) {
                                 if (stage.Params.match(/^\$\w+$/)) {
                                     stage.Params = eval(stage.Params.match(/\w+/)[0]);
                                 }
+                                stage.Params = stage.Params.split("::");
 
                                 let postOptions = {
                                     method: 'POST',
                                     uri: stage.Link,
-                                    headers: {},
+                                    headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+                                    body: stage.Params.map((value, index) => {
+                                        if (index % 2 === 0) return `${value}=`;
+                                        else return `${value}&`;
+                                    }).join(""),
+                                    gzip: true
                                 };
 
                                 let postHeaders = stage.Headers;
@@ -410,10 +431,15 @@ function searchLink(query, Link) {
                                     stage.GroupId = eval(stage.GroupId.match(/\w+/g)[0]);
                                 }
 
-                                const matchRegex = new RegExp(`${stage.String}`, "g");
-                                if (matchString.match(matchRegex)) tempResult = matchString.match(matchRegex)[stage.MatchId];
-                                else {
-                                    tempResult = stage.Default || "";
+                                tempResult = stage.Default || "";
+                                let matchRegex = new RegExp(`${stage.String}`, "g");
+                                let matchId = 0, match;
+                                while ((match = matchRegex.exec(matchString)) !== null) {
+                                    if (matchId == stage.MatchId) {
+                                        tempResult = match[stage.GroupId];
+                                        break;
+                                    }
+                                    matchId++;
                                 }
 
                                 eval(`${stage.Result.match(/\w+/)[0]} = ${JSON.stringify(tempResult)}`);
@@ -430,3 +456,13 @@ function searchLink(query, Link) {
         }
     });
 }
+
+// $.ajax({
+//     'type': 'GET',
+//     'url': "https://www.livenewsmag.com/wp-admin/admin-ajax.php",
+//     'dataType': 'json',
+//     'data': {
+//         'action': 'bimber_search',
+//         'bimber_term': "abc"
+//     }
+// })

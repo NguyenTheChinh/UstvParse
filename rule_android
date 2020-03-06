@@ -774,7 +774,7 @@
           "GroupId": "0",
           "Default": "@",
           "Target": "$Res",
-          "Result": "$function_result"
+          "Result": "$function"
         },
         {
           "Id": 19,
@@ -783,7 +783,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$func_name"
         },
         {
@@ -793,7 +793,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$Res5"
         },
         {
@@ -833,16 +833,16 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$Res8"
         },
         {
           "Id": 25,
           "Action": "REPLACE",
-          "In": "$function_result",
+          "In": "$function",
           "From": "$Res8",
           "To": "$Res7",
-          "Result": "$function_result"
+          "Result": "$function"
         },
         {
           "Id": 26,
@@ -851,7 +851,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$var_name"
         },
         {
@@ -872,15 +872,15 @@
           "GroupId": "0",
           "Default": "@",
           "Target": "$Res",
-          "Result": "$var_result"
+          "Result": "$var"
         },
         {
           "Id": 29,
           "Action": "CONCAT",
           "Targets": [
             "eval('",
-            "$var_result",
-            "$function_result",
+            "$var",
+            "$function",
             "$func_name",
             ";",
             "')"
@@ -1001,7 +1001,7 @@
           "Id": 3,
           "Action": "GET",
           "Link": "$Link",
-          "Headers": "Referer::http://ustvgo.tv/::User-Agent::Safari/537.36",
+          "Headers": "Referer::http://ustvgo.tv/",
           "Result": "$Res"
         },
         {
@@ -1059,7 +1059,7 @@
           "GroupId": "0",
           "Default": "@",
           "Target": "$Res",
-          "Result": "$var_result"
+          "Result": "$var"
         },
         {
           "Id": 3,
@@ -1074,17 +1074,17 @@
         {
           "Id": 4,
           "Action": "REPLACE",
-          "In": "$var_result",
+          "In": "$var",
           "From": "'",
           "To": "\\'",
-          "Result": "$var_result"
+          "Result": "$var"
         },
         {
           "Id": 5,
           "Action": "CONCAT",
           "Targets": [
             "eval('function atob (s){var e = {}, r=\\\"\\\",i, k, v = [], w = String.fromCharCode;var n = [[65, 91], [97, 123], [48, 58], [43, 44], [47, 48]];for (z in n) {for (i = n[z][0]; i < n[z][1]; i++) {v.push(w(i)); }} for (i = 0; i < 64; i++)  {e[v[i]] = i;}for (i = 0; i < s.length; i+=72){var b = 0, c, x, l = 0, o = s.substring(i, i+72); for (x = 0; x < o.length; x++){c = e[o.charAt(x)];b = (b << 6) + c; l += 6; while (l >= 8){   r += w((b >>> (l -= 8)) % 256); }}} return r;};var __=",
-            "$var_result",
+            "$var",
             "__;')"
           ],
           "Result": "$eval_link"
@@ -1194,7 +1194,7 @@
           "GroupId": "0",
           "Default": "@",
           "Target": "$Res",
-          "Result": "$function_result"
+          "Result": "$function"
         },
         {
           "Id": 19,
@@ -1203,7 +1203,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$func_name"
         },
         {
@@ -1213,7 +1213,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$Res5"
         },
         {
@@ -1253,16 +1253,16 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$Res8"
         },
         {
           "Id": 25,
           "Action": "REPLACE",
-          "In": "$function_result",
+          "In": "$function",
           "From": "$Res8",
           "To": "$Res7",
-          "Result": "$function_result"
+          "Result": "$function"
         },
         {
           "Id": 26,
@@ -1271,7 +1271,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$var_name"
         },
         {
@@ -1292,15 +1292,15 @@
           "GroupId": "0",
           "Default": "@",
           "Target": "$Res",
-          "Result": "$var_result"
+          "Result": "$var"
         },
         {
           "Id": 29,
           "Action": "CONCAT",
           "Targets": [
             "eval('",
-            "$var_result",
-            "$function_result",
+            "$var",
+            "$function",
             "$func_name",
             ";",
             "')"
@@ -1605,7 +1605,7 @@
           "GroupId": "0",
           "Default": "@",
           "Target": "$Res",
-          "Result": "$function_result"
+          "Result": "$function"
         },
         {
           "Id": 19,
@@ -1614,7 +1614,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$func_name"
         },
         {
@@ -1624,7 +1624,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$Res5"
         },
         {
@@ -1664,16 +1664,16 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$Res8"
         },
         {
           "Id": 25,
           "Action": "REPLACE",
-          "In": "$function_result",
+          "In": "$function",
           "From": "$Res8",
           "To": "$Res7",
-          "Result": "$function_result"
+          "Result": "$function"
         },
         {
           "Id": 26,
@@ -1682,7 +1682,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$var_name"
         },
         {
@@ -1703,15 +1703,15 @@
           "GroupId": "0",
           "Default": "@",
           "Target": "$Res",
-          "Result": "$var_result"
+          "Result": "$var"
         },
         {
           "Id": 29,
           "Action": "CONCAT",
           "Targets": [
             "eval('",
-            "$var_result",
-            "$function_result",
+            "$var",
+            "$function",
             "$func_name",
             ";",
             "')"
@@ -2112,7 +2112,7 @@
           "GroupId": "0",
           "Default": "@",
           "Target": "$Res",
-          "Result": "$function_result"
+          "Result": "$function"
         },
         {
           "Id": 19,
@@ -2121,7 +2121,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$func_name"
         },
         {
@@ -2131,7 +2131,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$Res5"
         },
         {
@@ -2171,16 +2171,16 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$Res8"
         },
         {
           "Id": 25,
           "Action": "REPLACE",
-          "In": "$function_result",
+          "In": "$function",
           "From": "$Res8",
           "To": "$Res7",
-          "Result": "$function_result"
+          "Result": "$function"
         },
         {
           "Id": 26,
@@ -2189,7 +2189,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$var_name"
         },
         {
@@ -2210,15 +2210,15 @@
           "GroupId": "0",
           "Default": "@",
           "Target": "$Res",
-          "Result": "$var_result"
+          "Result": "$var"
         },
         {
           "Id": 29,
           "Action": "CONCAT",
           "Targets": [
             "eval('",
-            "$var_result",
-            "$function_result",
+            "$var",
+            "$function",
             "$func_name",
             ";",
             "')"
@@ -2451,7 +2451,7 @@
           "GroupId": "0",
           "Default": "@",
           "Target": "$Res",
-          "Result": "$function_result"
+          "Result": "$function"
         },
         {
           "Id": 19,
@@ -2460,7 +2460,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$func_name"
         },
         {
@@ -2470,7 +2470,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$Res5"
         },
         {
@@ -2510,16 +2510,16 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$Res8"
         },
         {
           "Id": 25,
           "Action": "REPLACE",
-          "In": "$function_result",
+          "In": "$function",
           "From": "$Res8",
           "To": "$Res7",
-          "Result": "$function_result"
+          "Result": "$function"
         },
         {
           "Id": 26,
@@ -2528,7 +2528,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$var_name"
         },
         {
@@ -2549,15 +2549,15 @@
           "GroupId": "0",
           "Default": "@",
           "Target": "$Res",
-          "Result": "$var_result"
+          "Result": "$var"
         },
         {
           "Id": 29,
           "Action": "CONCAT",
           "Targets": [
             "eval('",
-            "$var_result",
-            "$function_result",
+            "$var",
+            "$function",
             "$func_name",
             ";",
             "')"
@@ -2780,7 +2780,7 @@
           "GroupId": "0",
           "Default": "@",
           "Target": "$Res",
-          "Result": "$function_result"
+          "Result": "$function"
         },
         {
           "Id": 19,
@@ -2789,7 +2789,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$func_name"
         },
         {
@@ -2799,7 +2799,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$Res5"
         },
         {
@@ -2839,16 +2839,16 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$Res8"
         },
         {
           "Id": 25,
           "Action": "REPLACE",
-          "In": "$function_result",
+          "In": "$function",
           "From": "$Res8",
           "To": "$Res7",
-          "Result": "$function_result"
+          "Result": "$function"
         },
         {
           "Id": 26,
@@ -2857,7 +2857,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$var_name"
         },
         {
@@ -2878,15 +2878,15 @@
           "GroupId": "0",
           "Default": "@",
           "Target": "$Res",
-          "Result": "$var_result"
+          "Result": "$var"
         },
         {
           "Id": 29,
           "Action": "CONCAT",
           "Targets": [
             "eval('",
-            "$var_result",
-            "$function_result",
+            "$var",
+            "$function",
             "$func_name",
             ";",
             "')"
@@ -3109,7 +3109,7 @@
           "GroupId": "0",
           "Default": "@",
           "Target": "$Res",
-          "Result": "$function_result"
+          "Result": "$function"
         },
         {
           "Id": 19,
@@ -3118,7 +3118,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$func_name"
         },
         {
@@ -3128,7 +3128,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$Res5"
         },
         {
@@ -3168,16 +3168,16 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$Res8"
         },
         {
           "Id": 25,
           "Action": "REPLACE",
-          "In": "$function_result",
+          "In": "$function",
           "From": "$Res8",
           "To": "$Res7",
-          "Result": "$function_result"
+          "Result": "$function"
         },
         {
           "Id": 26,
@@ -3186,7 +3186,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$var_name"
         },
         {
@@ -3207,15 +3207,15 @@
           "GroupId": "0",
           "Default": "@",
           "Target": "$Res",
-          "Result": "$var_result"
+          "Result": "$var"
         },
         {
           "Id": 29,
           "Action": "CONCAT",
           "Targets": [
             "eval('",
-            "$var_result",
-            "$function_result",
+            "$var",
+            "$function",
             "$func_name",
             ";",
             "')"
@@ -3429,7 +3429,7 @@
           "GroupId": "0",
           "Default": "@",
           "Target": "$Res",
-          "Result": "$function_result"
+          "Result": "$function"
         },
         {
           "Id": 19,
@@ -3438,7 +3438,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$func_name"
         },
         {
@@ -3448,7 +3448,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$Res5"
         },
         {
@@ -3488,16 +3488,16 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$Res8"
         },
         {
           "Id": 25,
           "Action": "REPLACE",
-          "In": "$function_result",
+          "In": "$function",
           "From": "$Res8",
           "To": "$Res7",
-          "Result": "$function_result"
+          "Result": "$function"
         },
         {
           "Id": 26,
@@ -3506,7 +3506,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$var_name"
         },
         {
@@ -3527,15 +3527,15 @@
           "GroupId": "0",
           "Default": "@",
           "Target": "$Res",
-          "Result": "$var_result"
+          "Result": "$var"
         },
         {
           "Id": 29,
           "Action": "CONCAT",
           "Targets": [
             "eval('",
-            "$var_result",
-            "$function_result",
+            "$var",
+            "$function",
             "$func_name",
             ";",
             "')"
@@ -4015,7 +4015,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Target": "$Res",
-          "Result": "$function_result"
+          "Result": "$function"
         },
         {
           "Id": 12,
@@ -4023,7 +4023,7 @@
           "String": "(?<=function)(?:.*?)\\)",
           "MatchId": "0",
           "GroupId": "0",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$func_name"
         },
         {
@@ -4032,7 +4032,7 @@
           "String": "(?<=document\\.getElementById\\(\")([^\"]*)(?=\")",
           "MatchId": "0",
           "GroupId": "0",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$Res5"
         },
         {
@@ -4070,16 +4070,16 @@
           "String": "document.getElementById(.*)innerHTML\\)",
           "MatchId": "0",
           "GroupId": "0",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$Res8"
         },
         {
           "Id": 18,
           "Action": "REPLACE",
-          "In": "$function_result",
+          "In": "$function",
           "From": "$Res8",
           "To": "$Res7",
-          "Result": "$function_result"
+          "Result": "$function"
         },
         {
           "Id": 19,
@@ -4087,7 +4087,7 @@
           "String": "(?<=\\+ )(.*)(?=.join)",
           "MatchId": "0",
           "GroupId": "0",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$var_name"
         },
         {
@@ -4107,15 +4107,15 @@
           "MatchId": "0",
           "GroupId": "0",
           "Target": "$Res",
-          "Result": "$var_result"
+          "Result": "$var"
         },
         {
           "Id": 22,
           "Action": "CONCAT",
           "Targets": [
             "eval('",
-            "$var_result",
-            "$function_result",
+            "$var",
+            "$function",
             "$func_name",
             ";",
             "')"
@@ -4611,7 +4611,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Target": "$Res",
-          "Result": "$function_result"
+          "Result": "$function"
         },
         {
           "Id": 3,
@@ -4619,7 +4619,7 @@
           "String": "(?<=function)(?:.*?)\\)",
           "MatchId": "0",
           "GroupId": "0",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$func_name"
         },
         {
@@ -4628,7 +4628,7 @@
           "String": "(?<=document\\.getElementById\\(\")([^\"]*)(?=\")",
           "MatchId": "0",
           "GroupId": "0",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$Res5"
         },
         {
@@ -4666,16 +4666,16 @@
           "String": "document.getElementById(.*)innerHTML\\)",
           "MatchId": "0",
           "GroupId": "0",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$Res8"
         },
         {
           "Id": 9,
           "Action": "REPLACE",
-          "In": "$function_result",
+          "In": "$function",
           "From": "$Res8",
           "To": "$Res7",
-          "Result": "$function_result"
+          "Result": "$function"
         },
         {
           "Id": 10,
@@ -4683,7 +4683,7 @@
           "String": "(?<=\\+ )(.*)(?=.join)",
           "MatchId": "0",
           "GroupId": "0",
-          "Target": "$function_result",
+          "Target": "$function",
           "Result": "$var_name"
         },
         {
@@ -4703,15 +4703,15 @@
           "MatchId": "0",
           "GroupId": "0",
           "Target": "$Res",
-          "Result": "$var_result"
+          "Result": "$var"
         },
         {
           "Id": 13,
           "Action": "CONCAT",
           "Targets": [
             "eval('",
-            "$var_result",
-            "$function_result",
+            "$var",
+            "$function",
             "$func_name",
             ";",
             "')"
@@ -5652,323 +5652,67 @@
           "Id": 1,
           "Action": "GET",
           "Link": "$Link",
-          "Headers": "User-Agent::Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36",
+          "Headers": "User-Agent::Safari/537.36",
           "Result": "$Res"
         },
         {
           "Id": 2,
-          "Action": "REPLACE",
-          "In": "$Res",
-          "From": "'",
-          "To": "\"",
+          "Action": "MATCH",
+          "String": "(?<=<iframe src=\\\")\\/file.*?(?=\\\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "$Link",
+          "Target": "$Res",
           "Result": "$Res1"
         },
         {
           "Id": 3,
-          "Action": "MATCH",
-          "String": "http(?:[^\"]*)m3u8(?:[^\"]*)",
-          "MatchId": "0",
-          "GroupId": "0",
-          "Default": "@",
-          "Target": "$Res1",
-          "Result": "$result"
+          "Action": "CONCAT",
+          "Targets": [
+            "eval('if(\\\"",
+            "$Res1",
+            "\\\".indexOf(\\\"http\\\")==-1){Res1=\\\"https://cobar.live\\\"+\\\"",
+            "$Res1",
+            "\\\"}')"
+          ],
+          "Result": "$Res2"
         },
         {
           "Id": 4,
-          "Action": "CONCAT",
-          "Targets": [
-            "eval(\"if(\\\"",
-            "$result",
-            "\\\"==\\\"@\\\") 24; else 37;\")"
-          ],
-          "Result": "$Res"
+          "Action": "EVAL",
+          "String": "$Res2",
+          "Result": "$Res1"
         },
         {
           "Id": 5,
-          "Action": "EVAL",
-          "String": "$Res",
+          "Action": "GET",
+          "Link": "$Res1",
+          "Headers": "Referer::https://cobar.live::User-Agent::Safari/537.36",
           "Result": "$Res"
         },
         {
           "Id": 6,
-          "Action": "GOTO",
-          "Stage": "$Res"
-        },
-        {
-          "Id": 7,
-          "Action": "CONCAT",
-          "Targets": [
-            "User-Agent::Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36::Referer::",
-            "$Link"
-          ],
-          "Result": "$Header"
-        },
-        {
-          "Id": 8,
           "Action": "MATCH",
-          "String": "(?<=iframe)(?:.*?src=\")([^\"]*)(?=\")",
-          "MatchId": "0",
-          "GroupId": "1",
-          "Default": "@",
-          "Target": "$Res1",
-          "Result": "$Link"
-        },
-        {
-          "Id": 9,
-          "Action": "GET",
-          "Link": "$Link",
-          "Headers": "$Header",
-          "Result": "$Res"
-        },
-        {
-          "Id": 10,
-          "Action": "MATCH",
-          "String": "function\\(p,a,c,k,e,d\\)(?:.*)\\{\\}\\)",
+          "String": "http(?:[^\"|']*?)m3u8(?:[^\"|']*?)",
           "MatchId": "0",
           "GroupId": "0",
-          "Default": "'@'",
+          "Default": "@",
           "Target": "$Res",
-          "Result": "$code"
-        },
-        {
-          "Id": 11,
-          "Action": "REPLACE",
-          "In": "$code",
-          "From": "\\",
-          "To": "\\\\",
-          "Result": "$code"
-        },
-        {
-          "Id": 12,
-          "Action": "REPLACE",
-          "In": "$code",
-          "From": "\"",
-          "To": "\\\"",
-          "Result": "$code"
-        },
-        {
-          "Id": 13,
-          "Action": "CONCAT",
-          "Targets": [
-            "var code;var env = {eval: function (c) {code = c;}};eval(\"with(env) {\" + \"eval(",
-            "$code",
-            ")\" + \"}\"); code;"
-          ],
-          "Result": "$code"
-        },
-        {
-          "Id": 14,
-          "Action": "EVAL",
-          "String": "$code",
-          "Result": "$out_code"
-        },
-        {
-          "Id": 15,
-          "Action": "REPLACE",
-          "In": "$out_code",
-          "From": "'",
-          "To": "\"",
-          "Result": "$out_code"
-        },
-        {
-          "Id": 16,
-          "Action": "MATCH",
-          "String": "(?<=streamdelay=)(?:.*?;)(.*?)(?=function)",
-          "MatchId": "0",
-          "GroupId": "1",
-          "Target": "$out_code",
-          "Result": "$Res2"
-        },
-        {
-          "Id": 17,
-          "Action": "EVAL",
-          "String": "$Res2",
-          "Result": "$Res3"
-        },
-        {
-          "Id": 18,
-          "Action": "CONCAT",
-          "Targets": [
-            "eval('",
-            "$Res2",
-            "')"
-          ],
-          "Result": "$Res9"
+          "Result": "$result"
         },
         {
           "Id": 19,
-          "Action": "EVAL",
-          "String": "$Res9",
-          "Result": "$Res9"
-        },
-        {
-          "Id": 20,
-          "Action": "MATCH",
-          "String": "(?<=ajax)(?:.*?url:)(.*?)(?=,)",
-          "MatchId": "0",
-          "GroupId": "1",
-          "Target": "$out_code",
-          "Result": "$Res3"
-        },
-        {
-          "Id": 21,
-          "Action": "REPLACE",
-          "In": "$Res3",
-          "From": "window.",
-          "To": "",
-          "Result": "$Res3"
-        },
-        {
-          "Id": 22,
-          "Action": "MATCH",
-          "String": "function dameVuelta.*?}",
-          "MatchId": "0",
-          "GroupId": "0",
-          "Target": "$out_code",
-          "Result": "$Res4"
-        },
-        {
-          "Id": 23,
-          "Action": "REPLACE",
-          "In": "$Res4",
-          "From": "window.",
-          "To": "",
-          "Result": "$Res4"
-        },
-        {
-          "Id": 24,
-          "Action": "MATCH",
-          "String": "(?:function changlasmuy.*?)(var.*?)(?=if)",
-          "MatchId": "0",
-          "GroupId": "1",
-          "Target": "$out_code",
-          "Result": "$Res5"
-        },
-        {
-          "Id": 25,
-          "Action": "REPLACE",
-          "In": "$Res5",
-          "From": "window.",
-          "To": "",
-          "Result": "$Res5"
-        },
-        {
-          "Id": 26,
-          "Action": "MATCH",
-          "String": "(?<=done\\(function\\()(.*?)(?=\\))",
-          "MatchId": "0",
-          "GroupId": "1",
-          "Target": "$out_code",
-          "Result": "$Res6"
-        },
-        {
-          "Id": 27,
-          "Action": "MATCH",
-          "String": "(?<=done\\(function\\()(?:.*?)(?=\\))(?:.*?else.*?{)(.*?)(?=if)",
-          "MatchId": "0",
-          "GroupId": "1",
-          "Target": "$out_code",
-          "Result": "$Res7"
-        },
-        {
-          "Id": 28,
-          "Action": "CONCAT",
-          "Targets": [
-            "eval('function atob(r,e){var o,t,d,n,f,a,i,h,c=[],C=\"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\";h=(e=void 0!==e&&e)?Utf8.decode(r):r;for(var g=0;g<h.length;g+=4)o=(a=C.indexOf(h.charAt(g))<<18|C.indexOf(h.charAt(g+1))<<12|(n=C.indexOf(h.charAt(g+2)))<<6|(f=C.indexOf(h.charAt(g+3))))>>>16&255,t=a>>>8&255,d=255&a,c[g/4]=String.fromCharCode(o,t,d),64==f&&(c[g/4]=String.fromCharCode(o,t)),64==n&&(c[g/4]=String.fromCharCode(o));return i=c.join(\"\"),e?Utf8.decode(i):i}",
-            "$Res3",
-            "')"
-          ],
-          "Result": "$Res3"
-        },
-        {
-          "Id": 29,
-          "Action": "EVAL",
-          "String": "$Res3",
-          "Result": "$Link2"
-        },
-        {
-          "Id": 30,
-          "Action": "CONCAT",
-          "Targets": [
-            "Referer::",
-            "$Link1",
-            "::User-Agent::Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36::Cookie::elVolumen=100;_ga=GA1.2.12685464.1575619943; _gid=GA1.2.1904256481.1575619943"
-          ],
-          "Result": "$Headers"
-        },
-        {
-          "Id": 31,
-          "Action": "CONCAT",
-          "Targets": [
-            "https://telerium.tv",
-            "$Link2"
-          ],
-          "Result": "$Link2"
-        },
-        {
-          "Id": 32,
-          "Action": "GET",
-          "Link": "$Link2",
-          "Headers": "$Headers",
-          "Result": "$Res8"
-        },
-        {
-          "Id": 33,
-          "Action": "CONCAT",
-          "Targets": [
-            "eval('function atob(r,e){var o,t,d,n,f,a,i,h,c=[],C=\"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\";h=(e=void 0!==e&&e)?Utf8.decode(r):r;for(var g=0;g<h.length;g+=4)o=(a=C.indexOf(h.charAt(g))<<18|C.indexOf(h.charAt(g+1))<<12|(n=C.indexOf(h.charAt(g+2)))<<6|(f=C.indexOf(h.charAt(g+3))))>>>16&255,t=a>>>8&255,d=255&a,c[g/4]=String.fromCharCode(o,t,d),64==f&&(c[g/4]=String.fromCharCode(o,t)),64==n&&(c[g/4]=String.fromCharCode(o));return i=c.join(\"\"),e?Utf8.decode(i):i}; ",
-            "$Res2",
-            ";",
-            "$Res4",
-            "$Res5",
-            ";",
-            "$Res6",
-            "=",
-            "$Res8",
-            ";",
-            "$Res7",
-            "')"
-          ],
-          "Result": "$Res8"
-        },
-        {
-          "Id": 34,
-          "Action": "EVAL",
-          "String": "$Res8",
-          "Result": "$result1"
-        },
-        {
-          "Id": 35,
-          "Action": "MATCH",
-          "String": "\\/\\/(?:[^\"]*)m3u8(?:[^\"]*)",
-          "MatchId": "0",
-          "GroupId": "0",
-          "Default": "$result",
-          "Target": "$result1",
-          "Result": "$result"
-        },
-        {
-          "Id": 36,
-          "Action": "CONCAT",
-          "Targets": [
-            "https:",
-            "$result"
-          ],
-          "Result": "$result"
-        },
-        {
-          "Id": 37,
           "Action": "CONCAT",
           "Targets": [
             "$result",
             " engineOptions=headers::Referer:",
             "$Link",
-            "::user_agent::Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36"
+            "::user_agent::Safari/9.0"
           ],
           "Result": "$result"
         },
         {
-          "Id": 38,
+          "Id": 20,
           "Action": "FINAL",
           "Result": "$result"
         }
@@ -5982,8 +5726,18 @@
           "Id": 1,
           "Action": "GET",
           "Link": "$Link",
-          "Headers": "User-Agent::Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36",
+          "Headers": "Accept::text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3::Accept-Language::vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,fr-FR;q=0.5::Connection::keep-alive::Host::ustv247.tv::Upgrade-Insecure-Requests::1::User-Agent::Safari/537.36",
           "Result": "$Res1"
+        },
+        {
+          "Id": 2,
+          "Action": "MATCH",
+          "String": "s,t,o,p(?:[^;]*);",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res1",
+          "Result": "$Res2"
         },
         {
           "Id": 3,
@@ -6079,7 +5833,7 @@
           "Id": 14,
           "Action": "CONCAT",
           "Targets": [
-            "User-Agent::Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36::Referer::",
+            "Connection::keep-alive::Accept::text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3::Accept-Language::vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,fr-FR;q=0.5::User-Agent::Safari/537.36::Referer::",
             "$Link",
             "::Cookie::",
             "$Res2"
@@ -6090,51 +5844,6 @@
           "Id": 15,
           "Action": "GET",
           "Link": "$Link",
-          "Headers": "$Headers",
-          "Result": "$Res1"
-        },
-        {
-          "Id": 16,
-          "Action": "REPLACE",
-          "In": "$Res1",
-          "From": "'",
-          "To": "\"",
-          "Result": "$Res1"
-        },
-        {
-          "Id": 17,
-          "Action": "MATCH",
-          "String": "(?<=iframe src=\")([^'\"]*)",
-          "MatchId": "0",
-          "GroupId": "0",
-          "Default": "@",
-          "Target": "$Res1",
-          "Result": "$Link1"
-        },
-        {
-          "Id": 18,
-          "Action": "CONCAT",
-          "Targets": [
-            "eval(\"if(\\\"",
-            "$Link1",
-            "\\\".indexOf(\\\"http\\\")==0) \\\"",
-            "$Link1",
-            "\\\"; else \\\"https://ustv247.tv\\\"+\\\"",
-            "$Link1",
-            "\\\";\")"
-          ],
-          "Result": "$eval_link"
-        },
-        {
-          "Id": 19,
-          "Action": "EVAL",
-          "String": "$eval_link",
-          "Result": "$Link1"
-        },
-        {
-          "Id": 15,
-          "Action": "GET",
-          "Link": "$Link1",
           "Headers": "$Headers",
           "Result": "$Res1"
         },
