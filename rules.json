@@ -1416,7 +1416,7 @@
         {
           "Id": 3,
           "Action": "MATCH",
-          "String": "(?<=<\\/script><script src=\").*?(?=\" data-minify)",
+          "String": "(?<=iframe src=\").*?(?=\")",
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
@@ -1427,7 +1427,7 @@
           "Id": 4,
           "Action": "CONCAT",
           "Targets": [
-            "https:",
+            "https://ustv247.tv/",
             "$Res2"
           ],
           "Result": "$Res2"
@@ -1458,7 +1458,7 @@
         {
           "Id": 8,
           "Action": "MATCH",
-          "String": "(?<=jwplayer\\.defaults=jwDefaults;)var .*?(?=var player)",
+          "String": "var .*?(?=var player)",
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
@@ -1468,7 +1468,7 @@
         {
           "Id": 9,
           "Action": "MATCH",
-          "String": "(?<=aspectratio:\"16:9\",\\}\\);)function.*?\\}",
+          "String": "function.*?\\}",
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
@@ -1502,7 +1502,7 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
-          "Target": "$Res1",
+          "Target": "$Res3",
           "Result": "$Res7"
         },
         {
@@ -6015,7 +6015,7 @@
         {
           "Id": 3,
           "Action": "MATCH",
-          "String": "(?<=<\\/script><script src=\").*?(?=\" data-minify)",
+          "String": "(?<=iframe src=\").*?(?=\")",
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
@@ -6026,7 +6026,7 @@
           "Id": 4,
           "Action": "CONCAT",
           "Targets": [
-            "https:",
+            "https://ustv247.tv/",
             "$Res2"
           ],
           "Result": "$Res2"
@@ -6057,7 +6057,7 @@
         {
           "Id": 8,
           "Action": "MATCH",
-          "String": "(?<=jwplayer\\.defaults=jwDefaults;)var .*?(?=var player)",
+          "String": "var .*?(?=var player)",
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
@@ -6067,7 +6067,7 @@
         {
           "Id": 9,
           "Action": "MATCH",
-          "String": "(?<=aspectratio:\"16:9\",\\}\\);)function.*?\\}",
+          "String": "function.*?\\}",
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
@@ -6101,7 +6101,191 @@
           "MatchId": "0",
           "GroupId": "0",
           "Default": "@",
+          "Target": "$Res3",
+          "Result": "$Res7"
+        },
+        {
+          "Id": 13,
+          "Action": "CONCAT",
+          "Targets": [
+            "document.getElementById(\"",
+            "$Res6",
+            "\").innerHTML"
+          ],
+          "Result": "$Res6"
+        },
+        {
+          "Id": 14,
+          "Action": "CONCAT",
+          "Targets": [
+            "\"",
+            "$Res7",
+            "\""
+          ],
+          "Result": "$Res7"
+        },
+        {
+          "Id": 15,
+          "Action": "REPLACE",
+          "In": "$Res5",
+          "From": "$Res6",
+          "To": "$Res7",
+          "Result": "$Res5"
+        },
+        {
+          "Id": 12,
+          "Action": "MATCH",
+          "String": "(?<=function ).*?(?=\\()",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res5",
+          "Result": "$Res8"
+        },
+        {
+          "Id": 16,
+          "Action": "CONCAT",
+          "Targets": [
+            "$Res4",
+            "$Res5",
+            "$Res8",
+            "();"
+          ],
+          "Result": "$Res5"
+        },
+        {
+          "Id": 17,
+          "Action": "EVAL",
+          "String": "$Res5",
+          "Result": "$Res5"
+        },
+        {
+          "Id": 18,
+          "Action": "CONCAT",
+          "Targets": [
+            "$Res5",
+            " engineOptions=headers::Referer:",
+            "$Link",
+            "::user_agent::Safari/9.0"
+          ],
+          "Result": "$result"
+        },
+        {
+          "Id": 19,
+          "Action": "FINAL",
+          "Result": "$result"
+        }
+      ]
+    },
+    {
+      "Match": "watchnewslive",
+      "Name": "watchnewslive Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "User-Agent::Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 2,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "'",
+          "To": "\"",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 3,
+          "Action": "MATCH",
+          "String": "(?<=iframe src=\").*?(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
           "Target": "$Res1",
+          "Result": "$Res2"
+        },
+        {
+          "Id": 4,
+          "Action": "CONCAT",
+          "Targets": [
+            "https://watchnewslive.tv/",
+            "$Res2"
+          ],
+          "Result": "$Res2"
+        },
+        {
+          "Id": 5,
+          "Action": "GET",
+          "Link": "$Res2",
+          "Headers": "Accept::text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3::Accept-Language::vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,fr-FR;q=0.5::Connection::keep-alive::Upgrade-Insecure-Requests::1::User-Agent::Safari/537.36",
+          "Result": "$Res3"
+        },
+        {
+          "Id": 6,
+          "Action": "REPLACE",
+          "In": "$Res3",
+          "From": "'",
+          "To": "\"",
+          "Result": "$Res3"
+        },
+        {
+          "Id": 7,
+          "Action": "REPLACE",
+          "In": "$Res3",
+          "From": "\n",
+          "To": "",
+          "Result": "$Res3"
+        },
+        {
+          "Id": 8,
+          "Action": "MATCH",
+          "String": "var .*?(?=var player)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res3",
+          "Result": "$Res4"
+        },
+        {
+          "Id": 9,
+          "Action": "MATCH",
+          "String": "function.*?\\}",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res3",
+          "Result": "$Res5"
+        },
+        {
+          "Id": 10,
+          "Action": "MATCH",
+          "String": "(?<=document.getElementById\\(\\\").*?(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res5",
+          "Result": "$Res6"
+        },
+        {
+          "Id": 11,
+          "Action": "CONCAT",
+          "Targets": [
+            "(?<=id=",
+            "$Res6",
+            ">).*?(?=<\\/)"
+          ],
+          "Result": "$Res8"
+        },
+        {
+          "Id": 12,
+          "Action": "MATCH",
+          "String": "$Res8",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res3",
           "Result": "$Res7"
         },
         {
