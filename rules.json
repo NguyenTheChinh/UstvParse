@@ -6096,7 +6096,7 @@
         {
           "Id": 7,
           "Action": "MATCH",
-          "String": "(?<=file:).*?(?=\\()",
+          "String": "(?<=source:).*?(?=\\()",
           "MatchId": "0",
           "GroupId": "0",
           "Target": "$Res3",
