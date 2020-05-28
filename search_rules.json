@@ -30,6 +30,14 @@
           "Result": "$Res1"
         },
         {
+          "Id": 12,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "\\",
+          "To": "\\\\",
+          "Result": "$Res1"
+        },
+        {
           "Id": 18,
           "Action": "REPLACE",
           "In": "$Res1",
@@ -92,114 +100,6 @@
           "Link": "$Link"
         },
         {
-          "Id": 4,
-          "Action": "MATCH",
-          "String": "var.*;",
-          "MatchId": "0",
-          "GroupId": "0",
-          "Default": "@",
-          "Target": "$Res1",
-          "Result": "$Res2"
-        },
-        {
-          "Id": 5,
-          "Action": "REPLACE",
-          "In": "$Res2",
-          "From": "\"",
-          "To": "'",
-          "Result": "$Res2"
-        },
-        {
-          "Id": 6,
-          "Action": "REPLACE",
-          "In": "$Res2",
-          "From": "u,c,U,r,i,l=0,a",
-          "To": "u=undefined,c=undefined,U=undefined,r=undefined,i=undefined,l=0,a=undefined",
-          "Result": "$Res2"
-        },
-        {
-          "Id": 7,
-          "Action": "REPLACE",
-          "In": "$Res2",
-          "From": "var",
-          "To": "",
-          "Result": "$Res2"
-        },
-        {
-          "Id": 8,
-          "Action": "REPLACE",
-          "Result": "$Res2",
-          "In": "$Res2",
-          "From": "e(r);",
-          "To": "r"
-        },
-        {
-          "Id": 9,
-          "Action": "CONCAT",
-          "Result": "$Res2",
-          "Targets": [
-            "eval(\"",
-            "$Res2",
-            "\")"
-          ]
-        },
-        {
-          "Id": 10,
-          "Action": "EVAL",
-          "Result": "$Res2",
-          "String": "$Res2"
-        },
-        {
-          "Id": 11,
-          "Action": "REPLACE",
-          "In": "$Res2",
-          "From": "document.cookie",
-          "To": "cookie",
-          "Result": "$Res2"
-        },
-        {
-          "Id": 12,
-          "Action": "REPLACE",
-          "Result": "$Res2",
-          "In": "$Res2",
-          "From": "location.reload();",
-          "To": "cookie.split(\";\")[0];"
-        },
-        {
-          "Id": 13,
-          "Action": "CONCAT",
-          "Result": "$str_Header",
-          "Targets": [
-            "eval(\"",
-            "$Res2",
-            "\")"
-          ]
-        },
-        {
-          "Id": 14,
-          "Action": "EVAL",
-          "Result": "$Res2",
-          "String": "$Res2"
-        },
-        {
-          "Id": 15,
-          "Action": "CONCAT",
-          "Result": "$Headers",
-          "Targets": [
-            "Connection::keep-alive::Accept::text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3::Accept-Language::vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,fr-FR;q=0.5::User-Agent::Safari/537.36::Referer::",
-            "$Link",
-            "::Cookie::",
-            "$Res2"
-          ]
-        },
-        {
-          "Id": 16,
-          "Action": "GET",
-          "Result": "$Res1",
-          "Link": "$Link",
-          "Headers": "$Headers"
-        },
-        {
           "Id": 17,
           "Action": "REPLACE",
           "In": "$Res1",
@@ -216,11 +116,35 @@
           "Result": "$Res1"
         },
         {
+          "Id": 12,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "\\",
+          "To": "\\\\",
+          "Result": "$Res1"
+        },
+        {
           "Id": 19,
           "Action": "REPLACE",
           "In": "$Res1",
           "From": "\"",
           "To": "\\\"",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 19,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "`",
+          "To": "\\`",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 17,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "\r",
+          "To": "",
           "Result": "$Res1"
         },
         {

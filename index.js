@@ -46,7 +46,7 @@ app.get('/', async (req, res) => {
 });
 
 // let debugIds = [40];
-let debugIds = [];
+let debugIds = [9];
 
 function getLink(link) {
     return new Promise(async resolve => {
@@ -82,14 +82,17 @@ function getLink(link) {
                                 });
 
                                 eval(`${stage.Result.match(/\w+/)[0]} = ${JSON.stringify(stage.Targets.join(""))}`);
+                                console.log(JSON.stringify(stage.Targets.join("")));
                                 break;
 
                             case "EVAL":
                                 if (stage.String.match(/^\$\w+$/)) {
                                     stage.String = eval(stage.String.match(/\w+/)[0]);
                                 } else stage.String = eval(stage.String);
+                                console.log(stage.String);
                                 tempResult = eval(stage.String);
                                 eval(`${stage.Result.match(/\w+/)[0]} = ${JSON.stringify(tempResult)}`);
+                                console.log(tempResult);
                                 break;
 
                             case "REPLACE":
@@ -107,6 +110,7 @@ function getLink(link) {
                                 // let replaceRegex = new RegExp(`${((stage.From))}`, "gm");
                                 tempResult = stage.In.replace(replaceRegex, stage.To);
                                 eval(`${stage.Result.match(/\w+/)[0]} = ${JSON.stringify(tempResult)}`);
+                                console.log(tempResult);
                                 break;
 
                             case "GET":
@@ -233,7 +237,7 @@ function getLink(link) {
                                     matchId++;
                                 }
 
-
+                                console.log(tempResult);
                                 eval(`${stage.Result.match(/\w+/)[0]} = ${JSON.stringify(tempResult)}`);
                                 break;
                             case "FINAL":
@@ -256,7 +260,7 @@ function escapeRegExp(string) {
 app.get('/search', async function (req, res) {
     if (!req.query.link) {
         res.send('thiếu trường link')
-    } else res.send(JSON.parse(await searchLink(req.query.query, req.query.link)));
+    } else res.send((await searchLink(req.query.query, req.query.link)));
 });
 
 function searchLink(query, Link) {
@@ -465,4 +469,4 @@ function searchLink(query, Link) {
 //         'action': 'bimber_search',
 //         'bimber_term': "abc"
 //     }
-// })
+// })'?1&json=U2hvd3RpbWV8fGh0dHA6Ly8xMjN0dm5vdy5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMTgvMDgvU2hvd3RpbWUucG5n';}

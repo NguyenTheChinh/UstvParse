@@ -13,23 +13,46 @@
           "Result": "$Res"
         },
         {
+          "Id": 6,
+          "Action": "REPLACE",
+          "In": "$Res",
+          "From": "\n",
+          "To": "",
+          "Result": "$Res1"
+        },
+        {
           "Id": 2,
           "Action": "MATCH",
-          "String": "(?<=__\\+=')(?:[^']*)json(?:[^']*)(?=')",
+          "String": "var _0x.*?(?=var options)",
           "MatchId": "0",
           "GroupId": "0",
-          "Target": "$Res",
+          "Target": "$Res1",
           "Result": "$Res1"
         },
         {
           "Id": 6,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "var",
+          "To": ";var",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 6,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "\"",
+          "To": "'",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 3,
           "Action": "MATCH",
-          "String": "(?<=E\\.d\\().*?(?=\\))",
+          "String": "(?<=reverse\\(\\).join\\(''\\);\\};var ).*?(?=\\=)",
           "MatchId": "0",
           "GroupId": "0",
-          "Default": "@",
-          "Target": "$Res",
-          "Result": "$Res4"
+          "Target": "$Res1",
+          "Result": "$function_name"
         },
         {
           "Id": 8,
@@ -45,9 +68,11 @@
             "CryptoJS.lib.Cipher || function(u) { var g = CryptoJS, f = g.lib, k = f.Base, l = f.WordArray, q = f.BufferedBlockAlgorithm, r = g.enc.Base64, v = g.algo.EvpKDF, n = f.Cipher = q.extend({ cfg: k.extend(), createEncryptor: function(a, b) { return this.create(this._ENC_XFORM_MODE, a, b) }, createDecryptor: function(a, b) { return this.create(this._DEC_XFORM_MODE, a, b) }, init: function(a, b, c) { this.cfg = this.cfg.extend(c); this._xformMode = a; this._key = b; this.reset() }, reset: function() { q.reset.call(this); this._doReset() }, process: function(a) { this._append(a); return this._process() }, finalize: function(a) { a && this._append(a); return this._doFinalize() }, keySize: 4, ivSize: 4, _ENC_XFORM_MODE: 1, _DEC_XFORM_MODE: 2, _createHelper: function(a) { return { encrypt: function(b, c, d) { return (\\\"string\\\" == typeof c ? s : j).encrypt(a, b, c, d) }, decrypt: function(b, c, d) { return (\\\"string\\\" == typeof c ? s : j).decrypt(a, b, c, d) } } } }); f.StreamCipher = n.extend({ _doFinalize: function() { return this._process(!0) }, blockSize: 1 }); var m = g.mode = {}, t = function(a, b, c) { var d = this._iv; d ? this._iv = u : d = this._prevBlock; for (var e = 0; e < c; e++) a[b + e] ^= d[e] }, h = (f.BlockCipherMode = k.extend({ createEncryptor: function(a, b) { return this.Encryptor.create(a, b) }, createDecryptor: function(a, b) { return this.Decryptor.create(a, b) }, init: function(a, b) { this._cipher = a; this._iv = b } })).extend(); h.Encryptor = h.extend({ processBlock: function(a, b) { var c = this._cipher, d = c.blockSize; t.call(this, a, b, d); c.encryptBlock(a, b); this._prevBlock = a.slice(b, b + d) } }); h.Decryptor = h.extend({ processBlock: function(a, b) { var c = this._cipher, d = c.blockSize, e = a.slice(b, b + d); c.decryptBlock(a, b); t.call(this, a, b, d); this._prevBlock = e } }); m = m.CBC = h; h = (g.pad = {}).Pkcs7 = { pad: function(a, b) { for (var c = 4 * b, c = c - a.sigBytes % c, d = c << 24 | c << 16 | c << 8 | c, e = [], f = 0; f < c; f += 4) e.push(d); c = l.create(e, c); a.concat(c) }, unpad: function(a) { a.sigBytes -= a.words[a.sigBytes - 1 >>> 2] & 255 } }; f.BlockCipher = n.extend({ cfg: n.cfg.extend({ mode: m, padding: h }), reset: function() { n.reset.call(this); var a = this.cfg, b = a.iv, a = a.mode; if (this._xformMode == this._ENC_XFORM_MODE) var c = a.createEncryptor; else c = a.createDecryptor, this._minBufferSize = 1; this._mode = c.call(a, this, b && b.words) }, _doProcessBlock: function(a, b) { this._mode.processBlock(a, b) }, _doFinalize: function() { var a = this.cfg.padding; if (this._xformMode == this._ENC_XFORM_MODE) { a.pad(this._data, this.blockSize); var b = this._process(!0) } else b = this._process(!0), a.unpad(b); return b }, blockSize: 4 }); var p = f.CipherParams = k.extend({ init: function(a) { this.mixIn(a) }, toString: function(a) { return (a || this.formatter).stringify(this) } }), m = (g.format = {}).OpenSSL = { stringify: function(a) { var b = a.ciphertext; a = a.salt; return (a ? l.create([1398893684, 1701076831]).concat(a).concat(b) : b).toString(r) }, parse: function(a) { a = r.parse(a); var b = a.words; if (1398893684 == b[0] && 1701076831 == b[1]) { var c = l.create(b.slice(2, 4)); b.splice(0, 4); a.sigBytes -= 16 } return p.create({ ciphertext: a, salt: c }) } }, j = f.SerializableCipher = k.extend({ cfg: k.extend({ format: m }), encrypt: function(a, b, c, d) { d = this.cfg.extend(d); var e = a.createEncryptor(c, d); b = e.finalize(b); e = e.cfg; return p.create({ ciphertext: b, key: c, iv: e.iv, algorithm: a, mode: e.mode, padding: e.padding, blockSize: a.blockSize, formatter: d.format }) }, decrypt: function(a, b, c, d) { d = this.cfg.extend(d); b = this._parse(b, d.format); return a.createDecryptor(c, d).finalize(b.ciphertext) }, _parse: function(a, b) { return \\\"string\\\" == typeof a ? b.parse(a, this) : a } }), g = (g.kdf = {}).OpenSSL = { execute: function(a, b, c, d) { d || (d = l.random(8)); a = v.create({ keySize: b + c }).compute(a, d); c = l.create(a.words.slice(b), 4 * c); a.sigBytes = 4 * b; return p.create({ key: a, iv: c, salt: d }) } }, s = f.PasswordBasedCipher = j.extend({ cfg: j.cfg.extend({ kdf: g }), encrypt: function(a, b, c, d) { d = this.cfg.extend(d); c = d.kdf.execute(c, a.keySize, a.ivSize); d.iv = c.iv; a = j.encrypt.call(this, a, b, c.key, d); a.mixIn(c); return a }, decrypt: function(a, b, c, d) { d = this.cfg.extend(d); b = this._parse(b, d.format); c = d.kdf.execute(c, a.keySize, a.ivSize, b.salt); d.iv = c.iv; return j.decrypt.call(this, a, b, c.key, d) } });return 0;}();",
             "(function(){for(var q=CryptoJS,x=q.lib.BlockCipher,r=q.algo,j=[],y=[],z=[],A=[],B=[],C=[],s=[],u=[],v=[],w=[],g=[],k=0;256>k;k++)g[k]=128>k?k<<1:k<<1^283;for(var n=0,l=0,k=0;256>k;k++){var f=l^l<<1^l<<2^l<<3^l<<4,f=f>>>8^f&255^99;j[n]=f;y[f]=n;var t=g[n],D=g[t],E=g[D],b=257*g[f]^16843008*f;z[n]=b<<24|b>>>8;A[n]=b<<16|b>>>16;B[n]=b<<8|b>>>24;C[n]=b;b=16843009*E^65537*D^257*t^16843008*n;s[f]=b<<24|b>>>8;u[f]=b<<16|b>>>16;v[f]=b<<8|b>>>24;w[f]=b;n?(n=t^g[g[g[E^t]]],l^=g[g[l]]):n=l=1}var F=[0,1,2,4,8,16,32,64,128,27,54],r=r.AES=x.extend({_doReset:function(){for(var c=this._key,e=c.words,a=c.sigBytes/4,c=4*((this._nRounds=a+6)+1),b=this._keySchedule=[],h=0;h<c;h++)if(h<a)b[h]=e[h];else{var d=b[h-1];h%a?6<a&&4==h%a&&(d=j[d>>>24]<<24|j[d>>>16&255]<<16|j[d>>>8&255]<<8|j[d&255]):(d=d<<8|d>>>24,d=j[d>>>24]<<24|j[d>>>16&255]<<16|j[d>>>8&255]<<8|j[d&255],d^=F[h/a|0]<<24);b[h]=b[h-a]^d}e=this._invKeySchedule=[];for(a=0;a<c;a++)h=c-a,d=a%4?b[h]:b[h-4],e[a]=4>a||4>=h?d:s[j[d>>>24]]^u[j[d>>>16&255]]^v[j[d>>>8&255]]^w[j[d&255]]},encryptBlock:function(c,e){this._doCryptBlock(c,e,this._keySchedule,z,A,B,C,j)},decryptBlock:function(c,e){var a=c[e+1];c[e+1]=c[e+3];c[e+3]=a;this._doCryptBlock(c,e,this._invKeySchedule,s,u,v,w,y);a=c[e+1];c[e+1]=c[e+3];c[e+3]=a},_doCryptBlock:function(c,e,a,b,h,d,j,m){for(var n=this._nRounds,f=c[e]^a[0],g=c[e+1]^a[1],k=c[e+2]^a[2],p=c[e+3]^a[3],l=4,t=1;t<n;t++)var q=b[f>>>24]^h[g>>>16&255]^d[k>>>8&255]^j[p&255]^a[l++],r=b[g>>>24]^h[k>>>16&255]^d[p>>>8&255]^j[f&255]^a[l++],s=b[k>>>24]^h[p>>>16&255]^d[f>>>8&255]^j[g&255]^a[l++],p=b[p>>>24]^h[f>>>16&255]^d[g>>>8&255]^j[k&255]^a[l++],f=q,g=r,k=s;q=(m[f>>>24]<<24|m[g>>>16&255]<<16|m[k>>>8&255]<<8|m[p&255])^a[l++];r=(m[g>>>24]<<24|m[k>>>16&255]<<16|m[p>>>8&255]<<8|m[f&255])^a[l++];s=(m[k>>>24]<<24|m[p>>>16&255]<<16|m[f>>>8&255]<<8|m[g&255])^a[l++];p=(m[p>>>24]<<24|m[f>>>16&255]<<16|m[g>>>8&255]<<8|m[k&255])^a[l++];c[e]=q;c[e+1]=r;c[e+2]=s;c[e+3]=p},keySize:8});q.AES=x._createHelper(r); return 0;}());",
             "function decode(r,t){var e=JSON.parse(CryptoJS.enc.Utf8.stringify(CryptoJS.enc.Base64.parse(r))),o=CryptoJS.enc.Hex.parse(e.salt),p=CryptoJS.enc.Hex.parse(e.iv),a=e.ciphertext,S=parseInt(e.iterations);S<=0&&(S=999);var i=256/4,n=CryptoJS.PBKDF2(t,o,{hasher:CryptoJS.algo.SHA512,keySize:i/8,iterations:S});return CryptoJS.AES.decrypt(a,n,{mode:CryptoJS.mode.CBC,iv:p}).toString(CryptoJS.enc.Utf8); return 0;}",
-            "decode(",
-            "$Res4",
-            ")\")"
+            ";var E = {d: decode};",
+            "$Res1",
+            ";",
+            "$function_name",
+            "();\")"
           ],
           "Result": "$Res5"
         },
@@ -55,22 +80,13 @@
           "Id": 9,
           "Action": "EVAL",
           "String": "$Res5",
-          "Result": "$Res6"
-        },
-        {
-          "Id": 10,
-          "Action": "CONCAT",
-          "Targets": [
-            "$Res6",
-            "$Res1"
-          ],
           "Result": "$o_Link"
         },
         {
           "Id": 11,
           "Action": "GET",
           "Link": "$o_Link",
-          "Headers": "Referer::http://123tvnow.com/::User-Agent::Safari/537.36",
+          "Headers": "Origin::http://123tvnow.com::Referer::http://123tvnow.com::User-Agent::Safari/537.36",
           "Result": "$Res7"
         },
         {
@@ -1399,14 +1415,14 @@
       "Name": "usnewslive Parser",
       "Stages": [
         {
-          "Id": 1,
+          "Id": 0,
           "Action": "GET",
           "Link": "$Link",
           "Headers": "User-Agent::Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36",
           "Result": "$Res1"
         },
         {
-          "Id": 2,
+          "Id": 1,
           "Action": "REPLACE",
           "In": "$Res1",
           "From": "'",
@@ -1414,7 +1430,7 @@
           "Result": "$Res1"
         },
         {
-          "Id": 3,
+          "Id": 2,
           "Action": "MATCH",
           "String": "(?<=iframe src=\").*?(?=\")",
           "MatchId": "0",
@@ -1424,7 +1440,7 @@
           "Result": "$Res2"
         },
         {
-          "Id": 4,
+          "Id": 3,
           "Action": "CONCAT",
           "Targets": [
             "https://ustv247.tv/",
@@ -1433,14 +1449,14 @@
           "Result": "$Res2"
         },
         {
-          "Id": 5,
+          "Id": 4,
           "Action": "GET",
           "Link": "$Res2",
-          "Headers": "Accept::text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3::Accept-Language::vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,fr-FR;q=0.5::Connection::keep-alive::Upgrade-Insecure-Requests::1::User-Agent::Safari/537.36",
+          "Headers": "Accept::text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3::Accept-Language::vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,fr-FR;q=0.5::Connection::keep-alive::Upgrade-Insecure-Requests::1::User-Agent::Safari/537.36::Referer::https://ustv247.tv/",
           "Result": "$Res3"
         },
         {
-          "Id": 6,
+          "Id": 5,
           "Action": "REPLACE",
           "In": "$Res3",
           "From": "'",
@@ -1448,7 +1464,7 @@
           "Result": "$Res3"
         },
         {
-          "Id": 7,
+          "Id": 6,
           "Action": "REPLACE",
           "In": "$Res3",
           "From": "\n",
@@ -1456,64 +1472,69 @@
           "Result": "$Res3"
         },
         {
-          "Id": 8,
+          "Id": 7,
           "Action": "MATCH",
-          "String": "var .*?(?=var player)",
+          "String": "(?<=file:).*?(?=\\()",
           "MatchId": "0",
           "GroupId": "0",
-          "Default": "@",
           "Target": "$Res3",
-          "Result": "$Res4"
+          "Result": "$function_name"
+        },
+        {
+          "Id": 8,
+          "Action": "CONCAT",
+          "Targets": [
+            "<script(?:(?!<script)[\\s\\S])*?",
+            "$function_name",
+            ".*<\\/script>"
+          ],
+          "Result": "$regex"
         },
         {
           "Id": 9,
           "Action": "MATCH",
-          "String": "function.*?\\}",
+          "String": "$regex",
           "MatchId": "0",
           "GroupId": "0",
-          "Default": "@",
           "Target": "$Res3",
-          "Result": "$Res5"
+          "Result": "$Res4"
         },
         {
           "Id": 10,
           "Action": "MATCH",
-          "String": "(?<=document.getElementById\\(\\\").*?(?=\")",
+          "String": "function.*?(?=var player)",
           "MatchId": "0",
           "GroupId": "0",
-          "Default": "@",
-          "Target": "$Res5",
-          "Result": "$Res6"
+          "Target": "$Res4",
+          "Result": "$Res4"
         },
         {
           "Id": 11,
-          "Action": "CONCAT",
-          "Targets": [
-            "(?<=id=",
-            "$Res6",
-            ">).*?(?=<\\/)"
-          ],
-          "Result": "$Res8"
+          "Action": "MATCH",
+          "String": "document\\[.*?\\]\\(\"(.*?)(?=\")",
+          "MatchId": "0",
+          "GroupId": "1",
+          "Target": "$Res4",
+          "Result": "$Res5"
         },
         {
           "Id": 12,
-          "Action": "MATCH",
-          "String": "$Res8",
-          "MatchId": "0",
-          "GroupId": "0",
-          "Default": "@",
-          "Target": "$Res3",
-          "Result": "$Res7"
+          "Action": "CONCAT",
+          "Targets": [
+            "(?<=id=",
+            "$Res5",
+            ">)([^<]*)(?=<)"
+          ],
+          "Result": "$Res6"
         },
         {
           "Id": 13,
-          "Action": "CONCAT",
-          "Targets": [
-            "document.getElementById(\"",
-            "$Res6",
-            "\").innerHTML"
-          ],
-          "Result": "$Res6"
+          "Action": "MATCH",
+          "String": "$Res6",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res3",
+          "Result": "$Res7"
         },
         {
           "Id": 14,
@@ -1527,54 +1548,71 @@
         },
         {
           "Id": 15,
-          "Action": "REPLACE",
-          "In": "$Res5",
-          "From": "$Res6",
-          "To": "$Res7",
-          "Result": "$Res5"
-        },
-        {
-          "Id": 12,
           "Action": "MATCH",
-          "String": "(?<=function ).*?(?=\\()",
+          "String": "document.*?innerHTML\"\\]",
           "MatchId": "0",
           "GroupId": "0",
-          "Default": "@",
-          "Target": "$Res5",
+          "Target": "$Res4",
           "Result": "$Res8"
         },
         {
           "Id": 16,
-          "Action": "CONCAT",
-          "Targets": [
-            "$Res4",
-            "$Res5",
-            "$Res8",
-            "();"
-          ],
-          "Result": "$Res5"
+          "Action": "REPLACE",
+          "In": "$Res4",
+          "From": "$Res8",
+          "To": "$Res7",
+          "Result": "$Res4"
         },
         {
           "Id": 17,
-          "Action": "EVAL",
-          "String": "$Res5",
-          "Result": "$Res5"
+          "Action": "CONCAT",
+          "Targets": [
+            "eval('",
+            "$Res4",
+            ";",
+            "$function_name",
+            "();",
+            "')"
+          ],
+          "Result": "$eval_link"
         },
         {
           "Id": 18,
-          "Action": "CONCAT",
-          "Targets": [
-            "$Res5",
-            " engineOptions=headers::Referer:",
-            "$Link",
-            "::user_agent::Safari/9.0"
-          ],
-          "Result": "$result"
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": "\r",
+          "To": "",
+          "Result": "$eval_link"
         },
         {
           "Id": 19,
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": "\n",
+          "To": "",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 20,
+          "Action": "EVAL",
+          "String": "$eval_link",
+          "Result": "$Result"
+        },
+        {
+          "Id": 21,
+          "Action": "CONCAT",
+          "Targets": [
+            "$Result",
+            " engineOptions=headers::Referer:",
+            "$Link",
+            "::user_agent::Mozilla/5.0"
+          ],
+          "Result": "$Result"
+        },
+        {
+          "Id": 22,
           "Action": "FINAL",
-          "Result": "$result"
+          "Result": "$Result"
         }
       ]
     },
@@ -5671,7 +5709,7 @@
           "Id": 1,
           "Action": "GET",
           "Link": "$Link",
-          "Headers": "User-Agent::Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36",
+          "Headers": "User-Agent::Safari/537.36",
           "Result": "$Res"
         },
         {
@@ -5717,7 +5755,7 @@
           "Id": 7,
           "Action": "CONCAT",
           "Targets": [
-            "User-Agent::Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36::Referer::",
+            "User-Agent::Safari/537.36::Referer::",
             "$Link"
           ],
           "Result": "$Header"
@@ -5840,7 +5878,7 @@
         {
           "Id": 22,
           "Action": "MATCH",
-          "String": "function dameVuelta.*?}",
+          "String": "function dameVuelta.*?\\}",
           "MatchId": "0",
           "GroupId": "0",
           "Target": "$out_code",
@@ -5883,7 +5921,7 @@
         {
           "Id": 27,
           "Action": "MATCH",
-          "String": "(?<=done\\(function\\()(?:.*?)(?=\\))(?:.*?else.*?{)(.*?)(?=if)",
+          "String": "(?<=done\\(function\\()(?:.*?)(?=\\))(?:.*?else.*?\\{)(.*?)(?=if)",
           "MatchId": "0",
           "GroupId": "1",
           "Target": "$out_code",
@@ -5894,6 +5932,7 @@
           "Action": "CONCAT",
           "Targets": [
             "eval('function atob(r,e){var o,t,d,n,f,a,i,h,c=[],C=\"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\";h=(e=void 0!==e&&e)?Utf8.decode(r):r;for(var g=0;g<h.length;g+=4)o=(a=C.indexOf(h.charAt(g))<<18|C.indexOf(h.charAt(g+1))<<12|(n=C.indexOf(h.charAt(g+2)))<<6|(f=C.indexOf(h.charAt(g+3))))>>>16&255,t=a>>>8&255,d=255&a,c[g/4]=String.fromCharCode(o,t,d),64==f&&(c[g/4]=String.fromCharCode(o,t)),64==n&&(c[g/4]=String.fromCharCode(o));return i=c.join(\"\"),e?Utf8.decode(i):i}",
+            "$Res2",
             "$Res3",
             "')"
           ],
@@ -5911,7 +5950,7 @@
           "Targets": [
             "Referer::",
             "$Link1",
-            "::User-Agent::Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36::Cookie::elVolumen=100;_ga=GA1.2.12685464.1575619943; _gid=GA1.2.1904256481.1575619943"
+            "::User-Agent::Safari/537.36::Cookie::elVolumen=100;_ga=GA1.2.12685464.1575619943; _gid=GA1.2.1904256481.1575619943"
           ],
           "Result": "$Headers"
         },
@@ -5982,7 +6021,7 @@
             "$result",
             " engineOptions=headers::Referer:",
             "$Link",
-            "::user_agent::Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36"
+            "::user_agent::Safari/537.36"
           ],
           "Result": "$result"
         },
@@ -5998,14 +6037,14 @@
       "Name": "ustv247 Parser",
       "Stages": [
         {
-          "Id": 1,
+          "Id": 0,
           "Action": "GET",
           "Link": "$Link",
           "Headers": "User-Agent::Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36",
           "Result": "$Res1"
         },
         {
-          "Id": 2,
+          "Id": 1,
           "Action": "REPLACE",
           "In": "$Res1",
           "From": "'",
@@ -6013,7 +6052,7 @@
           "Result": "$Res1"
         },
         {
-          "Id": 3,
+          "Id": 2,
           "Action": "MATCH",
           "String": "(?<=iframe src=\").*?(?=\")",
           "MatchId": "0",
@@ -6023,7 +6062,7 @@
           "Result": "$Res2"
         },
         {
-          "Id": 4,
+          "Id": 3,
           "Action": "CONCAT",
           "Targets": [
             "https://ustv247.tv/",
@@ -6032,14 +6071,14 @@
           "Result": "$Res2"
         },
         {
-          "Id": 5,
+          "Id": 4,
           "Action": "GET",
           "Link": "$Res2",
-          "Headers": "Accept::text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3::Accept-Language::vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,fr-FR;q=0.5::Connection::keep-alive::Upgrade-Insecure-Requests::1::User-Agent::Safari/537.36",
+          "Headers": "Accept::text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3::Accept-Language::vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,fr-FR;q=0.5::Connection::keep-alive::Upgrade-Insecure-Requests::1::User-Agent::Safari/537.36::Referer::https://ustv247.tv/",
           "Result": "$Res3"
         },
         {
-          "Id": 6,
+          "Id": 5,
           "Action": "REPLACE",
           "In": "$Res3",
           "From": "'",
@@ -6047,7 +6086,7 @@
           "Result": "$Res3"
         },
         {
-          "Id": 7,
+          "Id": 6,
           "Action": "REPLACE",
           "In": "$Res3",
           "From": "\n",
@@ -6055,64 +6094,69 @@
           "Result": "$Res3"
         },
         {
-          "Id": 8,
+          "Id": 7,
           "Action": "MATCH",
-          "String": "var .*?(?=var player)",
+          "String": "(?<=file:).*?(?=\\()",
           "MatchId": "0",
           "GroupId": "0",
-          "Default": "@",
           "Target": "$Res3",
-          "Result": "$Res4"
+          "Result": "$function_name"
+        },
+        {
+          "Id": 8,
+          "Action": "CONCAT",
+          "Targets": [
+            "<script(?:(?!<script)[\\s\\S])*?",
+            "$function_name",
+            ".*<\\/script>"
+          ],
+          "Result": "$regex"
         },
         {
           "Id": 9,
           "Action": "MATCH",
-          "String": "function.*?\\}",
+          "String": "$regex",
           "MatchId": "0",
           "GroupId": "0",
-          "Default": "@",
           "Target": "$Res3",
-          "Result": "$Res5"
+          "Result": "$Res4"
         },
         {
           "Id": 10,
           "Action": "MATCH",
-          "String": "(?<=document.getElementById\\(\\\").*?(?=\")",
+          "String": "function.*?(?=var player)",
           "MatchId": "0",
           "GroupId": "0",
-          "Default": "@",
-          "Target": "$Res5",
-          "Result": "$Res6"
+          "Target": "$Res4",
+          "Result": "$Res4"
         },
         {
           "Id": 11,
-          "Action": "CONCAT",
-          "Targets": [
-            "(?<=id=",
-            "$Res6",
-            ">).*?(?=<\\/)"
-          ],
-          "Result": "$Res8"
+          "Action": "MATCH",
+          "String": "document\\[.*?\\]\\(\"(.*?)(?=\")",
+          "MatchId": "0",
+          "GroupId": "1",
+          "Target": "$Res4",
+          "Result": "$Res5"
         },
         {
           "Id": 12,
-          "Action": "MATCH",
-          "String": "$Res8",
-          "MatchId": "0",
-          "GroupId": "0",
-          "Default": "@",
-          "Target": "$Res3",
-          "Result": "$Res7"
+          "Action": "CONCAT",
+          "Targets": [
+            "(?<=id=",
+            "$Res5",
+            ">)([^<]*)(?=<)"
+          ],
+          "Result": "$Res6"
         },
         {
           "Id": 13,
-          "Action": "CONCAT",
-          "Targets": [
-            "document.getElementById(\"",
-            "$Res6",
-            "\").innerHTML"
-          ],
-          "Result": "$Res6"
+          "Action": "MATCH",
+          "String": "$Res6",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res3",
+          "Result": "$Res7"
         },
         {
           "Id": 14,
@@ -6126,54 +6170,71 @@
         },
         {
           "Id": 15,
-          "Action": "REPLACE",
-          "In": "$Res5",
-          "From": "$Res6",
-          "To": "$Res7",
-          "Result": "$Res5"
-        },
-        {
-          "Id": 12,
           "Action": "MATCH",
-          "String": "(?<=function ).*?(?=\\()",
+          "String": "document.*?innerHTML\"\\]",
           "MatchId": "0",
           "GroupId": "0",
-          "Default": "@",
-          "Target": "$Res5",
+          "Target": "$Res4",
           "Result": "$Res8"
         },
         {
           "Id": 16,
-          "Action": "CONCAT",
-          "Targets": [
-            "$Res4",
-            "$Res5",
-            "$Res8",
-            "();"
-          ],
-          "Result": "$Res5"
+          "Action": "REPLACE",
+          "In": "$Res4",
+          "From": "$Res8",
+          "To": "$Res7",
+          "Result": "$Res4"
         },
         {
           "Id": 17,
-          "Action": "EVAL",
-          "String": "$Res5",
-          "Result": "$Res5"
+          "Action": "CONCAT",
+          "Targets": [
+            "eval('",
+            "$Res4",
+            ";",
+            "$function_name",
+            "();",
+            "')"
+          ],
+          "Result": "$eval_link"
         },
         {
           "Id": 18,
-          "Action": "CONCAT",
-          "Targets": [
-            "$Res5",
-            " engineOptions=headers::Referer:",
-            "$Link",
-            "::user_agent::Safari/9.0"
-          ],
-          "Result": "$result"
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": "\r",
+          "To": "",
+          "Result": "$eval_link"
         },
         {
           "Id": 19,
+          "Action": "REPLACE",
+          "In": "$eval_link",
+          "From": "\n",
+          "To": "",
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 20,
+          "Action": "EVAL",
+          "String": "$eval_link",
+          "Result": "$Result"
+        },
+        {
+          "Id": 21,
+          "Action": "CONCAT",
+          "Targets": [
+            "$Result",
+            " engineOptions=headers::Referer:",
+            "$Link",
+            "::user_agent::Mozilla/5.0"
+          ],
+          "Result": "$Result"
+        },
+        {
+          "Id": 22,
           "Action": "FINAL",
-          "Result": "$result"
+          "Result": "$Result"
         }
       ]
     },
@@ -6643,6 +6704,311 @@
         },
         {
           "Id": 32,
+          "Action": "FINAL",
+          "Result": "$result"
+        }
+      ]
+    },
+    {
+      "Match": "telerium.tv",
+      "Name": "telerium.tv Parser",
+      "Stages": [
+        {
+          "Id": 9,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "User-Agent::Safari/537.36",
+          "Result": "$Res"
+        },
+        {
+          "Id": 10,
+          "Action": "MATCH",
+          "String": "function\\(p,a,c,k,e,d\\)(?:.*)\\{\\}\\)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "'@'",
+          "Target": "$Res",
+          "Result": "$code"
+        },
+        {
+          "Id": 11,
+          "Action": "REPLACE",
+          "In": "$code",
+          "From": "\\",
+          "To": "\\\\",
+          "Result": "$code"
+        },
+        {
+          "Id": 12,
+          "Action": "REPLACE",
+          "In": "$code",
+          "From": "\"",
+          "To": "\\\"",
+          "Result": "$code"
+        },
+        {
+          "Id": 13,
+          "Action": "CONCAT",
+          "Targets": [
+            "var code;var env = {eval: function (c) {code = c;}};eval(\"with(env) {\" + \"eval(",
+            "$code",
+            ")\" + \"}\"); code;"
+          ],
+          "Result": "$code"
+        },
+        {
+          "Id": 14,
+          "Action": "EVAL",
+          "String": "$code",
+          "Result": "$out_code"
+        },
+        {
+          "Id": 15,
+          "Action": "REPLACE",
+          "In": "$out_code",
+          "From": "'",
+          "To": "\"",
+          "Result": "$out_code"
+        },
+        {
+          "Id": 16,
+          "Action": "MATCH",
+          "String": "(?<=streamdelay=)(?:.*?;)(.*?)(?=function)",
+          "MatchId": "0",
+          "GroupId": "1",
+          "Target": "$out_code",
+          "Result": "$Res2"
+        },
+        {
+          "Id": 17,
+          "Action": "EVAL",
+          "String": "$Res2",
+          "Result": "$Res3"
+        },
+        {
+          "Id": 18,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval('",
+            "$Res2",
+            "')"
+          ],
+          "Result": "$Res9"
+        },
+        {
+          "Id": 19,
+          "Action": "EVAL",
+          "String": "$Res9",
+          "Result": "$Res9"
+        },
+        {
+          "Id": 20,
+          "Action": "MATCH",
+          "String": "(?<=ajax)(?:.*?url:)(.*?)(?=,)",
+          "MatchId": "0",
+          "GroupId": "1",
+          "Target": "$out_code",
+          "Result": "$Res3"
+        },
+        {
+          "Id": 21,
+          "Action": "REPLACE",
+          "In": "$Res3",
+          "From": "window.",
+          "To": "",
+          "Result": "$Res3"
+        },
+        {
+          "Id": 22,
+          "Action": "MATCH",
+          "String": "function dameVuelta.*?\\}",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$out_code",
+          "Result": "$Res4"
+        },
+        {
+          "Id": 23,
+          "Action": "REPLACE",
+          "In": "$Res4",
+          "From": "window.",
+          "To": "",
+          "Result": "$Res4"
+        },
+        {
+          "Id": 24,
+          "Action": "MATCH",
+          "String": "(?:function changlasmuy.*?)(var.*?)(?=if)",
+          "MatchId": "0",
+          "GroupId": "1",
+          "Target": "$out_code",
+          "Result": "$Res5"
+        },
+        {
+          "Id": 25,
+          "Action": "REPLACE",
+          "In": "$Res5",
+          "From": "window.",
+          "To": "",
+          "Result": "$Res5"
+        },
+        {
+          "Id": 26,
+          "Action": "MATCH",
+          "String": "(?<=done\\(function\\()(.*?)(?=\\))",
+          "MatchId": "0",
+          "GroupId": "1",
+          "Target": "$out_code",
+          "Result": "$Res6"
+        },
+        {
+          "Id": 27,
+          "Action": "MATCH",
+          "String": "(?<=done\\(function\\()(?:.*?)(?=\\))(?:.*?else.*?\\{)(.*?)(?=if)",
+          "MatchId": "0",
+          "GroupId": "1",
+          "Target": "$out_code",
+          "Result": "$Res7"
+        },
+        {
+          "Id": 28,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval('function atob(r,e){var o,t,d,n,f,a,i,h,c=[],C=\"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\";h=(e=void 0!==e&&e)?Utf8.decode(r):r;for(var g=0;g<h.length;g+=4)o=(a=C.indexOf(h.charAt(g))<<18|C.indexOf(h.charAt(g+1))<<12|(n=C.indexOf(h.charAt(g+2)))<<6|(f=C.indexOf(h.charAt(g+3))))>>>16&255,t=a>>>8&255,d=255&a,c[g/4]=String.fromCharCode(o,t,d),64==f&&(c[g/4]=String.fromCharCode(o,t)),64==n&&(c[g/4]=String.fromCharCode(o));return i=c.join(\"\"),e?Utf8.decode(i):i}",
+            "$Res2",
+            "$Res3",
+            "')"
+          ],
+          "Result": "$Res3"
+        },
+        {
+          "Id": 29,
+          "Action": "EVAL",
+          "String": "$Res3",
+          "Result": "$Link2"
+        },
+        {
+          "Id": 30,
+          "Action": "CONCAT",
+          "Targets": [
+            "Referer::",
+            "$Link",
+            "::User-Agent::Safari/537.36::Cookie::elVolumen=100;_ga=GA1.2.12685464.1575619943; _gid=GA1.2.1904256481.1575619943"
+          ],
+          "Result": "$Headers"
+        },
+        {
+          "Id": 31,
+          "Action": "CONCAT",
+          "Targets": [
+            "https://telerium.tv",
+            "$Link2"
+          ],
+          "Result": "$Link2"
+        },
+        {
+          "Id": 32,
+          "Action": "GET",
+          "Link": "$Link2",
+          "Headers": "$Headers",
+          "Result": "$Res8"
+        },
+        {
+          "Id": 33,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval('function atob(r,e){var o,t,d,n,f,a,i,h,c=[],C=\"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\";h=(e=void 0!==e&&e)?Utf8.decode(r):r;for(var g=0;g<h.length;g+=4)o=(a=C.indexOf(h.charAt(g))<<18|C.indexOf(h.charAt(g+1))<<12|(n=C.indexOf(h.charAt(g+2)))<<6|(f=C.indexOf(h.charAt(g+3))))>>>16&255,t=a>>>8&255,d=255&a,c[g/4]=String.fromCharCode(o,t,d),64==f&&(c[g/4]=String.fromCharCode(o,t)),64==n&&(c[g/4]=String.fromCharCode(o));return i=c.join(\"\"),e?Utf8.decode(i):i}; ",
+            "$Res2",
+            ";",
+            "$Res4",
+            "$Res5",
+            ";",
+            "$Res6",
+            "=",
+            "$Res8",
+            ";",
+            "$Res7",
+            "')"
+          ],
+          "Result": "$Res8"
+        },
+        {
+          "Id": 34,
+          "Action": "EVAL",
+          "String": "$Res8",
+          "Result": "$result1"
+        },
+        {
+          "Id": 35,
+          "Action": "MATCH",
+          "String": "\\/\\/(?:[^\"]*)m3u8(?:[^\"]*)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "$result1",
+          "Target": "$result1",
+          "Result": "$result"
+        },
+        {
+          "Id": 36,
+          "Action": "CONCAT",
+          "Targets": [
+            "https:",
+            "$result"
+          ],
+          "Result": "$result"
+        },
+        {
+          "Id": 37,
+          "Action": "CONCAT",
+          "Targets": [
+            "$result",
+            " engineOptions=headers::Referer:",
+            "$Link",
+            "::user_agent::Safari/537.36"
+          ],
+          "Result": "$result"
+        },
+        {
+          "Id": 38,
+          "Action": "FINAL",
+          "Result": "$result"
+        }
+      ]
+    },
+    {
+      "Match": "limetvv.com",
+      "Name": "limetvv.com Parser",
+      "Stages": [
+        {
+          "Id": 9,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "User-Agent::Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36",
+          "Result": "$Res"
+        },
+        {
+          "Id": 10,
+          "Action": "MATCH",
+          "String": "http.*?m3u8.*?(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "'@'",
+          "Target": "$Res",
+          "Result": "$result"
+        },
+        {
+          "Id": 37,
+          "Action": "CONCAT",
+          "Targets": [
+            "$result",
+            " engineOptions=headers::Referer:",
+            "$Link",
+            "::user_agent::Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36"
+          ],
+          "Result": "$result"
+        },
+        {
+          "Id": 38,
           "Action": "FINAL",
           "Result": "$result"
         }
