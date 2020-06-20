@@ -289,7 +289,77 @@
             "'; var results=[], linkPattern = /(?:href=\\\")(.*?)(?=\\\")/gm, divLinkPattern = /<div class=\\\"event\\\">.*?<\\\\/div>/gm, nameRegex = new RegExp('(?:> )(.*?)(?=<\\\\/h4>)',\\\"g\\\"), link, divLink; while((divLink=divLinkPattern.exec(html))!==null){divLink=divLink[0];",
             "    var linkMatch=divLink.match(linkPattern), nameMatch = nameRegex.exec(divLink); if (linkMatch[1] == null || linkMatch[1].match(/http.*/gm) == null || nameMatch == null || nameMatch[1].toLowerCase().indexOf('",
             "$query",
-            "')===-1){ continue; } results.push({link: linkMatch[1].match(/http.*/gm)[0], image: null, name: nameMatch?nameMatch[1]:null}); linkPattern.lastIndex=0; nameRegex.lastIndex=0; }",
+            "'.toLowerCase())===-1){ continue; } results.push({link: linkMatch[1].match(/http.*/gm)[0], image: null, name: nameMatch?nameMatch[1]:null}); linkPattern.lastIndex=0; nameRegex.lastIndex=0; }",
+            " JSON.stringify(results);\")"
+          ],
+          "Result": "$Res2"
+        },
+        {
+          "Id": 6,
+          "Action": "EVAL",
+          "String": "$Res2",
+          "Result": "$Res3"
+        },
+        {
+          "Id": 7,
+          "Action": "FINAL",
+          "Result": "$Res3"
+        }
+      ]
+    },
+    {
+      "Match": "sports24.club",
+      "Name": "sports24.club Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "GET",
+          "Link": "https://sports24.club/tv/",
+          "Headers": "User-Agent::Safari/537.36",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 2,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "\n",
+          "To": "",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 3,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "'",
+          "To": "\"",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 4,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "\"",
+          "To": "\\\"",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 17,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "\r",
+          "To": "",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 5,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"var html = '",
+            "$Res1",
+            "'; var results=[], linkPattern = /(?:href=\\\")(.*?)(?=\\\")/gm, divLinkPattern = /<a class=\\\".*?fxbtn.*?\\\">.*?<\\\\/a>/gm, nameRegex = new RegExp('(?:>)(.*?)(?=<\\\\/a>)',\\\"g\\\"), link, divLink; while((divLink=divLinkPattern.exec(html))!==null){divLink=divLink[0];",
+            "  linkPattern.lastIndex=0; nameRegex.lastIndex=0;   var linkMatch=linkPattern.exec(divLink), nameMatch = nameRegex.exec(divLink); if (linkMatch[1] == null || nameMatch == null || nameMatch[1].toLowerCase().indexOf('",
+            "$query",
+            "'.toLowerCase())===-1){ continue; } else { results.push({link: 'https://sports24.club/tv/'+linkMatch[1], image: null, name: nameMatch?nameMatch[1]:null});} }",
             " JSON.stringify(results);\")"
           ],
           "Result": "$Res2"

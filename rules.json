@@ -7013,6 +7013,68 @@
           "Result": "$result"
         }
       ]
+    },
+    {
+      "Match": "sports24",
+      "Name": "sports24.club",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "GET",
+          "Link": "$Link",
+          "Result": "$Res"
+        },
+        {
+          "Id": 2,
+          "Action": "MATCH",
+          "String": "atob(?:[^;]*);",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res",
+          "Result": "$var_result"
+        },
+        {
+          "Id": 3,
+          "Action": "REPLACE",
+          "In": "$var_result",
+          "From": "'",
+          "To": "\"",
+          "Result": "$var_result"
+        },
+        {
+          "Id": 5,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval('function atob(r,e){var o,t,d,n,f,a,i,h,c=[],C=\"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\";h=(e=void 0!==e&&e)?Utf8.decode(r):r;for(var g=0;g<h.length;g+=4)o=(a=C.indexOf(h.charAt(g))<<18|C.indexOf(h.charAt(g+1))<<12|(n=C.indexOf(h.charAt(g+2)))<<6|(f=C.indexOf(h.charAt(g+3))))>>>16&255,t=a>>>8&255,d=255&a,c[g/4]=String.fromCharCode(o,t,d),64==f&&(c[g/4]=String.fromCharCode(o,t)),64==n&&(c[g/4]=String.fromCharCode(o));return i=c.join(\"\"),e?Utf8.decode(i):i};var __=",
+            "$var_result",
+            ";if(__.indexOf(\"https:\")===-1){__ = \"https:\"+__} __;')"
+          ],
+          "Result": "$eval_link"
+        },
+        {
+          "Id": 6,
+          "Action": "EVAL",
+          "String": "$eval_link",
+          "Result": "$result"
+        },
+        {
+          "Id": 35,
+          "Action": "CONCAT",
+          "Targets": [
+            "$result",
+            " engineOptions=headers::Referer:",
+            "$Link",
+            "::user_agent::Safari/9.0"
+          ],
+          "Result": "$result"
+        },
+        {
+          "Id": 36,
+          "Action": "FINAL",
+          "Result": "$result"
+        }
+      ]
     }
   ]
 }
