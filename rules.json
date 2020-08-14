@@ -5846,46 +5846,12 @@
           "Result": "$Res1"
         },
         {
-          "Id": 2,
-          "Action": "MATCH",
-          "String": "(?<=iframe src=\").*?(?=\")",
-          "MatchId": "0",
-          "GroupId": "0",
-          "Default": "@",
-          "Target": "$Res1",
-          "Result": "$Res2"
-        },
-        {
-          "Id": 3,
-          "Action": "CONCAT",
-          "Targets": [
-            "https://ustv247.tv/",
-            "$Res2"
-          ],
-          "Result": "$Res2"
-        },
-        {
-          "Id": 4,
-          "Action": "GET",
-          "Link": "$Res2",
-          "Headers": "Accept::text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3::Accept-Language::vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,fr-FR;q=0.5::Connection::keep-alive::Upgrade-Insecure-Requests::1::User-Agent::Safari/537.36::Referer::https://ustv247.tv/",
-          "Result": "$Res3"
-        },
-        {
-          "Id": 5,
-          "Action": "REPLACE",
-          "In": "$Res3",
-          "From": "'",
-          "To": "\"",
-          "Result": "$Res3"
-        },
-        {
           "Id": 6,
           "Action": "REPLACE",
-          "In": "$Res3",
+          "In": "$Res1",
           "From": "\n",
           "To": "",
-          "Result": "$Res3"
+          "Result": "$Res1"
         },
         {
           "Id": 7,
@@ -5893,7 +5859,7 @@
           "String": "(?<=var filePath = ).*?(?=;)",
           "MatchId": "0",
           "GroupId": "0",
-          "Target": "$Res3",
+          "Target": "$Res1",
           "Result": "$function_name"
         },
         {
@@ -5950,46 +5916,12 @@
           "Result": "$Res1"
         },
         {
-          "Id": 2,
-          "Action": "MATCH",
-          "String": "(?<=iframe src=\").*?(?=\")",
-          "MatchId": "0",
-          "GroupId": "0",
-          "Default": "@",
-          "Target": "$Res1",
-          "Result": "$Res2"
-        },
-        {
-          "Id": 3,
-          "Action": "CONCAT",
-          "Targets": [
-            "https://ustv247.tv/",
-            "$Res2"
-          ],
-          "Result": "$Res2"
-        },
-        {
-          "Id": 4,
-          "Action": "GET",
-          "Link": "$Res2",
-          "Headers": "Accept::text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3::Accept-Language::vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,fr-FR;q=0.5::Connection::keep-alive::Upgrade-Insecure-Requests::1::User-Agent::Safari/537.36::Referer::https://ustv247.tv/",
-          "Result": "$Res3"
-        },
-        {
-          "Id": 5,
-          "Action": "REPLACE",
-          "In": "$Res3",
-          "From": "'",
-          "To": "\"",
-          "Result": "$Res3"
-        },
-        {
           "Id": 6,
           "Action": "REPLACE",
-          "In": "$Res3",
+          "In": "$Res1",
           "From": "\n",
           "To": "",
-          "Result": "$Res3"
+          "Result": "$Res1"
         },
         {
           "Id": 7,
@@ -5997,7 +5929,7 @@
           "String": "(?<=var filePath = ).*?(?=;)",
           "MatchId": "0",
           "GroupId": "0",
-          "Target": "$Res3",
+          "Target": "$Res1",
           "Result": "$function_name"
         },
         {
@@ -6219,7 +6151,7 @@
       ]
     },
     {
-      "Match": "crichd.to",
+      "Match": "watch.crichd",
       "Name": "watch.crichd.to Parser",
       "Stages": [
         {
@@ -6304,11 +6236,11 @@
           "Targets": [
             "eval(\"if(\\\"",
             "$Link1",
-            "\\\".indexOf(\\\"http\\\")===0) \\\"",
+            "\\\".indexOf(\\\"http\\\")===0) encodeURI(\\\"",
             "$Link1",
-            "\\\"; else 'http:' + \\\"",
+            "\\\"); else 'http:' + encodeURI(\\\"",
             "$Link1",
-            "\\\";\")"
+            "\\\");\")"
           ],
           "Result": "$Link1"
         },
@@ -6689,7 +6621,7 @@
           "Targets": [
             "Referer::",
             "$Link",
-            "::User-Agent::Safari/537.36::Cookie::elVolumen=100;_ga=GA1.2.12685464.1575619943; _gid=GA1.2.1904256481.1575619943"
+            "::User-Agent::Safari/537.36::Cookie::_ga=GA1.2.1337183985.2595232215; _gid=GA1.2.334211785.2595232215; __ga=200"
           ],
           "Result": "$Headers"
         },
@@ -7281,7 +7213,7 @@
           "Action": "CONCAT",
           "Targets": [
             "$result_link",
-            " engineOptions=headers::Referer:https://www.plytv.me/"
+            " engineOptions=headers::Referer:https://www.plytv.me/::user_agent::Safari/537.36"
           ],
           "Result": "$result"
         },
@@ -7289,6 +7221,76 @@
           "Id": 22,
           "Action": "FINAL",
           "Result": "$result"
+        }
+      ]
+    },
+    {
+      "Match": "sports24.club",
+      "Name": "sports24.club Parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "GET",
+          "Link": "https://sports24.club/tv/",
+          "Headers": "User-Agent::Safari/537.36",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 2,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "\n",
+          "To": "",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 3,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "'",
+          "To": "\"",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 4,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "\"",
+          "To": "\\\"",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 17,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "\r",
+          "To": "",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 5,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"var html = '",
+            "$Res1",
+            "'; var results=[], linkPattern = /(?:href=\\\")(.*?)(?=\\\")/gm, divLinkPattern = /<a class=\\\".*?fxbtn.*?\\\">.*?<\\\\/a>/gm, nameRegex = new RegExp('(?:>)(.*?)(?=<\\\\/a>)',\\\"g\\\"), link, divLink; while((divLink=divLinkPattern.exec(html))!==null){divLink=divLink[0];",
+            "  linkPattern.lastIndex=0; nameRegex.lastIndex=0;   var linkMatch=linkPattern.exec(divLink), nameMatch = nameRegex.exec(divLink); if (linkMatch[1] == null || nameMatch == null || nameMatch[1].toLowerCase().indexOf('",
+            "$query",
+            "'.toLowerCase())===-1){ continue; } else { results.push({link: 'https://sports24.club/tv/'+linkMatch[1], image: null, name: nameMatch?nameMatch[1]:null});} }",
+            " JSON.stringify(results);\")"
+          ],
+          "Result": "$Res2"
+        },
+        {
+          "Id": 6,
+          "Action": "EVAL",
+          "String": "$Res2",
+          "Result": "$Res3"
+        },
+        {
+          "Id": 7,
+          "Action": "FINAL",
+          "Result": "$Res3"
         }
       ]
     }

@@ -1430,46 +1430,12 @@
           "Result": "$Res1"
         },
         {
-          "Id": 2,
-          "Action": "MATCH",
-          "String": "(?<=iframe src=\").*?(?=\")",
-          "MatchId": "0",
-          "GroupId": "0",
-          "Default": "@",
-          "Target": "$Res1",
-          "Result": "$Res2"
-        },
-        {
-          "Id": 3,
-          "Action": "CONCAT",
-          "Targets": [
-            "https://ustv247.tv/",
-            "$Res2"
-          ],
-          "Result": "$Res2"
-        },
-        {
-          "Id": 4,
-          "Action": "GET",
-          "Link": "$Res2",
-          "Headers": "Accept::text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3::Accept-Language::vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,fr-FR;q=0.5::Connection::keep-alive::Upgrade-Insecure-Requests::1::User-Agent::Safari/537.36::Referer::https://ustv247.tv/",
-          "Result": "$Res3"
-        },
-        {
-          "Id": 5,
-          "Action": "REPLACE",
-          "In": "$Res3",
-          "From": "'",
-          "To": "\"",
-          "Result": "$Res3"
-        },
-        {
           "Id": 6,
           "Action": "REPLACE",
-          "In": "$Res3",
+          "In": "$Res1",
           "From": "\n",
           "To": "",
-          "Result": "$Res3"
+          "Result": "$Res1"
         },
         {
           "Id": 7,
@@ -1477,7 +1443,7 @@
           "String": "(?<=var filePath = ).*?(?=;)",
           "MatchId": "0",
           "GroupId": "0",
-          "Target": "$Res3",
+          "Target": "$Res1",
           "Result": "$function_name"
         },
         {
@@ -5950,46 +5916,12 @@
           "Result": "$Res1"
         },
         {
-          "Id": 2,
-          "Action": "MATCH",
-          "String": "(?<=iframe src=\").*?(?=\")",
-          "MatchId": "0",
-          "GroupId": "0",
-          "Default": "@",
-          "Target": "$Res1",
-          "Result": "$Res2"
-        },
-        {
-          "Id": 3,
-          "Action": "CONCAT",
-          "Targets": [
-            "https://ustv247.tv/",
-            "$Res2"
-          ],
-          "Result": "$Res2"
-        },
-        {
-          "Id": 4,
-          "Action": "GET",
-          "Link": "$Res2",
-          "Headers": "Accept::text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3::Accept-Language::vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,fr-FR;q=0.5::Connection::keep-alive::Upgrade-Insecure-Requests::1::User-Agent::Safari/537.36::Referer::https://ustv247.tv/",
-          "Result": "$Res3"
-        },
-        {
-          "Id": 5,
-          "Action": "REPLACE",
-          "In": "$Res3",
-          "From": "'",
-          "To": "\"",
-          "Result": "$Res3"
-        },
-        {
           "Id": 6,
           "Action": "REPLACE",
-          "In": "$Res3",
+          "In": "$Res1",
           "From": "\n",
           "To": "",
-          "Result": "$Res3"
+          "Result": "$Res1"
         },
         {
           "Id": 7,
@@ -5997,7 +5929,7 @@
           "String": "(?<=var filePath = ).*?(?=;)",
           "MatchId": "0",
           "GroupId": "0",
-          "Target": "$Res3",
+          "Target": "$Res1",
           "Result": "$function_name"
         },
         {
@@ -6219,7 +6151,7 @@
       ]
     },
     {
-      "Match": "crichd.to",
+      "Match": "watch.crichd",
       "Name": "watch.crichd.to Parser",
       "Stages": [
         {
@@ -6272,22 +6204,13 @@
           "Result": "$Res2"
         },
         {
-          "Id": 7,
-          "Action": "MATCH",
-          "String": "(?:attr\\(\\\\\\\"src\\\\\\\".*?)(\\w+.*?)(?=\\))",
-          "MatchId": "1",
-          "GroupId": "1",
-          "Target": "$Res",
-          "Result": "$Res3"
-        },
-        {
           "Id": 8,
           "Action": "CONCAT",
           "Targets": [
             "eval(\"",
             "$Res1",
             "$Res2",
-            "$Res3",
+            "locations[++i % len]",
             "\")"
           ],
           "Result": "$Link1"
@@ -6304,11 +6227,11 @@
           "Targets": [
             "eval(\"if(\\\"",
             "$Link1",
-            "\\\".indexOf(\\\"http\\\")===0) \\\"",
+            "\\\".indexOf(\\\"http\\\")===0) encodeURI(\\\"",
             "$Link1",
-            "\\\"; else 'http:' + \\\"",
+            "\\\"); else 'http:' + encodeURI(\\\"",
             "$Link1",
-            "\\\";\")"
+            "\\\");\")"
           ],
           "Result": "$Link1"
         },
@@ -6689,7 +6612,7 @@
           "Targets": [
             "Referer::",
             "$Link",
-            "::User-Agent::Safari/537.36::Cookie::elVolumen=100;_ga=GA1.2.12685464.1575619943; _gid=GA1.2.1904256481.1575619943"
+            "::User-Agent::Safari/537.36::Cookie::_ga=GA1.2.1337183985.2595232215; _gid=GA1.2.334211785.2595232215; __ga=200"
           ],
           "Result": "$Headers"
         },
@@ -6842,9 +6765,9 @@
           "Id": 5,
           "Action": "CONCAT",
           "Targets": [
-            "eval('function atob (s){var e = {}, r=\\\"\\\",i, k, v = [], w = String.fromCharCode;var n = [[65, 91], [97, 123], [48, 58], [43, 44], [47, 48]];for (z in n) {for (i = n[z][0]; i < n[z][1]; i++) {v.push(w(i)); }} for (i = 0; i < 64; i++)  {e[v[i]] = i;}for (i = 0; i < s.length; i+=72){var b = 0, c, x, l = 0, o = s.substring(i, i+72); for (x = 0; x < o.length; x++){c = e[o.charAt(x)];b = (b << 6) + c; l += 6; while (l >= 8){   r += w((b >>> (l -= 8)) % 256); }}} return r;};var __=",
+            "eval('function atob(r,e){var o,t,d,n,f,a,i,h,c=[],C=\"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\";h=(e=void 0!==e&&e)?Utf8.decode(r):r;for(var g=0;g<h.length;g+=4)o=(a=C.indexOf(h.charAt(g))<<18|C.indexOf(h.charAt(g+1))<<12|(n=C.indexOf(h.charAt(g+2)))<<6|(f=C.indexOf(h.charAt(g+3))))>>>16&255,t=a>>>8&255,d=255&a,c[g/4]=String.fromCharCode(o,t,d),64==f&&(c[g/4]=String.fromCharCode(o,t)),64==n&&(c[g/4]=String.fromCharCode(o));return i=c.join(\"\"),e?Utf8.decode(i):i};var __=",
             "$var_result",
-            "__;')"
+            ";if(__.indexOf(\"https:\")===-1){__ = \"https:\"+__} __;')"
           ],
           "Result": "$eval_link"
         },
@@ -6852,15 +6775,6 @@
           "Id": 6,
           "Action": "EVAL",
           "String": "$eval_link",
-          "Result": "$result"
-        },
-        {
-          "Id": 34,
-          "Action": "CONCAT",
-          "Targets": [
-            "https:",
-            "$result"
-          ],
           "Result": "$result"
         },
         {
@@ -7290,7 +7204,7 @@
           "Action": "CONCAT",
           "Targets": [
             "$result_link",
-            " engineOptions=headers::Referer:https://www.plytv.me/engineOptions=headers::Referer:::user_agent::Safari/537.36"
+            " engineOptions=headers::Referer:https://www.plytv.me/::user_agent::Safari/537.36"
           ],
           "Result": "$result"
         },
