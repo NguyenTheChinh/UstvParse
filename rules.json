@@ -6449,53 +6449,35 @@
           "Result": "$Res"
         },
         {
-          "Id": 10,
-          "Action": "MATCH",
-          "String": "function\\(p,a,c,k,e,d\\)(?:.*)\\{\\}\\)",
-          "MatchId": "0",
-          "GroupId": "0",
-          "Default": "'@'",
-          "Target": "$Res",
-          "Result": "$code"
-        },
-        {
-          "Id": 11,
+          "Id": 2,
           "Action": "REPLACE",
-          "In": "$code",
-          "From": "\\",
-          "To": "\\\\",
-          "Result": "$code"
+          "In": "$Res",
+          "From": "\n",
+          "To": "",
+          "Result": "$Res"
         },
         {
-          "Id": 12,
+          "Id": 3,
           "Action": "REPLACE",
-          "In": "$code",
-          "From": "\"",
-          "To": "\\\"",
-          "Result": "$code"
+          "In": "$Res",
+          "From": "\r",
+          "To": "",
+          "Result": "$Res"
         },
         {
-          "Id": 13,
-          "Action": "CONCAT",
-          "Targets": [
-            "var code;var env = {eval: function (c) {code = c;}};eval(\"with(env) {\" + \"eval(",
-            "$code",
-            ")\" + \"}\"); code;"
-          ],
-          "Result": "$code"
-        },
-        {
-          "Id": 14,
-          "Action": "EVAL",
-          "String": "$code",
-          "Result": "$out_code"
-        },
-        {
-          "Id": 15,
+          "Id": 3,
           "Action": "REPLACE",
-          "In": "$out_code",
+          "In": "$Res",
           "From": "'",
           "To": "\"",
+          "Result": "$Res"
+        },
+        {
+          "Id": 4,
+          "Action": "REPLACE",
+          "In": "$Res",
+          "From": "\"",
+          "To": "\\\"",
           "Result": "$out_code"
         },
         {
@@ -6506,12 +6488,6 @@
           "GroupId": "1",
           "Target": "$out_code",
           "Result": "$Res2"
-        },
-        {
-          "Id": 17,
-          "Action": "EVAL",
-          "String": "$Res2",
-          "Result": "$Res3"
         },
         {
           "Id": 18,
@@ -6592,11 +6568,29 @@
         {
           "Id": 27,
           "Action": "MATCH",
-          "String": "(?<=done\\(function\\()(?:.*?)(?=\\))(?:.*?else.*?\\{)(.*?)(?=if)",
+          "String": "(?<=done\\(function\\()(?:.*?)(?=\\))(?:.*?else.*?\\{)(.*?;.*?)(?=;)",
           "MatchId": "0",
           "GroupId": "1",
           "Target": "$out_code",
           "Result": "$Res7"
+        },
+        {
+          "Id": 27,
+          "Action": "MATCH",
+          "String": "(?<=source: window\\.)atob.*?(?=,)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$out_code",
+          "Result": "$Res9"
+        },
+        {
+          "Id": 27,
+          "Action": "MATCH",
+          "String": ";.*",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res7",
+          "Result": "$Res10"
         },
         {
           "Id": 28,
@@ -6656,6 +6650,8 @@
             "$Res8",
             ";",
             "$Res7",
+            ";",
+            "$Res9",
             "')"
           ],
           "Result": "$Res8"
@@ -6676,11 +6672,31 @@
           "Target": "$result1",
           "Result": "$result"
         },
+
+
+        {
+          "Id": 31,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval('",
+            "$Res10",
+            "')"
+          ],
+          "Result": "$Res10"
+        },
+        {
+          "Id": 34,
+          "Action": "EVAL",
+          "String": "$Res10",
+          "Result": "$Res10"
+        },
+
         {
           "Id": 36,
           "Action": "CONCAT",
           "Targets": [
             "https:",
+            "$Res10",
             "$result"
           ],
           "Result": "$result"
