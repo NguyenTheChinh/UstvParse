@@ -1178,28 +1178,10 @@
       "Name": "StreamLive Parser",
       "Stages": [
         {
-          "Id": 1,
-          "Action": "MATCH",
-          "String": "(?<=\\/)(?:\\d\\d\\d\\d\\d)",
-          "MatchId": "0",
-          "GroupId": "0",
-          "Target": "$Link",
-          "Result": "$id_channel"
-        },
-        {
-          "Id": 2,
-          "Action": "CONCAT",
-          "Targets": [
-            "https://www.streamlive.to/embedplayer.php?channel=",
-            "$id_channel"
-          ],
-          "Result": "$Link"
-        },
-        {
           "Id": 3,
           "Action": "GET",
           "Link": "$Link",
-          "Headers": "Referer::https://www.streamlive.to/::User-Agent::Mozilla/5.0",
+          "Headers": "User-Agent::Mozilla/5.0",
           "Result": "$Res"
         },
         {
@@ -5916,6 +5898,40 @@
           "Result": "$Res1"
         },
         {
+          "Id": 2,
+          "Action": "MATCH",
+          "String": "(?<=iframe src=\").*?(?=\")",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Default": "@",
+          "Target": "$Res1",
+          "Result": "$Res2"
+        },
+        {
+          "Id": 3,
+          "Action": "CONCAT",
+          "Targets": [
+            "https://ustv247.tv",
+            "$Res2"
+          ],
+          "Result": "$Res2"
+        },
+        {
+          "Id": 4,
+          "Action": "GET",
+          "Link": "$Res2",
+          "Headers": "Accept::text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3::Accept-Language::vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,fr-FR;q=0.5::Connection::keep-alive::Upgrade-Insecure-Requests::1::User-Agent::Safari/537.36::Referer::https://ustv247.tv/",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 5,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "'",
+          "To": "\"",
+          "Result": "$Res1"
+        },
+        {
           "Id": 6,
           "Action": "REPLACE",
           "In": "$Res1",
@@ -6442,7 +6458,7 @@
       "Name": "telerium.tv Parser",
       "Stages": [
         {
-          "Id": 9,
+          "Id": 1,
           "Action": "GET",
           "Link": "$Link",
           "Headers": "User-Agent::Safari/537.36",
@@ -6481,224 +6497,162 @@
           "Result": "$out_code"
         },
         {
-          "Id": 16,
+          "Id": 5,
           "Action": "MATCH",
-          "String": "(?<=streamdelay=)(?:.*?;)(.*?)(?=function)",
+          "String": "function reverse.*?\\}",
           "MatchId": "0",
-          "GroupId": "1",
+          "GroupId": "0",
           "Target": "$out_code",
           "Result": "$Res2"
         },
         {
-          "Id": 18,
-          "Action": "CONCAT",
-          "Targets": [
-            "eval('",
-            "$Res2",
-            "')"
-          ],
-          "Result": "$Res9"
-        },
-        {
-          "Id": 19,
-          "Action": "EVAL",
-          "String": "$Res9",
-          "Result": "$Res9"
-        },
-        {
-          "Id": 20,
+          "Id": 6,
           "Action": "MATCH",
-          "String": "(?<=ajax)(?:.*?url:)(.*?)(?=,)",
-          "MatchId": "0",
-          "GroupId": "1",
-          "Target": "$out_code",
-          "Result": "$Res3"
-        },
-        {
-          "Id": 21,
-          "Action": "REPLACE",
-          "In": "$Res3",
-          "From": "window.",
-          "To": "",
-          "Result": "$Res3"
-        },
-        {
-          "Id": 22,
-          "Action": "MATCH",
-          "String": "function dameVuelta.*?\\}",
+          "String": "token=.*?]",
           "MatchId": "0",
           "GroupId": "0",
           "Target": "$out_code",
+          "Result": "$Res3"
+        },
+        {
+          "Id": 7,
+          "Action": "MATCH",
+          "String": "(?<=embed\\/).*(?=.html)",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Link",
           "Result": "$Res4"
         },
         {
-          "Id": 23,
-          "Action": "REPLACE",
-          "In": "$Res4",
-          "From": "window.",
-          "To": "",
+          "Id": 8,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"var date = new Date(); date.setDate(date.getDate() + 1); date.setSeconds(0);",
+            "'https://telerium.tv/streams/' + ",
+            "$Res4",
+            "+ '/' + date.getTime() + '.json'\")"
+          ],
           "Result": "$Res4"
         },
         {
-          "Id": 24,
-          "Action": "MATCH",
-          "String": "(?:function changlasmuy.*?)(var.*?)(?=if)",
-          "MatchId": "0",
-          "GroupId": "1",
-          "Target": "$out_code",
-          "Result": "$Res5"
-        },
-        {
-          "Id": 25,
-          "Action": "REPLACE",
-          "In": "$Res5",
-          "From": "window.",
-          "To": "",
-          "Result": "$Res5"
-        },
-        {
-          "Id": 26,
-          "Action": "MATCH",
-          "String": "(?<=done\\(function\\()(.*?)(?=\\))",
-          "MatchId": "0",
-          "GroupId": "1",
-          "Target": "$out_code",
-          "Result": "$Res6"
-        },
-        {
-          "Id": 27,
-          "Action": "MATCH",
-          "String": "(?<=done\\(function\\()(?:.*?)(?=\\))(?:.*?else.*?\\{)(.*?;.*?)(?=;)",
-          "MatchId": "0",
-          "GroupId": "1",
-          "Target": "$out_code",
-          "Result": "$Res7"
-        },
-        {
-          "Id": 27,
-          "Action": "MATCH",
-          "String": "(?<=source: window\\.)atob.*?(?=,)",
-          "MatchId": "0",
-          "GroupId": "0",
-          "Target": "$out_code",
-          "Result": "$Res9"
-        },
-        {
-          "Id": 27,
-          "Action": "MATCH",
-          "String": ";.*",
-          "MatchId": "0",
-          "GroupId": "0",
-          "Target": "$Res7",
-          "Result": "$Res10"
-        },
-        {
-          "Id": 28,
-          "Action": "CONCAT",
-          "Targets": [
-            "eval('function atob(r,e){var o,t,d,n,f,a,i,h,c=[],C=\"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\";h=(e=void 0!==e&&e)?Utf8.decode(r):r;for(var g=0;g<h.length;g+=4)o=(a=C.indexOf(h.charAt(g))<<18|C.indexOf(h.charAt(g+1))<<12|(n=C.indexOf(h.charAt(g+2)))<<6|(f=C.indexOf(h.charAt(g+3))))>>>16&255,t=a>>>8&255,d=255&a,c[g/4]=String.fromCharCode(o,t,d),64==f&&(c[g/4]=String.fromCharCode(o,t)),64==n&&(c[g/4]=String.fromCharCode(o));return i=c.join(\"\"),e?Utf8.decode(i):i}",
-            "$Res2",
-            "$Res3",
-            "')"
-          ],
-          "Result": "$Res3"
-        },
-        {
-          "Id": 29,
+          "Id": 9,
           "Action": "EVAL",
-          "String": "$Res3",
-          "Result": "$Link2"
+          "String": "$Res4",
+          "Result": "$Res4"
         },
         {
-          "Id": 30,
+          "Id": 3,
           "Action": "CONCAT",
           "Targets": [
             "Referer::",
             "$Link",
-            "::User-Agent::Safari/537.36::Cookie::_ga=GA1.2.1337183985.2595232215; _gid=GA1.2.334211785.2595232215; __ga=200"
+            "::User-Agent::Safari/537.36"
           ],
           "Result": "$Headers"
         },
         {
-          "Id": 31,
-          "Action": "CONCAT",
-          "Targets": [
-            "https://telerium.tv",
-            "$Link2"
-          ],
-          "Result": "$Link2"
-        },
-        {
-          "Id": 32,
+          "Id": 10,
           "Action": "GET",
-          "Link": "$Link2",
+          "Link": "$Res4",
           "Headers": "$Headers",
-          "Result": "$Res8"
+          "Result": "$Res5"
         },
         {
-          "Id": 33,
+          "Id": 11,
           "Action": "CONCAT",
           "Targets": [
-            "eval('function atob(r,e){var o,t,d,n,f,a,i,h,c=[],C=\"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\";h=(e=void 0!==e&&e)?Utf8.decode(r):r;for(var g=0;g<h.length;g+=4)o=(a=C.indexOf(h.charAt(g))<<18|C.indexOf(h.charAt(g+1))<<12|(n=C.indexOf(h.charAt(g+2)))<<6|(f=C.indexOf(h.charAt(g+3))))>>>16&255,t=a>>>8&255,d=255&a,c[g/4]=String.fromCharCode(o,t,d),64==f&&(c[g/4]=String.fromCharCode(o,t)),64==n&&(c[g/4]=String.fromCharCode(o));return i=c.join(\"\"),e?Utf8.decode(i):i}; ",
-            "$Res2",
-            ";",
-            "$Res4",
+            "eval('(",
             "$Res5",
-            ";",
-            "$Res6",
-            "=",
-            "$Res8",
-            ";",
-            "$Res7",
-            ";",
-            "$Res9",
-            "')"
+            ").tokenurl')"
           ],
-          "Result": "$Res8"
+          "Result": "$Res6"
         },
         {
-          "Id": 34,
+          "Id": 12,
           "Action": "EVAL",
-          "String": "$Res8",
-          "Result": "$result1"
+          "String": "$Res6",
+          "Result": "$Res6"
         },
         {
-          "Id": 35,
+          "Id": 14,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"if(\\\"",
+            "$Res6",
+            "\\\".indexOf(\\\"https://telerium.tv\\\")===0) encodeURI(\\\"",
+            "$Res6",
+            "\\\"); else 'https://telerium.tv' + encodeURI(\\\"",
+            "$Res6",
+            "\\\");\")"
+          ],
+          "Result": "$Res6"
+        },
+        {
+          "Id": 15,
+          "Action": "EVAL",
+          "String": "$Res6",
+          "Result": "$Res6"
+        },
+        {
+          "Id": 16,
+          "Action": "GET",
+          "Link": "$Res6",
+          "Headers": "$Headers",
+          "Result": "$Res6"
+        },
+        {
+          "Id": 17,
           "Action": "MATCH",
-          "String": "\\/\\/(?:[^\"]*)m3u8(?:[^\"]*)",
+          "String": "_.*?(?=\\[)",
           "MatchId": "0",
           "GroupId": "0",
-          "Default": "$result1",
-          "Target": "$result1",
-          "Result": "$result"
+          "Target": "$Res3",
+          "Result": "$Res7"
         },
-
-
         {
-          "Id": 31,
+          "Id": 18,
+          "Action": "REPLACE",
+          "In": "$Res3",
+          "From": "$Res7",
+          "To": "$Res6",
+          "Result": "$Res3"
+        },
+        {
+          "Id": 19,
           "Action": "CONCAT",
           "Targets": [
             "eval('",
-            "$Res10",
+            "function reverse(arr){ return arr.split(\\'\\').reverse().join(\\'\\')};",
+            "$Res3",
+            ";(",
+            "$Res5",
+            ").url + token",
             "')"
           ],
-          "Result": "$Res10"
+          "Result": "$Res7"
         },
         {
-          "Id": 34,
+          "Id": 20,
           "Action": "EVAL",
-          "String": "$Res10",
-          "Result": "$Res10"
+          "String": "$Res7",
+          "Result": "$Res7"
         },
-
         {
-          "Id": 36,
+          "Id": 21,
           "Action": "CONCAT",
           "Targets": [
-            "https:",
-            "$Res10",
-            "$result"
+            "eval('if(\\\"",
+            "$Res7",
+            "\\\".indexOf(\\\"http\\\")==-1){$Res7=\\\"http:\\\"+\\\"",
+            "$Res7",
+            "\\\"}')"
           ],
+          "Result": "$Res7"
+        },
+        {
+          "Id": 22,
+          "Action": "EVAL",
+          "String": "$Res7",
           "Result": "$result"
         },
         {
