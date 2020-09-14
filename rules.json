@@ -6508,7 +6508,7 @@
         {
           "Id": 6,
           "Action": "MATCH",
-          "String": "token=.*?]",
+          "String": "token=.*?\\)(?=,)",
           "MatchId": "0",
           "GroupId": "0",
           "Target": "$out_code",
@@ -6603,7 +6603,7 @@
         {
           "Id": 17,
           "Action": "MATCH",
-          "String": "_.*?(?=\\[)",
+          "String": "(?<=,)_.*?(?=\\[)",
           "MatchId": "0",
           "GroupId": "0",
           "Target": "$Res3",
@@ -6618,12 +6618,23 @@
           "Result": "$Res3"
         },
         {
+          "Id": 181,
+          "Action": "MATCH",
+          "String": "(?<=,).*?(?=\\))",
+          "MatchId": "0",
+          "GroupId": "0",
+          "Target": "$Res3",
+          "Result": "$Res3"
+        },
+        {
           "Id": 19,
           "Action": "CONCAT",
           "Targets": [
             "eval('",
             "function reverse(arr){ return arr.split(\\'\\').reverse().join(\\'\\')};",
+            "token=reverse(",
             "$Res3",
+            ")",
             ";(",
             "$Res5",
             ").url + token",
@@ -6746,7 +6757,7 @@
           "Targets": [
             "eval('function atob(r,e){var o,t,d,n,f,a,i,h,c=[],C=\"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\";h=(e=void 0!==e&&e)?Utf8.decode(r):r;for(var g=0;g<h.length;g+=4)o=(a=C.indexOf(h.charAt(g))<<18|C.indexOf(h.charAt(g+1))<<12|(n=C.indexOf(h.charAt(g+2)))<<6|(f=C.indexOf(h.charAt(g+3))))>>>16&255,t=a>>>8&255,d=255&a,c[g/4]=String.fromCharCode(o,t,d),64==f&&(c[g/4]=String.fromCharCode(o,t)),64==n&&(c[g/4]=String.fromCharCode(o));return i=c.join(\"\"),e?Utf8.decode(i):i};var __=",
             "$var_result",
-            ";if(__.indexOf(\"https:\")===-1){__ = \"https:\"+__} __;')"
+            ";if (__.indexOf(\"/\")===0 && __[1]!==\"/\"){__ = \"https://sports24.club\"+__} if(__.indexOf(\"https:\")===-1){__ = \"https:\"+__} __;')"
           ],
           "Result": "$eval_link"
         },
@@ -7191,76 +7202,6 @@
           "Id": 22,
           "Action": "FINAL",
           "Result": "$result"
-        }
-      ]
-    },
-    {
-      "Match": "sports24.club",
-      "Name": "sports24.club Parser",
-      "Stages": [
-        {
-          "Id": 1,
-          "Action": "GET",
-          "Link": "https://sports24.club/tv/",
-          "Headers": "User-Agent::Safari/537.36",
-          "Result": "$Res1"
-        },
-        {
-          "Id": 2,
-          "Action": "REPLACE",
-          "In": "$Res1",
-          "From": "\n",
-          "To": "",
-          "Result": "$Res1"
-        },
-        {
-          "Id": 3,
-          "Action": "REPLACE",
-          "In": "$Res1",
-          "From": "'",
-          "To": "\"",
-          "Result": "$Res1"
-        },
-        {
-          "Id": 4,
-          "Action": "REPLACE",
-          "In": "$Res1",
-          "From": "\"",
-          "To": "\\\"",
-          "Result": "$Res1"
-        },
-        {
-          "Id": 17,
-          "Action": "REPLACE",
-          "In": "$Res1",
-          "From": "\r",
-          "To": "",
-          "Result": "$Res1"
-        },
-        {
-          "Id": 5,
-          "Action": "CONCAT",
-          "Targets": [
-            "eval(\"var html = '",
-            "$Res1",
-            "'; var results=[], linkPattern = /(?:href=\\\")(.*?)(?=\\\")/gm, divLinkPattern = /<a class=\\\".*?fxbtn.*?\\\">.*?<\\\\/a>/gm, nameRegex = new RegExp('(?:>)(.*?)(?=<\\\\/a>)',\\\"g\\\"), link, divLink; while((divLink=divLinkPattern.exec(html))!==null){divLink=divLink[0];",
-            "  linkPattern.lastIndex=0; nameRegex.lastIndex=0;   var linkMatch=linkPattern.exec(divLink), nameMatch = nameRegex.exec(divLink); if (linkMatch[1] == null || nameMatch == null || nameMatch[1].toLowerCase().indexOf('",
-            "$query",
-            "'.toLowerCase())===-1){ continue; } else { results.push({link: 'https://sports24.club/tv/'+linkMatch[1], image: null, name: nameMatch?nameMatch[1]:null});} }",
-            " JSON.stringify(results);\")"
-          ],
-          "Result": "$Res2"
-        },
-        {
-          "Id": 6,
-          "Action": "EVAL",
-          "String": "$Res2",
-          "Result": "$Res3"
-        },
-        {
-          "Id": 7,
-          "Action": "FINAL",
-          "Result": "$Res3"
         }
       ]
     }
