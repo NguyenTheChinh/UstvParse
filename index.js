@@ -3,6 +3,7 @@ let searchRules = require('./search_rules');
 let requestPromise = require('request-promise').defaults({jar: true});
 let bodyParser = require('body-parser');
 let tough = require('tough-cookie');
+let tr = require('tor-request');
 
 const express = require('express');
 const app = express();
@@ -20,6 +21,12 @@ app.get('/debug', function () {
     console.log(Res);
     debugger;
 });
+
+// tr.request('http://123tvnow.com/watch/disney-xd/', function (err, res, body) {
+//     if (!err && res.statusCode == 200) {
+//         console.log("Your public (through Tor) IP is: " + body);
+//     }
+// });
 
 app.get('/', async (req, res) => {
     if (req.query.url) {
@@ -46,7 +53,7 @@ app.get('/', async (req, res) => {
 });
 
 // let debugIds = [40];
-let debugIds = [2];
+let debugIds = [5];
 
 function getLink(link) {
     return new Promise(async resolve => {
