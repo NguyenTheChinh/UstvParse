@@ -308,13 +308,13 @@
       ]
     },
     {
-      "Match": "sports24.club",
-      "Name": "sports24.club Parser",
+      "Match": "sports24.stream",
+      "Name": "sports24.stream Parser",
       "Stages": [
         {
           "Id": 1,
           "Action": "GET",
-          "Link": "https://sports24.club/tv/",
+          "Link": "https://sports24.stream/tv/",
           "Headers": "User-Agent::Safari/537.36",
           "Result": "$Res1"
         },
@@ -372,6 +372,163 @@
         },
         {
           "Id": 7,
+          "Action": "FINAL",
+          "Result": "$Res3"
+        }
+      ]
+    },
+    {
+      "Match": "daddylive.co",
+      "Name": "daddylive.co parser",
+      "Stages": [
+        {
+          "Id": 2,
+          "Action": "GET",
+          "Link": "https://daddylive.co/24-hours-channels.php",
+          "Headers": "User-Agent::Safari/537.36",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 17,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "\n",
+          "To": "",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 12,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "\\",
+          "To": "\\\\",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 18,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "'",
+          "To": "\"",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 19,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "\"",
+          "To": "\\\"",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 20,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"var queryString = '",
+            "$query",
+            "'.toLowerCase(); var html = '",
+            "$Res1",
+            "'; let linkDivRegex = new RegExp('(?:<hr)(.*?)(?=<hr)', 'g') ;html = linkDivRegex.exec(html); if(!html){var results=[];} else { html=html[1]; var results=[], linkPattern = /(?:.*?href=\\\")([^\\\"]*)(?=\\\")/gm, link; while((link=linkPattern.exec(html))!==null){link=link[1];",
+            "    var nameRegex = new RegExp('(?:\\\"' + link + '\\\".*?<\\\/i>)(.*?)(?=<)',\\\"g\\\");",
+            "    var nameMatch = nameRegex.exec(html); var name = nameMatch?nameMatch[1]:''; if(name.toLowerCase().indexOf(queryString)!=-1) {results.push({link: 'https://daddylive.co' + link, image: null, name: name}) } }",
+            "} JSON.stringify(results);\")"
+          ],
+          "Result": "$Res2"
+        },
+        {
+          "Id": 21,
+          "Action": "EVAL",
+          "String": "$Res2",
+          "Result": "$Res3"
+        },
+        {
+          "Id": 22,
+          "Action": "FINAL",
+          "Result": "$Res3"
+        }
+      ]
+    },
+    {
+      "Match": "newslive",
+      "Name": "www.newslive.com parser",
+      "Stages": [
+        {
+          "Id": 1,
+          "Action": "CONCAT",
+          "Targets": [
+            "https://www.newslive.com/?s=",
+            "$query"
+          ],
+          "Result": "$Link"
+        },
+        {
+          "Id": 2,
+          "Action": "GET",
+          "Link": "$Link",
+          "Headers": "User-Agent::Safari/537.36",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 17,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "\r",
+          "To": "",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 17,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "\n",
+          "To": "",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 12,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "\\",
+          "To": "\\\\",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 18,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "'",
+          "To": "\"",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 19,
+          "Action": "REPLACE",
+          "In": "$Res1",
+          "From": "\"",
+          "To": "\\\"",
+          "Result": "$Res1"
+        },
+        {
+          "Id": 20,
+          "Action": "CONCAT",
+          "Targets": [
+            "eval(\"var html = '",
+            "$Res1",
+            "'; var results=[], linkPattern = /(?:class=\\\"td-module-thumb\\\".*?href=\\\")(.*?)(?=\\\")/gm, link; while((link=linkPattern.exec(html))!==null){link=link[1];",
+            "    var imageRegex = new RegExp('(?:\\\"' + link + '\\\".*?src=\\\")(.*?)(?=\\\")',\\\"g\\\"), nameRegex = new RegExp('(?:\\\"' + link + '\\\".*?title=\\\")(.*?)(?=\\\")',\\\"g\\\");",
+            "    var imageMatch=imageRegex.exec(html), nameMatch = nameRegex.exec(html); results.push({link: link, image: imageMatch?imageMatch[1]:null, name: nameMatch?nameMatch[1]:null}) }",
+            " JSON.stringify(results);\")"
+          ],
+          "Result": "$Res2"
+        },
+        {
+          "Id": 21,
+          "Action": "EVAL",
+          "String": "$Res2",
+          "Result": "$Res3"
+        },
+        {
+          "Id": 22,
           "Action": "FINAL",
           "Result": "$Res3"
         }

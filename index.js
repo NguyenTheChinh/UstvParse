@@ -2,12 +2,11 @@ let originalRules = require('./rules.json');
 let searchRules = require('./search_rules');
 let requestPromise = require('request-promise').defaults({jar: true});
 let bodyParser = require('body-parser');
-let tough = require('tough-cookie');
-let tr = require('tor-request');
+const util = require("util");
 
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = 3001;
 app.use(bodyParser.urlencoded());
 
 app.use(bodyParser.json());
@@ -16,17 +15,6 @@ app.listen(port, (err) => {
     if (err) throw err;
     console.log(`server is listening on ${port}`);
 });
-
-app.get('/debug', function () {
-    console.log(Res);
-    debugger;
-});
-
-// tr.request('http://123tvnow.com/watch/disney-xd/', function (err, res, body) {
-//     if (!err && res.statusCode == 200) {
-//         console.log("Your public (through Tor) IP is: " + body);
-//     }
-// });
 
 app.get('/', async (req, res) => {
     if (req.query.url) {
@@ -52,10 +40,10 @@ app.get('/', async (req, res) => {
     }
 });
 
-// let debugIds = [40];
-let debugIds = [5];
+let debugIds = [10];
 
 function getLink(link) {
+    let parseLogs = [];
     return new Promise(async resolve => {
         try {
             let goto;
@@ -176,6 +164,11 @@ function getLink(link) {
                                     stage.Params = eval(stage.Params.match(/\w+/)[0]);
                                 }
                                 stage.Params = stage.Params.split("::");
+                                let formData = {};
+                                for (let i = 0; i < stage.Params.length; i += 2) {
+                                    let key = stage.Params[i];
+                                    formData[key] = stage.Params[i + 1];
+                                }
 
                                 let postOptions = {
                                     method: 'POST',
@@ -183,9 +176,10 @@ function getLink(link) {
                                     headers: {},
                                     body: stage.Params.map((value, index) => {
                                         if (index % 2 === 0) return `${value}=`;
-                                        else return `${value}&`;
+                                        else return `${value}${index === stage.Params.length - 1 ? "" : "&"}`;
                                     }).join(""),
-                                    gzip: true
+                                    gzip: true,
+                                    // formData,
                                 };
 
                                 let postHeaders = stage.Headers;
@@ -200,7 +194,7 @@ function getLink(link) {
                                 let postRequestSucess = false;
                                 await requestPromise(postOptions).then(function (htmlString) {
                                     console.log(htmlString);
-                                    eval(`${stage.Result.match(/\w+/)[0]}=${JSON.stringify(htmlString)}`);
+                                    eval(`${stage.Result.match(/\w+/)[0]} = ${JSON.stringify(htmlString)}`);
                                     postRequestSucess = true;
                                 })
                                     .catch(function (err) {
@@ -239,7 +233,7 @@ function getLink(link) {
                                 while ((match = matchRegex.exec(matchString)) !== null) {
                                     if (matchId == stage.MatchId) {
                                         tempResult = match[stage.GroupId];
-                                        break;
+                                        // break;
                                     }
                                     matchId++;
                                 }
@@ -309,8 +303,10 @@ function searchLink(query, Link) {
                                 if (stage.String.match(/^\$\w+$/)) {
                                     stage.String = eval(stage.String.match(/\w+/)[0]);
                                 } else stage.String = eval(stage.String);
+                                console.log(stage.String);
                                 tempResult = eval(stage.String);
                                 eval(`${stage.Result.match(/\w+/)[0]} = ${JSON.stringify(tempResult)}`);
+                                console.log(tempResult);
                                 break;
 
                             case "REPLACE":
@@ -409,7 +405,7 @@ function searchLink(query, Link) {
                                 let postRequestSucess = false;
                                 await requestPromise(postOptions).then(function (htmlString) {
                                     console.log(htmlString);
-                                    eval(`${stage.Result.match(/\w+/)[0]}=${JSON.stringify(htmlString)}`);
+                                    eval(`${stage.Result.match(/\w+/)[0]} = ${JSON.stringify(htmlString)}`);
                                     postRequestSucess = true;
                                 })
                                     .catch(function (err) {
@@ -468,12 +464,36 @@ function searchLink(query, Link) {
     });
 }
 
-// $.ajax({
-//     'type': 'GET',
-//     'url': "https://www.livenewsmag.com/wp-admin/admin-ajax.php",
-//     'dataType': 'json',
-//     'data': {
-//         'action': 'bimber_search',
-//         'bimber_term': "abc"
+function sortStageId(stages) {
+    let temp = JSON.parse(JSON.stringify(stages));
+    if (!Array.isArray(stages) && stages.hasOwnProperty("Stages")) {
+        temp = JSON.parse(JSON.stringify(stages.Stages));
+    }
+
+    temp = temp.map((stage, index) => {
+        stage.Id = index + 1;
+        return stage;
+    });
+    if (stages.hasOwnProperty("Stages")) {
+        stages.Stages = temp;
+
+        require('child_process').spawn('clip').stdin.end(util.inspect(JSON.stringify(stages, null, 2)));
+        return stages;
+    } else {
+        require('child_process').spawn('clip').stdin.end(util.inspect(JSON.stringify(temp, null, 2)));
+        return temp;
+    }
+}
+
+// let rules = require("./rules.json");
+// const fs = require("fs");
+// for (let i = 0; i < rules.Rules.length; i++) {
+//     let rule = rules.Rules[i];
+//     let hasGoto = rule.Stages.find(stage => stage.Action === "GOTO");
+//     if (hasGoto) {
+//         console.log(rule.Match);
+//     } else {
+//         rule.Stages = sortStageId(rule.Stages);
 //     }
-// })'?1&json=U2hvd3RpbWV8fGh0dHA6Ly8xMjN0dm5vdy5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMTgvMDgvU2hvd3RpbWUucG5n';}
+// }
+// fs.writeFileSync("./rules.json", JSON.stringify(rules, null, 2))
