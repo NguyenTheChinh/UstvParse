@@ -6,7 +6,7 @@ const util = require("util");
 
 const express = require('express');
 const app = express();
-const port = 3001;
+const port = 3002;
 app.use(bodyParser.urlencoded());
 
 app.use(bodyParser.json());
@@ -17,8 +17,8 @@ app.listen(port, (err) => {
 });
 
 app.get('/', async (req, res) => {
-    if (req.query.url) {
-        let link = await getLink(req.query.url).catch(ref => {
+    if (req.query.url || req.query.link) {
+        let link = await getLink(req.query.url || req.query.link).catch(ref => {
 
         });
         if (link) {
@@ -40,9 +40,10 @@ app.get('/', async (req, res) => {
     }
 });
 
-let debugIds = [10];
+let debugIds = [6];
 
 function getLink(link) {
+    // link="https://123zcast.com/embed.php?player=desktop&v=skysprem&vw=100%&vh=520__requestHeader=Referer::https://cdn2.crichd.pro/";
     let parseLogs = [];
     return new Promise(async resolve => {
         try {
@@ -464,36 +465,4 @@ function searchLink(query, Link) {
     });
 }
 
-function sortStageId(stages) {
-    let temp = JSON.parse(JSON.stringify(stages));
-    if (!Array.isArray(stages) && stages.hasOwnProperty("Stages")) {
-        temp = JSON.parse(JSON.stringify(stages.Stages));
-    }
 
-    temp = temp.map((stage, index) => {
-        stage.Id = index + 1;
-        return stage;
-    });
-    if (stages.hasOwnProperty("Stages")) {
-        stages.Stages = temp;
-
-        require('child_process').spawn('clip').stdin.end(util.inspect(JSON.stringify(stages, null, 2)));
-        return stages;
-    } else {
-        require('child_process').spawn('clip').stdin.end(util.inspect(JSON.stringify(temp, null, 2)));
-        return temp;
-    }
-}
-
-// let rules = require("./rules.json");
-// const fs = require("fs");
-// for (let i = 0; i < rules.Rules.length; i++) {
-//     let rule = rules.Rules[i];
-//     let hasGoto = rule.Stages.find(stage => stage.Action === "GOTO");
-//     if (hasGoto) {
-//         console.log(rule.Match);
-//     } else {
-//         rule.Stages = sortStageId(rule.Stages);
-//     }
-// }
-// fs.writeFileSync("./rules.json", JSON.stringify(rules, null, 2))
